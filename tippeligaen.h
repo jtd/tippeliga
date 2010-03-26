@@ -18,6 +18,9 @@ protected:
 
 private:
     Ui::Tippeligaen *ui;
+
+private slots:
+    void on_actionAvslutt_triggered();
 };
 
 #endif // TIPPELIGAEN_H

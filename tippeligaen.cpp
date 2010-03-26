@@ -24,3 +24,8 @@ void Tippeligaen::changeEvent(QEvent *e)
         break;
     }
 }
+
+void Tippeligaen::on_actionAvslutt_triggered()
+{
+    exit(0);
+}
