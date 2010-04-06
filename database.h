@@ -44,7 +44,8 @@ static bool createConnection(){
                                      "etternavn VARCHAR(40),"
                                      "draktnummer VARCHAR(5),"
                                      "posisjon VARCHAR(40),"
-                                     "int lagId)");
+                                     "lagID INT,"
+                                     "FOREIGN KEY (lagID) REFERENCES lag(id))");
 
     query.exec("INSERT INTO spiller VALUES(0, 'Jon Torstein', 'Dalen', '3', 'Høyre back', 2)");
     query.exec("INSERT INTO spiller VALUES(1, 'Eirik', 'Luka', '7', 'Spiss', 2)");

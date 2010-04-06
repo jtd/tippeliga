@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-
     Tippeligaen w;
     w.show();
     return a.exec();
