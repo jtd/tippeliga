@@ -3,10 +3,19 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include <QSqlTableModel>
 
 namespace Ui {
     class Tippeligaen;
 }
+enum {
+    Spiller_Id = 0,
+    Spiller_Fornavn = 1,
+    Spiller_Etternavn = 2,
+    Spiller_Draktnummer = 3,
+    Spiller_Posisjon = 4,
+    Spiller_LagID = 5
+};
 
 class Tippeligaen : public QMainWindow {
     Q_OBJECT
@@ -22,6 +31,8 @@ public:
     QGroupBox *createLagInfoGroupBox();
     QLabel *drakt;
     QLabel *valerengaInfo;
+    QSqlTableModel *model;
+
 
 protected:
     void changeEvent(QEvent *e);

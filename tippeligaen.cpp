@@ -83,12 +83,27 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
 QGroupBox* Tippeligaen::createSpillerePaLagGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillere"));
 
+    model = new QSqlTableModel(this);
+    model->setTable("spiller");
+    model->setSort(Spiller_Etternavn, Qt::AscendingOrder);
+    model->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
+    model->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
+    model->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
+    model->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
+    model->select();
+
     spillereTableView = new QTableView;
+    spillereTableView->setModel(model);
+    spillereTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    spillereTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    spillereTableView->setColumnHidden(Spiller_LagID, true);
+    spillereTableView->setColumnHidden(Spiller_Id, true);
+    spillereTableView->resizeColumnsToContents();
     spillereTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     spillereTableView->setSortingEnabled(true);
-    spillereTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    QHeaderView *header = spillereTableView->horizontalHeader();
+    header->setStretchLastSection(true);
 
-    spillereTableView->setSelectionMode(QAbstractItemView::SingleSelection);
     spillereTableView->setShowGrid(false);
     spillereTableView->verticalHeader()->hide();
     spillereTableView->setAlternatingRowColors(true);
