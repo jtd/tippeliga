@@ -17,6 +17,7 @@ static bool createConnection(){
     query.exec("create table lag (id int primary key, "
                                      "lag varchar(40), lagInfo varchar(50))");
     query.exec("insert into lag values(0, 'Vålerenga', 'Etablert i 1998')");
+    query.exec("insert into lag values(1, 'Rosenborg', 'Etablert i 1992')");
 }
 
 #endif // DATABASE_H
