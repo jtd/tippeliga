@@ -8,6 +8,7 @@ TARGET = tippeliga
 TEMPLATE = app
 SOURCES += main.cpp \
     tippeligaen.cpp
-HEADERS += tippeligaen.h
+HEADERS += tippeligaen.h \
+    database.h
 FORMS += tippeligaen.ui
 RESOURCES += bilder.qrc
