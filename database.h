@@ -20,8 +20,6 @@ static bool createConnection(){
                                  "lagnavn VARCHAR(40),"
                                  "lagInfo VARCHAR(50))");
 
-
-
     query.exec("INSERT INTO lag VALUES(0, 'Vålerenga', 'Etablert i 1998')");
     query.exec("INSERT INTO lag VALUES(1, 'Rosenborg', 'Etablert i 1992')");
     query.exec("INSERT INTO lag VALUES(2, 'Odd Grenland', 'Etablert i 1992')");
