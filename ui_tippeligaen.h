@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tippeligaen.ui'
 **
-** Created: Fri 26. Mar 14:45:12 2010
+** Created: Tue 6. Apr 09:36:17 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,7 +19,6 @@
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QStatusBar>
-#include <QtGui/QToolBar>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -31,7 +30,6 @@ public:
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuO;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *Tippeligaen)
@@ -50,10 +48,6 @@ public:
         menuO = new QMenu(menuBar);
         menuO->setObjectName(QString::fromUtf8("menuO"));
         Tippeligaen->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(Tippeligaen);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        Tippeligaen->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        Tippeligaen->insertToolBarBreak(mainToolBar);
         statusBar = new QStatusBar(Tippeligaen);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         Tippeligaen->setStatusBar(statusBar);
