@@ -83,27 +83,12 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
 QGroupBox* Tippeligaen::createSpillerePaLagGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillere"));
 
-    model = new QSqlTableModel(this);
-    model->setTable("spiller");
-    model->setSort(Spiller_Etternavn, Qt::AscendingOrder);
-    model->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
-    model->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
-    model->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
-    model->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
-    model->select();
-
     spillereTableView = new QTableView;
-    spillereTableView->setModel(model);
-    spillereTableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    spillereTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    spillereTableView->setColumnHidden(Spiller_LagID, true);
-    spillereTableView->setColumnHidden(Spiller_Id, true);
-    spillereTableView->resizeColumnsToContents();
     spillereTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     spillereTableView->setSortingEnabled(true);
-    QHeaderView *header = spillereTableView->horizontalHeader();
-    header->setStretchLastSection(true);
+    spillereTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    spillereTableView->setSelectionMode(QAbstractItemView::SingleSelection);
     spillereTableView->setShowGrid(false);
     spillereTableView->verticalHeader()->hide();
     spillereTableView->setAlternatingRowColors(true);
@@ -123,7 +108,7 @@ QGroupBox* Tippeligaen::createSpillerePaLagGroupBox(){
 
 QGroupBox* Tippeligaen::createRundensLagGroupBox()
 {
-    QGroupBox *box = new QGroupBox(tr("Rundenslag"));
+    QGroupBox *box = new QGroupBox(tr("Rundens lag"));
 
     baneLabel = new QLabel;
     baneLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
@@ -149,7 +134,7 @@ QGroupBox* Tippeligaen::createLagInfoGroupBox(){
     QLabel *testlabel3 = new QLabel;
     testlabel3->setText("Posisjon:");
     QLabel *testlabel4 = new QLabel;
-    testlabel4->setText("Antallganger på rundens lag:");
+    testlabel4->setText("Antall ganger på rundens lag:");
 
     QLabel *spillerLabel1 = new QLabel;
     spillerLabel1->setText("Jon Torstein Dalen");
