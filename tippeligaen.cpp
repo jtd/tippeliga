@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QtSql>
 
 Tippeligaen::Tippeligaen(QWidget *parent) :
     QMainWindow(parent),
@@ -68,9 +69,6 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
         tippeligaLagComboBox->addItem(lag.value(1).toString());
     }
 
-    connect(tippeligaLagComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(changeArtist(int)));
-
     QGroupBox *box = new QGroupBox(tr("Tippeligalag"));
 
     QGridLayout *layout = new QGridLayout;
@@ -83,7 +81,7 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
 QGroupBox* Tippeligaen::createSpillerePaLagGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillere"));
 
-    model = new QSqlTableModel(this);
+    model = new QSqlRelationalTableModel(this);
     model->setTable("spiller");
     model->setSort(Spiller_Etternavn, Qt::AscendingOrder);
     model->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));

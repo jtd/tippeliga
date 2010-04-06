@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui>
-#include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
 
 namespace Ui {
     class Tippeligaen;
@@ -31,7 +31,7 @@ public:
     QGroupBox *createLagInfoGroupBox();
     QLabel *drakt;
     QLabel *valerengaInfo;
-    QSqlTableModel *model;
+    QSqlRelationalTableModel *model;
 
 
 protected:
