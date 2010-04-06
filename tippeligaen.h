@@ -2,6 +2,7 @@
 #define TIPPELIGAEN_H
 
 #include <QMainWindow>
+#include <QtGui>
 
 namespace Ui {
     class Tippeligaen;
@@ -12,6 +13,15 @@ class Tippeligaen : public QMainWindow {
 public:
     Tippeligaen(QWidget *parent = 0);
     ~Tippeligaen();
+    QComboBox *tippeligaLagComboBox;
+    QGroupBox *createTippeligaLagVelgerGroupBox();
+    QTableView *spillereTableView;
+    QGroupBox *createSpillerePaLagGroupBox();
+    QGroupBox *createRundensLagGroupBox();
+    QLabel *baneLabel;
+    QGroupBox *createLagInfoGroupBox();
+    QLabel *drakt;
+    QLabel *valerengaInfo;
 
 protected:
     void changeEvent(QEvent *e);

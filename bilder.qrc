@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>bilder/fullbaneTest.png</file>
+        <file>bilder/valerenga.png</file>
+    </qresource>
+</RCC>
