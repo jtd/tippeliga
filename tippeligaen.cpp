@@ -1,6 +1,10 @@
 #include "tippeligaen.h"
 #include "ui_tippeligaen.h"
 
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+
 Tippeligaen::Tippeligaen(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tippeligaen)
@@ -51,9 +55,11 @@ void Tippeligaen::on_actionAvslutt_triggered(){
 QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
 
     tippeligaLagComboBox = new QComboBox;
-    tippeligaLagComboBox->addItem("Vålerenga");
-    tippeligaLagComboBox->addItem("Odd Grendland");
-    tippeligaLagComboBox->addItem("Rosenborg");
+
+    QSqlQuery lag ("select * from Lag order by lagnavn asc" );
+    while (lag.next()) {
+        tippeligaLagComboBox->addItem(lag.value(1).toString());
+    }
 
     QGroupBox *box = new QGroupBox(tr("Tippeligalag"));
 
