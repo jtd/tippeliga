@@ -20,6 +20,8 @@ static bool createConnection(){
                                  "lagnavn VARCHAR(40),"
                                  "lagInfo VARCHAR(50))");
 
+
+
     query.exec("INSERT INTO lag VALUES(0, 'Vålerenga', 'Etablert i 1998')");
     query.exec("INSERT INTO lag VALUES(1, 'Rosenborg', 'Etablert i 1992')");
     query.exec("INSERT INTO lag VALUES(2, 'Odd Grenland', 'Etablert i 1992')");
@@ -37,15 +39,15 @@ static bool createConnection(){
     query.exec("INSERT INTO lag VALUES(14, 'Brann', 'Etablert i 1992')");
     query.exec("INSERT INTO lag VALUES(15, 'Strømsgodset', 'Etablert i 1992')");
 
-
     query.exec("CREATE TABLE spiller (id INT PRIMARY KEY,"
                                      "fornavn VARCHAR(40),"
                                      "etternavn VARCHAR(40),"
                                      "draktnummer VARCHAR(5),"
-                                     "posisjon VARCHAR(40),");
-                                     "FOREIGN KEY(id) REFERENCES lag)");
+                                     "posisjon VARCHAR(40),"
+                                     "int lagId)");
 
     query.exec("INSERT INTO spiller VALUES(0, 'Jon Torstein', 'Dalen', '3', 'Høyre back', 2)");
+    query.exec("INSERT INTO spiller VALUES(1, 'Eirik', 'Luka', '7', 'Spiss', 2)");
 
     return true;
 }

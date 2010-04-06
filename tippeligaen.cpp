@@ -56,16 +56,19 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
 
     tippeligaLagComboBox = new QComboBox;
 
-    QSqlQuery spiller ("select * from spiller" );
+    /*QSqlQuery spiller ("select * from spiller" );
     while (spiller.next()) {
-        tippeligaLagComboBox->addItem(spiller.value(2).toString());
-    }
-    /*
+        tippeligaLagComboBox->addItem(spiller.value(1).toString());
+    }*/
+
     QSqlQuery lag ("select * from lag order by lagnavn asc" );
     while (lag.next()) {
         tippeligaLagComboBox->addItem(lag.value(1).toString());
     }
-    */
+
+    connect(tippeligaLagComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(changeArtist(int)));
+
     QGroupBox *box = new QGroupBox(tr("Tippeligalag"));
 
     QGridLayout *layout = new QGridLayout;
