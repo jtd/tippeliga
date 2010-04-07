@@ -23,11 +23,8 @@ public:
     QGroupBox *createTeamInfoGroupBox();
     QLabel *drakt;
     QLabel *valerengaInfo;
-    QSqlRelationalTableModel *model;
     QSqlRelationalTableModel *teamModel;
     QSqlRelationalTableModel *playerModel;
-
-
 
 protected:
     void changeEvent(QEvent *e);

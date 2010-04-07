@@ -1,5 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+#include <QSqlRelationalTableModel>
 
 enum {
     Spiller_Id = 0,
@@ -14,6 +15,8 @@ class Player
 {
     public:
         Player();
+        //QSqlRelationalTableModel *playerModel;
+
 };
 
 

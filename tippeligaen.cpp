@@ -1,5 +1,7 @@
 #include "tippeligaen.h"
 #include "ui_tippeligaen.h"
+#include "player.h"
+#include "team.h"
 
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -60,7 +62,7 @@ QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
     teamComboBox = new QComboBox;
     teamModel = new QSqlRelationalTableModel(this);
     teamModel->setTable("lag");
-    teamModel->setRelation(0, QSqlRelation("lag", "id", "lagnavn"));
+    teamModel->setRelation(Team_Id, QSqlRelation("lag", "id", "lagnavn"));
     teamModel->setSort(1, Qt::AscendingOrder);
     teamModel->select();
 
