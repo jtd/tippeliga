@@ -1,7 +1,5 @@
 #include "tippeligaen.h"
 #include "ui_tippeligaen.h"
-#include "player.h"
-#include "team.h"
 
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -15,17 +13,20 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     ui->setupUi(this);
     QGroupBox *team = createTeamChooserGroupBox();
     QGroupBox *players = createTeamPlayersGroupBox();
-    QGroupBox *teamOfTheRound = createTeamOfTheRoundGroupBox();
     QGroupBox *teamInfo = createTeamInfoGroupBox();
+    teamOfTheRound = createTeamOfTheRoundGroupBox();
+    teamWiki = createTeamWikiGroupBox();
+    teamWiki->hide();
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(team, 0, 0);
     layout->addWidget(players, 1, 0);
     layout->addWidget(teamInfo, 2 ,0);
     layout->addWidget(teamOfTheRound, 0, 1, 3, 1);
+    layout->addWidget(teamWiki, 0, 1, 3, 1);
     layout->setColumnStretch(1, 1);
     layout->setColumnMinimumWidth(0, 500);
-    layout->setColumnMinimumWidth(1, 500);
+    layout->setColumnMinimumWidth(1, 700);
 
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
@@ -62,7 +63,7 @@ QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
     teamComboBox = new QComboBox;
     teamModel = new QSqlRelationalTableModel(this);
     teamModel->setTable("lag");
-    teamModel->setRelation(Team_Id, QSqlRelation("lag", "id", "lagnavn"));
+    teamModel->setRelation(0, QSqlRelation("lag", "id", "lagnavn"));
     teamModel->setSort(1, Qt::AscendingOrder);
     teamModel->select();
 
@@ -141,12 +142,27 @@ QGroupBox* Tippeligaen::createTeamPlayersGroupBox(){
 
 QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Rundens lag"));
-
+ 
     fieldLabel = new QLabel;
     fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
-
+    fieldLabel->setAlignment(Qt::AlignTop);
+    fieldLabel->show();
+    
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(fieldLabel, 0,0);
+    box->setLayout(layout);
+
+    return box;
+}
+QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
+    QGroupBox *box = new QGroupBox(tr("Wiki"));
+
+    wiki = new QWebView();
+    wiki->load(QUrl("http://no.wikipedia.org/wiki/Vålerenga_fotball"));
+    wiki->show();
+
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(wiki, 0,0);
     box->setLayout(layout);
 
     return box;
@@ -221,4 +237,19 @@ void Tippeligaen::updatePlayerTableView(int row){
     }
     playerModel->select();
     playerTableView->horizontalHeader()->setVisible(playerModel->rowCount()>0);
+}
+
+void Tippeligaen::on_actionUkens_lag_triggered()
+{
+    teamOfTheRound->show();;
+    teamWiki->hide();
+    ui->actionLaginfo->setChecked(false);
+}
+
+void Tippeligaen::on_actionLaginfo_triggered()
+{
+    teamWiki->show();
+    teamOfTheRound->hide();
+    ui->actionUkens_lag->setChecked(false);
+
 }
