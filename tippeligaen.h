@@ -32,6 +32,9 @@ public:
     QLabel *drakt;
     QLabel *valerengaInfo;
     QSqlRelationalTableModel *model;
+    QSqlRelationalTableModel *lagModel;
+    QSqlRelationalTableModel *spillerModel;
+
 
 
 protected:
@@ -42,6 +45,8 @@ private:
 
 private slots:
     void on_actionAvslutt_triggered();
+    //void oppdaterSpillerView();
+    void oppdaterSpillerView2(int row);
 };
 
 #endif // TIPPELIGAEN_H

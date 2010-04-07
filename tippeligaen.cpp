@@ -56,6 +56,16 @@ void Tippeligaen::on_actionAvslutt_triggered(){
 QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
 
     tippeligaLagComboBox = new QComboBox;
+    lagModel = new QSqlRelationalTableModel(this);
+    lagModel->setTable("lag");
+    lagModel->setRelation(0, QSqlRelation("lag", "id", "lagnavn"));
+    lagModel->setSort(1, Qt::AscendingOrder);
+    lagModel->select();
+
+    tippeligaLagComboBox->setModel(lagModel);
+
+    connect(tippeligaLagComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(oppdaterSpillerView2(int)));
 
     /*
     QSqlQuery spiller ("select * from spiller" );
@@ -64,10 +74,12 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
     }
     */
 
-    QSqlQuery lag ("select * from lag order by lagnavn asc" );
+
+
+    /*QSqlQuery lag ("select * from lag order by lagnavn asc" );
     while (lag.next()) {
         tippeligaLagComboBox->addItem(lag.value(1).toString());
-    }
+    }*/
 
     QGroupBox *box = new QGroupBox(tr("Tippeligalag"));
 
@@ -81,20 +93,30 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
 QGroupBox* Tippeligaen::createSpillerePaLagGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillere"));
 
-    model = new QSqlRelationalTableModel(this);
+    /*model = new QSqlRelationalTableModel(this);
     model->setTable("spiller");
     model->setSort(Spiller_Etternavn, Qt::AscendingOrder);
     model->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
     model->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
     model->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
     model->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
-    model->select();
+    model->select();*/
+
+    spillerModel = new QSqlRelationalTableModel(this);
+    spillerModel->setTable("spiller");
+    spillerModel->setRelation(Spiller_LagID, QSqlRelation("lag", "id", "lagnavn"));
+    spillerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
+    spillerModel->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
+    spillerModel->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
+    spillerModel->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
+    spillerModel->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
+    spillerModel->setHeaderData(Spiller_LagID, Qt::Horizontal, tr("Lag"));
 
     spillereTableView = new QTableView;
-    spillereTableView->setModel(model);
+    spillereTableView->setModel(spillerModel);
     spillereTableView->setSelectionMode(QAbstractItemView::SingleSelection);
     spillereTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    spillereTableView->setColumnHidden(Spiller_LagID, true);
+    //spillereTableView->setColumnHidden(Spiller_LagID, true);
     spillereTableView->setColumnHidden(Spiller_Id, true);
     spillereTableView->resizeColumnsToContents();
     spillereTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -173,4 +195,36 @@ QGroupBox* Tippeligaen::createLagInfoGroupBox(){
     box->setLayout(layout);
 
     return box;
+}
+
+/*void Tippeligaen::oppdaterSpillerView(){
+    //QModelIndex index = lagModel->relationModel(0)->index(row, 5);
+    QModelIndex i = tippeligaLagComboBox->currentIndex();
+    if(i.isValid()){
+        QSqlRecord record = lagModel->record(i.row());
+        int id = record.value("id").toInt();
+        spillerModel->setFilter(QString("lagID = %1").arg(id));
+    }
+    else{
+        spillerModel->setFilter("lagID = -1");
+    }
+    spillerModel->select();
+    spillereTableView->horizontalHeader()->setVisible(spillerModel->rowCount()>0);
+}*/
+
+void Tippeligaen::oppdaterSpillerView2(int row){
+    QModelIndex index = lagModel->relationModel(0)->index(row, 0);
+    //QModelIndex i = tippeligaLagComboBox->currentIndex();
+    if(index.isValid()){
+         spillerModel->setFilter(QString("lagID = %1").arg(row));
+
+        /*QSqlRecord record = lagModel->record(row);
+        int id = record.value("id").toInt();
+        spillerModel->setFilter(QString("lagID = %1").arg(id));*/
+    }
+    else{
+        spillerModel->setFilter("lagID = -1");
+    }
+    spillerModel->select();
+    spillereTableView->horizontalHeader()->setVisible(spillerModel->rowCount()>0);
 }
