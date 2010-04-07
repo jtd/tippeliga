@@ -25,6 +25,7 @@ public:
     QLabel *valerengaInfo;
     QSqlRelationalTableModel *teamModel;
     QSqlRelationalTableModel *playerModel;
+    QLabel *playerName;
 
 protected:
     void changeEvent(QEvent *e);
@@ -35,6 +36,7 @@ private:
 private slots:
     void on_actionAvslutt_triggered();
     void updatePlayerTableView(int row);
+    void playerInformation();
 };
 
 #endif // TIPPELIGAEN_H

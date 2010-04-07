@@ -119,6 +119,9 @@ QGroupBox* Tippeligaen::createTeamPlayersGroupBox(){
     QHeaderView *header = playerTableView->horizontalHeader();
     header->setStretchLastSection(true);
 
+    connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this, SLOT(playerInformation()));
+
     playerTableView->setShowGrid(false);
     playerTableView->verticalHeader()->hide();
     playerTableView->setAlternatingRowColors(true);
@@ -152,6 +155,8 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
 QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillerinfo"));
 
+
+
     drakt = new QLabel;
     drakt->setAlignment(Qt::AlignRight);
     drakt->setPixmap(QPixmap(":/bilder/valerenga.png"));
@@ -171,8 +176,8 @@ QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     spillerLabel2->setText("Vålerenga");
     QLabel *spillerLabel3 = new QLabel;
     spillerLabel3->setText("Midtstopper");
-    QLabel *spillerLabel4 = new QLabel;
-    spillerLabel4->setText("4");
+   /* QLabel *spillerLabel4 = new QLabel;
+    spillerLabel4->setText("4");*/
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(testlabel1, 0, 0);
@@ -182,13 +187,23 @@ QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(testlabel3, 2, 0);
     layout->addWidget(spillerLabel3, 2, 1);
     layout->addWidget(testlabel4, 3, 0);
-    layout->addWidget(spillerLabel4, 3, 1);
+    layout->addWidget(playerName, 3, 1);
 
     //layout->addWidget(drakt, 0, 3, 3, 2);
     layout->addWidget(drakt, 0, 2, 4, 1);
     box->setLayout(layout);
 
     return box;
+}
+
+void Tippeligaen::playerInformation(){
+    QModelIndex index = playerTableView->currentIndex();
+    QSqlRecord record = playerModel->record(index.row());
+
+    QString playerFirstName = record.value("fornavn").toString();
+    QString playerLastName = record.value("etternavn").toString();
+    playerName->setText(tr("Title: %1 (%2)").arg(playerFirstName).arg(playerLastName));
+    playerName->show();
 }
 
 void Tippeligaen::updatePlayerTableView(int row){
