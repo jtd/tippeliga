@@ -142,6 +142,7 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
  
     fieldLabel = new QLabel;
     fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
+    fieldLabel->setAlignment(Qt::AlignTop);
     fieldLabel->show();
     
     QGridLayout *layout = new QGridLayout;
