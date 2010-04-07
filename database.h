@@ -53,7 +53,7 @@ static bool createConnection(){
     query.exec("INSERT INTO spiller VALUES(null, 'Eirik', 'Luka', '7', 'Spiss', 15)");
     query.exec("INSERT INTO spiller VALUES(null, 'Anders', 'Evenstuen', '7', 'Spiss', 8)");
     query.exec("INSERT INTO spiller VALUES(null, 'Henrik', 'Wingerei', '4', 'Midtbane', 10)");
-    query.exec("INSERT INTO spiller VALUES(null, 'Øyvind', 'Midtbø', '1', 'Keeper', 4)");
+    query.exec("INSERT INTO spiller VALUES(null, 'Øyvind', 'Midtbø', '1', 'Keeper', 0)");
 
     return true;
 }

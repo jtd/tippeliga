@@ -11,16 +11,16 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     ui(new Ui::Tippeligaen)
 {
     ui->setupUi(this);
-    QGroupBox *tippeligaLag = createTippeligaLagVelgerGroupBox();
-    QGroupBox *spillerePaLag = createSpillerePaLagGroupBox();
-    QGroupBox *rundensLag = createRundensLagGroupBox();
-    QGroupBox *lagInfo = createLagInfoGroupBox();
+    QGroupBox *team = createTeamChooserGroupBox();
+    QGroupBox *players = createTeamPlayersGroupBox();
+    QGroupBox *teamOfTheRound = createTeamOfTheRoundGroupBox();
+    QGroupBox *teamInfo = createTeamInfoGroupBox();
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(tippeligaLag, 0, 0);
-    layout->addWidget(spillerePaLag, 1, 0);
-    layout->addWidget(lagInfo, 2 ,0);
-    layout->addWidget(rundensLag, 0, 1, 3, 1);
+    layout->addWidget(team, 0, 0);
+    layout->addWidget(players, 1, 0);
+    layout->addWidget(teamInfo, 2 ,0);
+    layout->addWidget(teamOfTheRound, 0, 1, 3, 1);
     layout->setColumnStretch(1, 1);
     layout->setColumnMinimumWidth(0, 500);
     layout->setColumnMinimumWidth(1, 500);
@@ -33,6 +33,8 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     //showImageLabel();
     //resize(850, 400);
     setWindowTitle(tr("Tippeligaen 2010"));
+
+    updatePlayerTableView(0);
 }
 
 Tippeligaen::~Tippeligaen(){
@@ -53,28 +55,19 @@ void Tippeligaen::changeEvent(QEvent *e){
 void Tippeligaen::on_actionAvslutt_triggered(){
     exit(0);
 }
-QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
+QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
 
-    tippeligaLagComboBox = new QComboBox;
-    lagModel = new QSqlRelationalTableModel(this);
-    lagModel->setTable("lag");
-    lagModel->setRelation(0, QSqlRelation("lag", "id", "lagnavn"));
-    lagModel->setSort(1, Qt::AscendingOrder);
-    lagModel->select();
+    teamComboBox = new QComboBox;
+    teamModel = new QSqlRelationalTableModel(this);
+    teamModel->setTable("lag");
+    teamModel->setRelation(0, QSqlRelation("lag", "id", "lagnavn"));
+    teamModel->setSort(1, Qt::AscendingOrder);
+    teamModel->select();
 
-    tippeligaLagComboBox->setModel(lagModel);
+    teamComboBox->setModel(teamModel);
 
-    connect(tippeligaLagComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(oppdaterSpillerView2(int)));
-
-    /*
-    QSqlQuery spiller ("select * from spiller" );
-    while (spiller.next()) {
-        tippeligaLagComboBox->addItem(spiller.value(1).toString());
-    }
-    */
-
-
+    connect(teamComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(updatePlayerTableView(int)));
 
     /*QSqlQuery lag ("select * from lag order by lagnavn asc" );
     while (lag.next()) {
@@ -84,13 +77,13 @@ QGroupBox* Tippeligaen::createTippeligaLagVelgerGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Tippeligalag"));
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(tippeligaLagComboBox, 0, 0);
+    layout->addWidget(teamComboBox, 0, 0);
     box->setLayout(layout);
 
     return box;
 }
 
-QGroupBox* Tippeligaen::createSpillerePaLagGroupBox(){
+QGroupBox* Tippeligaen::createTeamPlayersGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillere"));
 
     /*model = new QSqlRelationalTableModel(this);
@@ -102,60 +95,59 @@ QGroupBox* Tippeligaen::createSpillerePaLagGroupBox(){
     model->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
     model->select();*/
 
-    spillerModel = new QSqlRelationalTableModel(this);
-    spillerModel->setTable("spiller");
-    spillerModel->setRelation(Spiller_LagID, QSqlRelation("lag", "id", "lagnavn"));
-    spillerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
-    spillerModel->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
-    spillerModel->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
-    spillerModel->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
-    spillerModel->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
-    spillerModel->setHeaderData(Spiller_LagID, Qt::Horizontal, tr("Lag"));
+    playerModel = new QSqlRelationalTableModel(this);
+    playerModel->setTable("spiller");
+    playerModel->setRelation(Spiller_LagID, QSqlRelation("lag", "id", "lagnavn"));
+    playerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
+    playerModel->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
+    playerModel->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
+    playerModel->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
+    playerModel->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
+    playerModel->setHeaderData(Spiller_LagID, Qt::Horizontal, tr("Lag"));
 
-    spillereTableView = new QTableView;
-    spillereTableView->setModel(spillerModel);
-    spillereTableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    spillereTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    //spillereTableView->setColumnHidden(Spiller_LagID, true);
-    spillereTableView->setColumnHidden(Spiller_Id, true);
-    spillereTableView->resizeColumnsToContents();
-    spillereTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    spillereTableView->setSortingEnabled(true);
-    QHeaderView *header = spillereTableView->horizontalHeader();
+    playerTableView = new QTableView;
+    playerTableView->setModel(playerModel);
+    playerTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    playerTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //playerTableView->setColumnHidden(Spiller_LagID, true);
+    playerTableView->setColumnHidden(Spiller_Id, true);
+    playerTableView->resizeColumnsToContents();
+    playerTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    playerTableView->setSortingEnabled(true);
+    QHeaderView *header = playerTableView->horizontalHeader();
     header->setStretchLastSection(true);
 
-    spillereTableView->setShowGrid(false);
-    spillereTableView->verticalHeader()->hide();
-    spillereTableView->setAlternatingRowColors(true);
+    playerTableView->setShowGrid(false);
+    playerTableView->verticalHeader()->hide();
+    playerTableView->setAlternatingRowColors(true);
     //albumView->setModel(model);
     //adjustHeader();
 
-    QLocale locale = spillereTableView->locale();
+    QLocale locale = playerTableView->locale();
     locale.setNumberOptions(QLocale::OmitGroupSeparator);
-    spillereTableView->setLocale(locale);
+    playerTableView->setLocale(locale);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(spillereTableView, 0, 0);
+    layout->addWidget(playerTableView, 0, 0);
     box->setLayout(layout);
 
     return box;
 }
 
-QGroupBox* Tippeligaen::createRundensLagGroupBox()
-{
+QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Rundens lag"));
 
-    baneLabel = new QLabel;
-    baneLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
+    fieldLabel = new QLabel;
+    fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(baneLabel, 0,0);
+    layout->addWidget(fieldLabel, 0,0);
     box->setLayout(layout);
 
     return box;
 }
 
-QGroupBox* Tippeligaen::createLagInfoGroupBox(){
+QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillerinfo"));
 
     drakt = new QLabel;
@@ -197,34 +189,19 @@ QGroupBox* Tippeligaen::createLagInfoGroupBox(){
     return box;
 }
 
-/*void Tippeligaen::oppdaterSpillerView(){
-    //QModelIndex index = lagModel->relationModel(0)->index(row, 5);
-    QModelIndex i = tippeligaLagComboBox->currentIndex();
-    if(i.isValid()){
-        QSqlRecord record = lagModel->record(i.row());
-        int id = record.value("id").toInt();
-        spillerModel->setFilter(QString("lagID = %1").arg(id));
-    }
-    else{
-        spillerModel->setFilter("lagID = -1");
-    }
-    spillerModel->select();
-    spillereTableView->horizontalHeader()->setVisible(spillerModel->rowCount()>0);
-}*/
-
-void Tippeligaen::oppdaterSpillerView2(int row){
-    QModelIndex index = lagModel->relationModel(0)->index(row, 0);
+void Tippeligaen::updatePlayerTableView(int row){
+    QModelIndex index = teamModel->relationModel(0)->index(row, 0);
     //QModelIndex i = tippeligaLagComboBox->currentIndex();
     if(index.isValid()){
-         spillerModel->setFilter(QString("lagID = %1").arg(row));
+         playerModel->setFilter(QString("lagID = %1").arg(row));
 
-        /*QSqlRecord record = lagModel->record(row);
+        /*QSqlRecord record = teamModel->record(row);
         int id = record.value("id").toInt();
-        spillerModel->setFilter(QString("lagID = %1").arg(id));*/
+        playerModel->setFilter(QString("lagID = %1").arg(id));*/
     }
     else{
-        spillerModel->setFilter("lagID = -1");
+        playerModel->setFilter("lagID = -1");
     }
-    spillerModel->select();
-    spillereTableView->horizontalHeader()->setVisible(spillerModel->rowCount()>0);
+    playerModel->select();
+    playerTableView->horizontalHeader()->setVisible(playerModel->rowCount()>0);
 }

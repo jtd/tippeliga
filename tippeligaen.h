@@ -22,18 +22,18 @@ class Tippeligaen : public QMainWindow {
 public:
     Tippeligaen(QWidget *parent = 0);
     ~Tippeligaen();
-    QComboBox *tippeligaLagComboBox;
-    QGroupBox *createTippeligaLagVelgerGroupBox();
-    QTableView *spillereTableView;
-    QGroupBox *createSpillerePaLagGroupBox();
-    QGroupBox *createRundensLagGroupBox();
-    QLabel *baneLabel;
-    QGroupBox *createLagInfoGroupBox();
+    QComboBox *teamComboBox;
+    QGroupBox *createTeamChooserGroupBox();
+    QTableView *playerTableView;
+    QGroupBox *createTeamPlayersGroupBox();
+    QGroupBox *createTeamOfTheRoundGroupBox();
+    QLabel *fieldLabel;
+    QGroupBox *createTeamInfoGroupBox();
     QLabel *drakt;
     QLabel *valerengaInfo;
     QSqlRelationalTableModel *model;
-    QSqlRelationalTableModel *lagModel;
-    QSqlRelationalTableModel *spillerModel;
+    QSqlRelationalTableModel *teamModel;
+    QSqlRelationalTableModel *playerModel;
 
 
 
@@ -45,8 +45,7 @@ private:
 
 private slots:
     void on_actionAvslutt_triggered();
-    //void oppdaterSpillerView();
-    void oppdaterSpillerView2(int row);
+    void updatePlayerTableView(int row);
 };
 
 #endif // TIPPELIGAEN_H
