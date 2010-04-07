@@ -3,7 +3,8 @@
 # -------------------------------------------------
 QT += network \
     sql \
-    xml
+    xml \
+    webkit
 TARGET = tippeliga
 TEMPLATE = app
 SOURCES += main.cpp \

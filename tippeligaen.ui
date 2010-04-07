@@ -29,12 +29,40 @@
     </property>
     <addaction name="actionAvslutt"/>
    </widget>
+   <widget class="QMenu" name="menuVis">
+    <property name="title">
+     <string>Vis</string>
+    </property>
+    <addaction name="actionUkens_lag"/>
+    <addaction name="actionLaginfo"/>
+    <addaction name="separator"/>
+   </widget>
    <addaction name="menuO"/>
+   <addaction name="menuVis"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAvslutt">
    <property name="text">
     <string>Avslutt</string>
+   </property>
+  </action>
+  <action name="actionUkens_lag">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ukens lag</string>
+   </property>
+  </action>
+  <action name="actionLaginfo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Laginfo</string>
    </property>
   </action>
  </widget>
