@@ -120,9 +120,6 @@ QGroupBox* Tippeligaen::createTeamPlayersGroupBox(){
     QHeaderView *header = playerTableView->horizontalHeader();
     header->setStretchLastSection(true);
 
-    connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-            this, SLOT(playerInformation()));
-
     playerTableView->setShowGrid(false);
     playerTableView->verticalHeader()->hide();
     playerTableView->setAlternatingRowColors(true);
@@ -210,16 +207,6 @@ QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     box->setLayout(layout);
 
     return box;
-}
-
-void Tippeligaen::playerInformation(){
-    QModelIndex index = playerTableView->currentIndex();
-    QSqlRecord record = playerModel->record(index.row());
-
-    QString playerFirstName = record.value("fornavn").toString();
-    QString playerLastName = record.value("etternavn").toString();
-    playerName->setText(tr("Title: %1 (%2)").arg(playerFirstName).arg(playerLastName));
-    playerName->show();
 }
 
 void Tippeligaen::updatePlayerTableView(int row){
