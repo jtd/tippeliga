@@ -49,7 +49,7 @@ static bool createConnection(){
                                      "posisjon VARCHAR(40),"
                                      "lagID INT,"
                                      "FOREIGN KEY (lagID) REFERENCES lag(id))");
-
+    query.exec("INSERT INTO spiller VALUES(null, 'Leif', 'Juster', '1', 'Keeper', 0)");
     query.exec("INSERT INTO spiller VALUES(null, 'Jon Torstein', 'Dalen', '3', 'Høyre back', 7)");
     query.exec("INSERT INTO spiller VALUES(null, 'Eirik', 'Luka', '7', 'Spiss', 15)");
     query.exec("INSERT INTO spiller VALUES(null, 'Anders', 'Evenstuen', '7', 'Spiss', 8)");

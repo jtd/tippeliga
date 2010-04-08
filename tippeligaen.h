@@ -31,10 +31,13 @@ public:
     QSqlRelationalTableModel *model;
     QSqlRelationalTableModel *teamModel;
     QSqlRelationalTableModel *playerModel;
-    QLabel *playerName;
     QWebView *wiki;
     QGroupBox *teamOfTheRound;
     QGroupBox *teamWiki;
+    QLabel *playerNameLabel, *playerTeamLabel, *playerPositionLabel;
+    QLabel *playerName;
+    QLabel *playerTeam;
+    QLabel *playerPosition;
 
 protected:
     void changeEvent(QEvent *e);
@@ -47,6 +50,7 @@ private slots:
     void on_actionUkens_lag_triggered();
     void on_actionAvslutt_triggered();
     void updatePlayerTableView(int row);
+    void updatePlayerInformation();
 };
 
 #endif // TIPPELIGAEN_H

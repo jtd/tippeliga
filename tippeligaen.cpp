@@ -38,6 +38,7 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     setWindowTitle(tr("Tippeligaen 2010"));
 
     updatePlayerTableView(0);
+    connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(updatePlayerInformation()));
 }
 
 Tippeligaen::~Tippeligaen(){
@@ -139,12 +140,12 @@ QGroupBox* Tippeligaen::createTeamPlayersGroupBox(){
 
 QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Rundens lag"));
- 
+
     fieldLabel = new QLabel;
     fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
     fieldLabel->setAlignment(Qt::AlignTop);
     fieldLabel->show();
-    
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(fieldLabel, 0,0);
     box->setLayout(layout);
@@ -168,39 +169,43 @@ QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
 QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillerinfo"));
 
-
-
     drakt = new QLabel;
     drakt->setAlignment(Qt::AlignRight);
     drakt->setPixmap(QPixmap(":/bilder/valerenga.png"));
 
-    QLabel *testlabel1 = new QLabel;
-    testlabel1->setText("Spillernavn:");
-    QLabel *testlabel2 = new QLabel;
-    testlabel2->setText("Lag:");
-    QLabel *testlabel3 = new QLabel;
-    testlabel3->setText("Posisjon:");
-    QLabel *testlabel4 = new QLabel;
-    testlabel4->setText("Antall ganger på rundens lag:");
 
-    QLabel *spillerLabel1 = new QLabel;
+    playerNameLabel = new QLabel;
+    playerNameLabel->setText(tr("Spillernavn: "));
+    playerPositionLabel = new QLabel;
+    playerPositionLabel->setText(tr("Posisjon: "));
+    playerTeamLabel = new QLabel;
+    playerTeamLabel->setText(tr("Lag: "));
+
+
+    playerName = new QLabel;
+    playerTeam = new QLabel;
+    playerPosition = new QLabel;
+
+    /*QLabel *spillerLabel1 = new QLabel;
     spillerLabel1->setText("Jon Torstein Dalen");
     QLabel *spillerLabel2 = new QLabel;
     spillerLabel2->setText("Vålerenga");
     QLabel *spillerLabel3 = new QLabel;
     spillerLabel3->setText("Midtstopper");
-   /* QLabel *spillerLabel4 = new QLabel;
-    spillerLabel4->setText("4");*/
+    QLabel *spillerLabel4 = new QLabel;
+    spillerLabel4->setText("4");
+    playerInformationLabel = new QLabel;
+    playerInformationLabel->setText("Hei på deg du!");*/
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(testlabel1, 0, 0);
-    layout->addWidget(spillerLabel1, 0, 1);
-    layout->addWidget(testlabel2, 1, 0);
-    layout->addWidget(spillerLabel2, 1, 1);
-    layout->addWidget(testlabel3, 2, 0);
-    layout->addWidget(spillerLabel3, 2, 1);
-    layout->addWidget(testlabel4, 3, 0);
-    layout->addWidget(playerName, 3, 1);
+    layout->addWidget(playerNameLabel, 0, 0);
+    layout->addWidget(playerName, 0, 1);
+    layout->addWidget(playerPositionLabel, 1, 0);
+    layout->addWidget(playerPosition, 1, 1);
+    layout->addWidget(playerTeamLabel, 2, 0);
+    layout->addWidget(playerTeam, 2, 1);
+    /*layout->addWidget(testlabel4, 3, 0);
+    layout->addWidget(playerInformationLabel, 3, 1);*/
 
     //layout->addWidget(drakt, 0, 3, 3, 2);
     layout->addWidget(drakt, 0, 2, 4, 1);
@@ -238,5 +243,19 @@ void Tippeligaen::on_actionLaginfo_triggered()
     teamWiki->show();
     teamOfTheRound->hide();
     ui->actionUkens_lag->setChecked(false);
+}
+void Tippeligaen::updatePlayerInformation(){
+    QModelIndex index = playerTableView->currentIndex();
+    QSqlRecord record = playerModel->record(index.row());
 
+    QString playerFirstNameString = record.value("fornavn").toString();
+    QString playerLastNameString = record.value("etternavn").toString();
+    QString playerPositionString = record.value("posisjon").toString();
+    QString teamString = record.value("lagID").toString();
+
+    playerName->setText(tr("%1 %2").arg(playerFirstNameString).arg(playerLastNameString));
+    playerTeam->setText(tr("%1").arg(teamString));
+    playerPosition->setText(tr("%1").arg(playerPositionString));
+    //playerName->show();
+    //playerInformationLabel->setText("Javell, morn!");
 }
