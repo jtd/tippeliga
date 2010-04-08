@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>bilder/fullbaneTest.png</file>
-        <file>bilder/valerenga.png</file>
+        <file>bilder/Aalesund.png</file>
+        <file>bilder/Vålerenga.png</file>
     </qresource>
 </RCC>

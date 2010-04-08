@@ -251,11 +251,14 @@ void Tippeligaen::updatePlayerInformation(){
     QString playerFirstNameString = record.value("fornavn").toString();
     QString playerLastNameString = record.value("etternavn").toString();
     QString playerPositionString = record.value("posisjon").toString();
-    QString teamString = record.value("lagID").toString();
+    QString teamString = record.value("lagnavn").toString();
 
     playerName->setText(tr("%1 %2").arg(playerFirstNameString).arg(playerLastNameString));
     playerTeam->setText(tr("%1").arg(teamString));
     playerPosition->setText(tr("%1").arg(playerPositionString));
+
+    QString picUrl = ":/bilder/" +teamString +".png";
+    drakt->setPixmap(QPixmap(picUrl));
     //playerName->show();
     //playerInformationLabel->setText("Javell, morn!");
 }
