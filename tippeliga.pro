@@ -10,10 +10,14 @@ TEMPLATE = app
 SOURCES += main.cpp \
     tippeligaen.cpp \
     player.cpp \
-    team.cpp
+    team.cpp \
+    shirt.cpp \
+    field.cpp
 HEADERS += tippeligaen.h \
     database.h \
     player.h \
-    team.h
+    team.h \
+    shirt.h \
+    field.h
 FORMS += tippeligaen.ui
 RESOURCES += bilder.qrc
