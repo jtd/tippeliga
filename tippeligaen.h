@@ -18,6 +18,9 @@ class Tippeligaen : public QMainWindow {
 public:
     Tippeligaen(QWidget *parent = 0);
     ~Tippeligaen();
+    void setUrl(QString url);
+    QString url();
+
     QComboBox *teamComboBox;
     QGroupBox *createTeamChooserGroupBox();
     QTableView *playerTableView;
@@ -40,11 +43,14 @@ public:
     QLabel *playerPosition;
     QString selectedTeamUrl;
 
+    QString *test;
+
 protected:
     void changeEvent(QEvent *e);
 
 private:
     Ui::Tippeligaen *ui;
+    QString _url;
 
 private slots:
     void on_actionLaginfo_triggered();

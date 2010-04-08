@@ -45,6 +45,16 @@ Tippeligaen::~Tippeligaen(){
     delete ui;
 }
 
+void Tippeligaen::setUrl(QString url)
+{
+    _url = url;
+}
+
+QString Tippeligaen::url()
+{
+    return _url;
+}
+
 void Tippeligaen::changeEvent(QEvent *e){
     QMainWindow::changeEvent(e);
     switch (e->type()) {
@@ -59,6 +69,7 @@ void Tippeligaen::changeEvent(QEvent *e){
 void Tippeligaen::on_actionAvslutt_triggered(){
     exit(0);
 }
+
 QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
 
     teamComboBox = new QComboBox;
@@ -163,8 +174,8 @@ QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
         url = lag.value(1).toString();
     }
     */
-    playerName->setText(selectedTeamUrl);
-    selectedTeamUrl = "http://www.vg.no";
+    
+    playerName->setText(url());
     QString url = selectedTeamUrl;
     wiki->load(QUrl(url));
     wiki->show();
@@ -233,11 +244,10 @@ void Tippeligaen::updatePlayerTableView(int row){
          playerModel->setFilter(QString("lagID = %1").arg(row));
 
          QString teamUrl = record.value("nettside").toString();
-
          //selectedTeamId = new QString;
-
+         setUrl(teamUrl);
          selectedTeamUrl = teamUrl;
-         //playerName->setText(teamUrl);
+         //playerName->setText(selectedTeamUrl);
 
 
         /*QSqlRecord record = teamModel->record(row);
@@ -264,6 +274,7 @@ void Tippeligaen::on_actionLaginfo_triggered()
     teamOfTheRound->hide();
     ui->actionUkens_lag->setChecked(false);
 }
+
 void Tippeligaen::updatePlayerInformation(){
     QModelIndex index = playerTableView->currentIndex();
     QSqlRecord record = playerModel->record(index.row());
