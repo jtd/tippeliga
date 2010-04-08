@@ -27,7 +27,7 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     layout->addWidget(teamWiki, 0, 1, 3, 1);
     layout->setColumnStretch(1, 1);
     layout->setColumnMinimumWidth(0, 500);
-    layout->setColumnMinimumWidth(1, 700);
+    layout->setColumnMinimumWidth(1, 500);
 
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
@@ -37,7 +37,6 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     //showImageLabel();
     //resize(850, 400);
     setWindowTitle(tr("Tippeligaen 2010"));
-
     updatePlayerTableView(0);
     connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(updatePlayerInformation()));
 }
@@ -153,16 +152,20 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
 
     return box;
 }
+
 QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Wiki"));
 
     wiki = new QWebView();
-    QSqlQuery lag ("select nettside from lag where id = " + selectedTeamId );
+   /* QSqlQuery lag ("select nettside from lag where id = " + selectedTeamUrl );
     QString url;
     while(lag.next()) {
         url = lag.value(1).toString();
     }
-    playerName->setText(selectedTeamId);
+    */
+    playerName->setText(selectedTeamUrl);
+    selectedTeamUrl = "http://www.vg.no";
+    QString url = selectedTeamUrl;
     wiki->load(QUrl(url));
     wiki->show();
 
@@ -224,10 +227,18 @@ QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
 
 void Tippeligaen::updatePlayerTableView(int row){
     QModelIndex index = teamModel->relationModel(0)->index(row, 0);
+    QSqlRecord record = teamModel->record(row);
     //QModelIndex i = tippeligaLagComboBox->currentIndex();
     if(index.isValid()){
          playerModel->setFilter(QString("lagID = %1").arg(row));
-         selectedTeamId = QString::number(row);
+
+         QString teamUrl = record.value("nettside").toString();
+
+         //selectedTeamId = new QString;
+
+         selectedTeamUrl = teamUrl;
+         //playerName->setText(teamUrl);
+
 
         /*QSqlRecord record = teamModel->record(row);
         int id = record.value("id").toInt();
