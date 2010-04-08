@@ -259,6 +259,4 @@ void Tippeligaen::updatePlayerInformation(){
 
     QString picUrl = ":/bilder/" +teamString +".png";
     drakt->setPixmap(QPixmap(picUrl));
-    //playerName->show();
-    //playerInformationLabel->setText("Javell, morn!");
 }
