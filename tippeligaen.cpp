@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QtSql>
 
+
 Tippeligaen::Tippeligaen(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tippeligaen)
@@ -156,7 +157,13 @@ QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Wiki"));
 
     wiki = new QWebView();
-    wiki->load(QUrl("http://no.wikipedia.org/wiki/Vålerenga_fotball"));
+    QSqlQuery lag ("select nettside from lag where id = " + selectedTeamId );
+    QString url;
+    while(lag.next()) {
+        url = lag.value(1).toString();
+    }
+    playerName->setText(selectedTeamId);
+    wiki->load(QUrl(url));
     wiki->show();
 
     QGridLayout *layout = new QGridLayout;
@@ -211,6 +218,7 @@ QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(drakt, 0, 2, 4, 1);
     box->setLayout(layout);
 
+    box->setMinimumHeight(170);
     return box;
 }
 
@@ -219,6 +227,7 @@ void Tippeligaen::updatePlayerTableView(int row){
     //QModelIndex i = tippeligaLagComboBox->currentIndex();
     if(index.isValid()){
          playerModel->setFilter(QString("lagID = %1").arg(row));
+         selectedTeamId = QString::number(row);
 
         /*QSqlRecord record = teamModel->record(row);
         int id = record.value("id").toInt();

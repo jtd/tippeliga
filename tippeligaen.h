@@ -38,6 +38,7 @@ public:
     QLabel *playerName;
     QLabel *playerTeam;
     QLabel *playerPosition;
+    QString selectedTeamId;
 
 protected:
     void changeEvent(QEvent *e);
