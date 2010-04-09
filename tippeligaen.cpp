@@ -16,8 +16,10 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     QGroupBox *players = createTeamPlayersGroupBox();
     QGroupBox *teamInfo = createTeamInfoGroupBox();
     teamOfTheRound = createTeamOfTheRoundGroupBox();
-    teamWiki = createTeamWikiGroupBox();
+    createTeamWikiView();
     teamWiki->hide();
+    //teamWiki = createTeamWikiGroupBox();
+    //teamWiki->hide();
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(team, 0, 0);
@@ -38,7 +40,10 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     //resize(850, 400);
     setWindowTitle(tr("Tippeligaen 2010"));
     updatePlayerTableView(0);
-    connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(updatePlayerInformation()));
+    connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this, SLOT(updatePlayerInformation()));
+    connect(teamComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(updateTeamWiki(int)));
 }
 
 Tippeligaen::~Tippeligaen(){
@@ -71,7 +76,6 @@ void Tippeligaen::on_actionAvslutt_triggered(){
 }
 
 QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
-
     teamComboBox = new QComboBox;
     teamModel = new QSqlRelationalTableModel(this);
     teamModel->setTable("lag");
@@ -84,13 +88,7 @@ QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
     connect(teamComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(updatePlayerTableView(int)));
 
-    /*QSqlQuery lag ("select * from lag order by lagnavn asc" );
-    while (lag.next()) {
-        tippeligaLagComboBox->addItem(lag.value(1).toString());
-    }*/
-
     QGroupBox *box = new QGroupBox(tr("Tippeligalag"));
-
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(teamComboBox, 0, 0);
     box->setLayout(layout);
@@ -100,15 +98,6 @@ QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
 
 QGroupBox* Tippeligaen::createTeamPlayersGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Spillere"));
-
-    /*model = new QSqlRelationalTableModel(this);
-    model->setTable("spiller");
-    model->setSort(Spiller_Etternavn, Qt::AscendingOrder);
-    model->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
-    model->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
-    model->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
-    model->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
-    model->select();*/
 
     playerModel = new QSqlRelationalTableModel(this);
     playerModel->setTable("spiller");
@@ -166,25 +155,27 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
 
 QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Wiki"));
-
+    //Teste litt her updateTeamWiki
     wiki = new QWebView();
-   /* QSqlQuery lag ("select nettside from lag where id = " + selectedTeamUrl );
-    QString url;
-    while(lag.next()) {
-        url = lag.value(1).toString();
-    }
-    */
-    
-    playerName->setText(url());
-    QString url = selectedTeamUrl;
-    wiki->load(QUrl(url));
+    //playerName->setText(url());
+    //QString url = selectedTeamUrl;
+    wiki->load(QUrl("http://www.vg.no"));
     wiki->show();
-
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(wiki, 0,0);
     box->setLayout(layout);
-
     return box;
+}
+
+void Tippeligaen::createTeamWikiView(){
+    teamWiki = new QGroupBox(tr("Wikipedia informasjon"));
+    wikiLayout = new QGridLayout;
+    teamWiki->setLayout(wikiLayout);
+
+}
+
+void Tippeligaen::createMakeNewPlayerView(){
+
 }
 
 QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
@@ -194,7 +185,6 @@ QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     drakt->setAlignment(Qt::AlignRight);
     drakt->setPixmap(QPixmap(":/bilder/valerenga.png"));
 
-
     playerNameLabel = new QLabel;
     playerNameLabel->setText(tr("Spillernavn: "));
     playerPositionLabel = new QLabel;
@@ -202,21 +192,9 @@ QGroupBox* Tippeligaen::createTeamInfoGroupBox(){
     playerTeamLabel = new QLabel;
     playerTeamLabel->setText(tr("Lag: "));
 
-
     playerName = new QLabel;
     playerTeam = new QLabel;
     playerPosition = new QLabel;
-
-    /*QLabel *spillerLabel1 = new QLabel;
-    spillerLabel1->setText("Jon Torstein Dalen");
-    QLabel *spillerLabel2 = new QLabel;
-    spillerLabel2->setText("Vålerenga");
-    QLabel *spillerLabel3 = new QLabel;
-    spillerLabel3->setText("Midtstopper");
-    QLabel *spillerLabel4 = new QLabel;
-    spillerLabel4->setText("4");
-    playerInformationLabel = new QLabel;
-    playerInformationLabel->setText("Hei på deg du!");*/
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(playerNameLabel, 0, 0);
@@ -261,9 +239,28 @@ void Tippeligaen::updatePlayerTableView(int row){
     playerTableView->horizontalHeader()->setVisible(playerModel->rowCount()>0);
 }
 
+void Tippeligaen::updateTeamWiki(int row){
+    QModelIndex index = teamModel->relationModel(0)->index(row, 0);
+    QSqlRecord record = teamModel->record(row);
+    if(index.isValid()){
+         QString teamUrl = record.value("nettside").toString();
+         playerName->setText(teamUrl);
+         wiki = new QWebView();
+         wiki->load(QUrl(teamUrl));
+         //wiki->show();
+         wikiLayout->addWidget(wiki, 0,0);
+         teamWiki->setLayout(wikiLayout);
+    }
+    else{
+        playerModel->setFilter("lagID = -1");
+    }
+}
+
+
+
 void Tippeligaen::on_actionUkens_lag_triggered()
 {
-    teamOfTheRound->show();;
+    teamOfTheRound->show();
     teamWiki->hide();
     ui->actionLaginfo->setChecked(false);
 }

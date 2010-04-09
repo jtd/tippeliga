@@ -19,6 +19,8 @@ public:
     Tippeligaen(QWidget *parent = 0);
     ~Tippeligaen();
     void setUrl(QString url);
+    void createTeamWikiView();
+    void createMakeNewPlayerView();
     QString url();
 
     QComboBox *teamComboBox;
@@ -37,6 +39,7 @@ public:
     QWebView *wiki;
     QGroupBox *teamOfTheRound;
     QGroupBox *teamWiki;
+    QGridLayout *wikiLayout;
     QLabel *playerNameLabel, *playerTeamLabel, *playerPositionLabel;
     QLabel *playerName;
     QLabel *playerTeam;
@@ -57,6 +60,7 @@ private slots:
     void on_actionUkens_lag_triggered();
     void on_actionAvslutt_triggered();
     void updatePlayerTableView(int row);
+    void updateTeamWiki(int row);
     void updatePlayerInformation();
 };
 
