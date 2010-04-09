@@ -18,8 +18,10 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     teamOfTheRound = createTeamOfTheRoundGroupBox();
     createTeamWikiView();
     teamWiki->hide();
+    makeWindowMenues();
     //teamWiki = createTeamWikiGroupBox();
     //teamWiki->hide();
+
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(team, 0, 0);
@@ -288,3 +290,18 @@ void Tippeligaen::updatePlayerInformation(){
     QString picUrl = ":/bilder/" +teamString +".png";
     drakt->setPixmap(QPixmap(picUrl));
 }
+
+void Tippeligaen::makeWindowMenues(){
+    //Lager hovedmeny Window og setter action for dette.
+    createPlayerMenu = new QMenu(this);
+    createPlayerMenu->setTitle(tr("Rediger"));
+
+    createPlayerAction = new QAction(tr("Opprett ny spiller"), createPlayerMenu);
+    createPlayerMenu->addAction(createPlayerAction);
+    ui->menuBar->addMenu(createPlayerMenu);
+
+    /*connect(cascadeAction, SIGNAL(triggered()), this, SLOT(cascadeSubWindows()));
+    tileAction = new QAction(tr("Tile"), fileMenu);
+    connect(tileAction, SIGNAL(triggered()), this, SLOT(tileSubWindows()));*/
+}
+

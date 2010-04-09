@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tippeligaen.ui'
 **
-** Created: Fri 9. Apr 11:01:20 2010
+** Created: Fri 9. Apr 11:55:56 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -54,7 +54,7 @@ public:
         Tippeligaen->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Tippeligaen);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 21));
+        menuBar->setGeometry(QRect(0, 0, 600, 18));
         menuO = new QMenu(menuBar);
         menuO->setObjectName(QString::fromUtf8("menuO"));
         menuVis = new QMenu(menuBar);

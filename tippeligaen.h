@@ -21,6 +21,7 @@ public:
     void setUrl(QString url);
     void createTeamWikiView();
     void createMakeNewPlayerView();
+    void makeWindowMenues();
     QString url();
 
     QComboBox *teamComboBox;
@@ -45,6 +46,8 @@ public:
     QLabel *playerTeam;
     QLabel *playerPosition;
     QString selectedTeamUrl;
+    QMenu *createPlayerMenu;
+    QAction *createPlayerAction;
 
     QString *test;
 
