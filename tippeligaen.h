@@ -20,18 +20,24 @@ public:
     ~Tippeligaen();
     void setUrl(QString url);
     void createTeamWikiView();
-    void createMakeNewPlayerView();
+
     void makeWindowMenues();
+    void createTeamInfoGroupBox();
+    void createMakeNewPlayerGroupBox();
+    void createMakeNewPlayerView();
+    void createTeamPlayersGroupBox();
     QString url();
 
     QComboBox *teamComboBox;
     QGroupBox *createTeamChooserGroupBox();
     QTableView *playerTableView;
-    QGroupBox *createTeamPlayersGroupBox();
+    QGroupBox *players;
+    //QGroupBox *createTeamPlayersGroupBox();
     QGroupBox *createTeamOfTheRoundGroupBox();
     QGroupBox *createTeamWikiGroupBox();
     QLabel *fieldLabel;
-    QGroupBox *createTeamInfoGroupBox();
+    QGroupBox *teamInfo;
+    //QGroupBox *createTeamInfoGroupBox();
     QLabel *drakt;
     QLabel *valerengaInfo;
     QSqlRelationalTableModel *model;
@@ -41,6 +47,7 @@ public:
     QGroupBox *teamOfTheRound;
     QGroupBox *teamWiki;
     QGridLayout *wikiLayout;
+    QGroupBox *makePlayerGroupBox;
     QLabel *playerNameLabel, *playerTeamLabel, *playerPositionLabel;
     QLabel *playerName;
     QLabel *playerTeam;
@@ -48,6 +55,15 @@ public:
     QString selectedTeamUrl;
     QMenu *createPlayerMenu;
     QAction *createPlayerAction;
+    QLineEdit *playerFirstNameEdit;
+    QLineEdit *playerLastNameEdit;
+    QLabel *shirtNumberLabel;
+    QComboBox *playerPositionEdit;
+    QLineEdit *shirtNumberEdit;
+    QLabel *playerFirstNameLabel;
+    QLabel *playerLastNameLabel;
+    QPushButton *createNewPlayer;
+    QGridLayout *mainLayout;
 
     QString *test;
 
@@ -62,9 +78,12 @@ private slots:
     void on_actionLaginfo_triggered();
     void on_actionUkens_lag_triggered();
     void on_actionAvslutt_triggered();
+    void actionCreatePlayerTriggered();
     void updatePlayerTableView(int row);
     void updateTeamWiki(int row);
     void updatePlayerInformation();
+    void actionAddNewPlayerToDataBase();
+
 };
 
 #endif // TIPPELIGAEN_H
