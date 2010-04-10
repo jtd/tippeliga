@@ -7,7 +7,6 @@
 #include <QSqlQuery>
 #include <QtSql>
 
-
 Tippeligaen::Tippeligaen(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tippeligaen)
@@ -236,7 +235,6 @@ void Tippeligaen::createMakeNewPlayerView(){
     makePlayerGroupBox->setMinimumHeight(170);
 }
 
-/*QGroupBox*/
 void Tippeligaen::createTeamInfoGroupBox(){
     teamInfo = new QGroupBox(tr("Spillerinfo"));
 
@@ -244,7 +242,6 @@ void Tippeligaen::createTeamInfoGroupBox(){
     shirt = new Shirt();
     shirtLabel = new QLabel(shirt);
     shirtLabel->setAlignment(Qt::AlignRight);
-    shirtLabel->setPixmap(QPixmap(":/bilder/Vålerenga.png"));
 
     shirt->addLabel(shirtLabel);
     playerNameLabel = new QLabel;
@@ -265,10 +262,6 @@ void Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(playerPosition, 1, 1);
     layout->addWidget(playerTeamLabel, 2, 0);
     layout->addWidget(playerTeam, 2, 1);
-    /*layout->addWidget(testlabel4, 3, 0);
-    layout->addWidget(playerInformationLabel, 3, 1);*/
-
-    //layout->addWidget(shirtLabel, 0, 3, 3, 2);
     layout->addWidget(shirt, 0, 2, 4, 1);
     teamInfo->setLayout(layout);
 
