@@ -41,19 +41,19 @@ static bool createConnection(){
     query.exec("INSERT INTO lag VALUES(14, 'Viking', 'http://no.wikipedia.org/wiki/Viking_Fotballklubb')");
     query.exec("INSERT INTO lag VALUES(15, 'Vålerenga', 'http://no.wikipedia.org/wiki/Vålerenga_fotball')");
 
-    query.exec("CREATE TABLE spiller (id INT PRIMARY KEY,"
+    query.exec("CREATE TABLE spiller (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                                      "fornavn VARCHAR(40),"
                                      "etternavn VARCHAR(40),"
                                      "draktnummer VARCHAR(5),"
                                      "posisjon VARCHAR(40),"
                                      "lagID INT,"
                                      "FOREIGN KEY (lagID) REFERENCES lag(id))");
-    query.exec("INSERT INTO spiller VALUES(null, 'Leif', 'Juster', '1', 'Keeper', 0)");
-    query.exec("INSERT INTO spiller VALUES(null, 'Jon Torstein', 'Dalen', '3', 'Høyre back', 7)");
-    query.exec("INSERT INTO spiller VALUES(null, 'Eirik', 'Luka', '7', 'Spiss', 15)");
-    query.exec("INSERT INTO spiller VALUES(null, 'Anders', 'Evenstuen', '7', 'Spiss', 8)");
-    query.exec("INSERT INTO spiller VALUES(null, 'Henrik', 'Wingerei', '4', 'Midtbane', 10)");
-    query.exec("INSERT INTO spiller VALUES(null, 'Øyvind', 'Midtbø', '1', 'Keeper', 4)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID) VALUES ('Leif', 'Juster', '1', 'Keeper', 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID) VALUES('Jon Torstein', 'Dalen', '3', 'Høyre back', 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID) VALUES('Eirik', 'Luka', '7', 'Spiss', 15)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID) VALUES('Anders', 'Evenstuen', '7', 'Spiss', 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID) VALUES('Henrik', 'Wingerei', '4', 'Midtbane', 10)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID) VALUES('Øyvind', 'Midtbø', '1', 'Keeper', 4)");
 
     return true;
 }

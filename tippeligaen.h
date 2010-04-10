@@ -7,6 +7,7 @@
 #include "team.h"
 #include "player.h"
 #include "shirt.h"
+#include "field.h"
 
 #include <QWebView>
 
@@ -27,6 +28,7 @@ public:
     void createMakeNewPlayerGroupBox();
     void createMakeNewPlayerView();
     void createTeamPlayersGroupBox();
+
     QString url();
 
     QComboBox *teamComboBox;
@@ -65,9 +67,11 @@ public:
     QLabel *playerLastNameLabel;
     QPushButton *createNewPlayer;
     QGridLayout *mainLayout;
+    QPushButton *deletePlayerButton;
 
     QString *test;
     Shirt *shirt;
+    Field *field;
 
 
 protected:
@@ -86,6 +90,7 @@ private slots:
     void updateTeamWiki(int row);
     void updatePlayerInformation();
     void actionAddNewPlayerToDataBase();
+    void deletePlayer();
 
 };
 

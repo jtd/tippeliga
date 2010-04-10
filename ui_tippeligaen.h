@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tippeligaen.ui'
 **
-** Created: Sat 10. Apr 12:28:43 2010
+** Created: Sat 10. Apr 16:09:36 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

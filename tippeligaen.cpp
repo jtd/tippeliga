@@ -58,7 +58,8 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
             this, SLOT(actionCreatePlayerTriggered()));
     connect(createNewPlayer, SIGNAL(clicked()),
             this, SLOT(actionAddNewPlayerToDataBase()));
-
+    connect(deletePlayerButton, SIGNAL(clicked()),
+            this, SLOT(deletePlayer()));
 }
 
 Tippeligaen::~Tippeligaen(){
@@ -120,6 +121,7 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerModel->setTable("spiller");
     playerModel->setRelation(Spiller_LagID, QSqlRelation("lag", "id", "lagnavn"));
     playerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
+    playerModel->setHeaderData(Spiller_Id, Qt::Horizontal, tr("id"));
     playerModel->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
     playerModel->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
     playerModel->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
@@ -131,7 +133,7 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerTableView->setSelectionMode(QAbstractItemView::SingleSelection);
     playerTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     //playerTableView->setColumnHidden(Spiller_LagID, true);
-    playerTableView->setColumnHidden(Spiller_Id, true);
+    //playerTableView->setColumnHidden(Spiller_Id, true);
     playerTableView->resizeColumnsToContents();
     playerTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     playerTableView->setSortingEnabled(true);
@@ -158,14 +160,19 @@ void Tippeligaen::createTeamPlayersGroupBox(){
 QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Rundens lag"));
 
-    fieldLabel = new QLabel;
+    field = new Field();
+
+    fieldLabel = new QLabel(field);
     fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
     fieldLabel->setAlignment(Qt::AlignTop);
-    fieldLabel->show();
+    //fieldLabel->show();
+    field->addLabel(fieldLabel);
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(fieldLabel, 0,0);
+    layout->addWidget(field);//, 0,0);
     box->setLayout(layout);
+    box->setAcceptDrops(true);
+    this->setAcceptDrops(true);
 
     return box;
 }
@@ -242,6 +249,7 @@ void Tippeligaen::createTeamInfoGroupBox(){
     shirt = new Shirt();
     shirtLabel = new QLabel(shirt);
     shirtLabel->setAlignment(Qt::AlignRight);
+    shirtLabel->setPixmap(QPixmap(":/bilder/Aalesund.png"));
 
     shirt->addLabel(shirtLabel);
     playerNameLabel = new QLabel;
@@ -250,6 +258,9 @@ void Tippeligaen::createTeamInfoGroupBox(){
     playerPositionLabel->setText(tr("Posisjon: "));
     playerTeamLabel = new QLabel;
     playerTeamLabel->setText(tr("Lag: "));
+
+    deletePlayerButton = new QPushButton;
+    deletePlayerButton->setText(tr("Slett"));
 
     playerName = new QLabel;
     playerTeam = new QLabel;
@@ -262,6 +273,7 @@ void Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(playerPosition, 1, 1);
     layout->addWidget(playerTeamLabel, 2, 0);
     layout->addWidget(playerTeam, 2, 1);
+    layout->addWidget(deletePlayerButton, 3, 0);
     layout->addWidget(shirt, 0, 2, 4, 1);
     teamInfo->setLayout(layout);
 
@@ -369,6 +381,7 @@ void Tippeligaen::updatePlayerInformation(){
 
     QString picUrl = ":/bilder/" +teamString +".png";
     shirtLabel->setPixmap(QPixmap(picUrl));
+    shirt->addLabel(shirtLabel);
 }
 
 void Tippeligaen::makeWindowMenues(){
@@ -382,5 +395,26 @@ void Tippeligaen::makeWindowMenues(){
 
     /*connect(cascadeAction, SIGNAL(triggered()), this, SLOT(cascadeSubWindows()));
     tileAction = new QAction(tr("Tile"), fileMenu);*/
+}
+
+void Tippeligaen::deletePlayer(){
+    deletePlayerButton->setText(tr("Jasså du trykket altså!"));
+
+    QModelIndex index = playerTableView->currentIndex();
+    if(!index.isValid()){
+        return;
+    }
+    QSqlRecord record = playerModel->record(index.row());
+    int spillerId = record.value(Spiller_Id).toInt();
+    int r = QMessageBox::warning(this, tr("Slett Spiller"),
+                                 tr("Slett %1 %2 fra spillere?").arg(record.value(Spiller_Fornavn).toString(), record.value(Spiller_Etternavn).toString()), QMessageBox::Yes | QMessageBox::No);
+    if(r == QMessageBox::No){
+        return;
+    }
+    QSqlQuery deletePlayer ("DELETE FROM spiller WHERE id = " + spillerId);
+    deletePlayer.exec();
+
+    playerModel->removeRow(index.row());
+    playerModel->submitAll();
 }
 
