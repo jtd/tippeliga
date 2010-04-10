@@ -1,7 +1,11 @@
 #ifndef SHIRT_H
 #define SHIRT_H
 
+#include <QtGui>
+#include <QLabel>
 #include <QWidget>
+#include <QDragMoveEvent>
+#include "tippeligaen.h"
 
 class Shirt : public QWidget
 {
@@ -14,7 +18,8 @@ class Shirt : public QWidget
     public slots:
 
     protected:
-
+        void dragMoveEvent(QDragMoveEvent *event);
+        void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // SHIRT_H

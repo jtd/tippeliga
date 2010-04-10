@@ -6,6 +6,7 @@
 #include <QSqlRelationalTableModel>
 #include "team.h"
 #include "player.h"
+#include "shirt.h"
 
 #include <QWebView>
 
@@ -38,7 +39,7 @@ public:
     QLabel *fieldLabel;
     QGroupBox *teamInfo;
     //QGroupBox *createTeamInfoGroupBox();
-    QLabel *drakt;
+    QLabel *shirtLabel;
     QLabel *valerengaInfo;
     QSqlRelationalTableModel *model;
     QSqlRelationalTableModel *teamModel;
@@ -66,6 +67,8 @@ public:
     QGridLayout *mainLayout;
 
     QString *test;
+    //Shirt shirt;
+
 
 protected:
     void changeEvent(QEvent *e);

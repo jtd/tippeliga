@@ -238,11 +238,9 @@ void Tippeligaen::createMakeNewPlayerView(){
 void Tippeligaen::createTeamInfoGroupBox(){
     teamInfo = new QGroupBox(tr("Spillerinfo"));
 
-    //QGroupBox *box = new QGroupBox(tr("Spillerinfo"));
-
-    drakt = new QLabel;
-    drakt->setAlignment(Qt::AlignRight);
-    drakt->setPixmap(QPixmap(":/bilder/valerenga.png"));
+    shirtLabel = new QLabel;
+    shirtLabel->setAlignment(Qt::AlignRight);
+    //shirtLabel->setPixmap(QPixmap(":/bilder/valerenga.png"));
 
     playerNameLabel = new QLabel;
     playerNameLabel->setText(tr("Spillernavn: "));
@@ -265,8 +263,8 @@ void Tippeligaen::createTeamInfoGroupBox(){
     /*layout->addWidget(testlabel4, 3, 0);
     layout->addWidget(playerInformationLabel, 3, 1);*/
 
-    //layout->addWidget(drakt, 0, 3, 3, 2);
-    layout->addWidget(drakt, 0, 2, 4, 1);
+    //layout->addWidget(shirtLabel, 0, 3, 3, 2);
+    layout->addWidget(shirtLabel, 0, 2, 4, 1);
     teamInfo->setLayout(layout);
 
     teamInfo->setMinimumHeight(170);
@@ -372,7 +370,7 @@ void Tippeligaen::updatePlayerInformation(){
     playerPosition->setText(tr("%1").arg(playerPositionString));
 
     QString picUrl = ":/bilder/" +teamString +".png";
-    drakt->setPixmap(QPixmap(picUrl));
+    shirtLabel->setPixmap(QPixmap(picUrl));
 }
 
 void Tippeligaen::makeWindowMenues(){
