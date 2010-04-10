@@ -5,6 +5,11 @@ Shirt::Shirt(QWidget *parent) :
 {
 }
 
+void Shirt::addLabel(QLabel *label)
+{
+   this->label = label;
+}
+
 void Shirt::dragMoveEvent(QDragMoveEvent *event)
 {
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {

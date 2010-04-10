@@ -1,5 +1,6 @@
 #include "tippeligaen.h"
 #include "ui_tippeligaen.h"
+#include "shirt.h"
 
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -11,6 +12,7 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tippeligaen)
 {
+    this->setAcceptDrops(true);
     ui->setupUi(this);
     QGroupBox *team = createTeamChooserGroupBox();
     //QGroupBox *players = createTeamPlayersGroupBox();
@@ -238,10 +240,13 @@ void Tippeligaen::createMakeNewPlayerView(){
 void Tippeligaen::createTeamInfoGroupBox(){
     teamInfo = new QGroupBox(tr("Spillerinfo"));
 
-    shirtLabel = new QLabel;
+    //Shirt* s = new Shirt();
+    shirt = new Shirt();
+    shirtLabel = new QLabel(shirt);
     shirtLabel->setAlignment(Qt::AlignRight);
-    //shirtLabel->setPixmap(QPixmap(":/bilder/valerenga.png"));
+    shirtLabel->setPixmap(QPixmap(":/bilder/Vålerenga.png"));
 
+    shirt->addLabel(shirtLabel);
     playerNameLabel = new QLabel;
     playerNameLabel->setText(tr("Spillernavn: "));
     playerPositionLabel = new QLabel;
@@ -264,7 +269,7 @@ void Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(playerInformationLabel, 3, 1);*/
 
     //layout->addWidget(shirtLabel, 0, 3, 3, 2);
-    layout->addWidget(shirtLabel, 0, 2, 4, 1);
+    layout->addWidget(shirt, 0, 2, 4, 1);
     teamInfo->setLayout(layout);
 
     teamInfo->setMinimumHeight(170);

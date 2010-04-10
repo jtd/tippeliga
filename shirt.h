@@ -5,13 +5,15 @@
 #include <QLabel>
 #include <QWidget>
 #include <QDragMoveEvent>
-#include "tippeligaen.h"
+//#include "tippeligaen.h"
 
 class Shirt : public QWidget
 {
     Q_OBJECT
     public:
         explicit Shirt(QWidget *parent = 0);
+        void addLabel(QLabel* label);
+        QLabel* label;
 
     signals:
 

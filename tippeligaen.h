@@ -67,7 +67,7 @@ public:
     QGridLayout *mainLayout;
 
     QString *test;
-    //Shirt shirt;
+    Shirt *shirt;
 
 
 protected:
