@@ -456,14 +456,21 @@ void Tippeligaen::deletePlayer(){
     playerModel->submitAll();
 }
 
-void Tippeligaen::actionShowTeamOfTheRound_triggered()
-{
+void Tippeligaen::actionShowTeamOfTheRound_triggered(){
+    if(!actionShowTeamOfTheRound->isChecked()) {
+        actionShowTeamOfTheRound->setChecked(true);
+    }
+
     teamOfTheRound->show();
     teamWiki->hide();
     actionShowTeamInfo->setChecked(false);
 }
 
 void Tippeligaen::actionShowTeamInfo_triggered(){
+    if(!actionShowTeamInfo->isChecked()) {
+        actionShowTeamInfo->setChecked(true);
+    }
+
     teamWiki->show();
     teamOfTheRound->hide();
     actionShowTeamOfTheRound->setChecked(false);
