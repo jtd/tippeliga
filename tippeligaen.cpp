@@ -262,7 +262,7 @@ void Tippeligaen::createTeamInfoGroupBox(){
     deletePlayerButton = new QPushButton;
     deletePlayerButton->setText(tr("Slett"));
     addToTeamOfTheRoundButton = new QPushButton;
-    addToTeamOfTheRoundButton->setText(tr("Legg til i rundens lagg"));
+    addToTeamOfTheRoundButton->setText(tr("Legg til i rundens lag"));
 
     playerName = new QLabel;
     playerTeam = new QLabel;
@@ -357,12 +357,15 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
    insertPlayer.bindValue(":lagID", teamComboBox->currentIndex());
    insertPlayer.exec();
 
+   int lagID = teamComboBox->currentIndex();
+
    QMessageBox* m = new QMessageBox();
    m->setText(QString(tr("Spiller %1 %2 ble opprettet.")).arg(playerFirstNameEdit->text(), playerLastNameEdit->text()));
    m->show();
    playerFirstNameEdit->setText("");
    playerLastNameEdit->setText("");
    shirtNumberEdit->setText("");
+   updatePlayerTableView(lagID);
 
    /*delete players;
    createTeamPlayersGroupBox();
@@ -407,6 +410,9 @@ void Tippeligaen::deletePlayer(){
 
     QModelIndex index = playerTableView->currentIndex();
     if(!index.isValid()){
+        QMessageBox* m = new QMessageBox();
+        m->setText(tr("Merk en spiller for å slette"));
+        m->show();
         return;
     }
     QSqlRecord record = playerModel->record(index.row());
@@ -427,4 +433,6 @@ void Tippeligaen::deletePlayer(){
     playerModel->removeRow(index.row());
     playerModel->submitAll();
 }
+
+
 
