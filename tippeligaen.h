@@ -68,6 +68,7 @@ public:
     QPushButton *createNewPlayer;
     QGridLayout *mainLayout;
     QPushButton *deletePlayerButton;
+    QPushButton *addToTeamOfTheRoundButton;
 
     QString *test;
     Shirt *shirt;

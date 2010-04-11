@@ -261,6 +261,8 @@ void Tippeligaen::createTeamInfoGroupBox(){
 
     deletePlayerButton = new QPushButton;
     deletePlayerButton->setText(tr("Slett"));
+    addToTeamOfTheRoundButton = new QPushButton;
+    addToTeamOfTheRoundButton->setText(tr("Legg til i rundens lagg"));
 
     playerName = new QLabel;
     playerTeam = new QLabel;
@@ -274,6 +276,7 @@ void Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(playerTeamLabel, 2, 0);
     layout->addWidget(playerTeam, 2, 1);
     layout->addWidget(deletePlayerButton, 3, 0);
+    layout->addWidget(addToTeamOfTheRoundButton, 3, 1);
     layout->addWidget(shirt, 0, 2, 4, 1);
     teamInfo->setLayout(layout);
 
@@ -354,6 +357,9 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
    insertPlayer.bindValue(":lagID", teamComboBox->currentIndex());
    insertPlayer.exec();
 
+   QMessageBox* m = new QMessageBox();
+   m->setText(QString(tr("Spiller %1 %2 ble opprettet.")).arg(playerFirstNameEdit->text(), playerLastNameEdit->text()));
+   m->show();
    playerFirstNameEdit->setText("");
    playerLastNameEdit->setText("");
    shirtNumberEdit->setText("");
@@ -398,7 +404,6 @@ void Tippeligaen::makeWindowMenues(){
 }
 
 void Tippeligaen::deletePlayer(){
-    deletePlayerButton->setText(tr("Jasså du trykket altså!"));
 
     QModelIndex index = playerTableView->currentIndex();
     if(!index.isValid()){
@@ -406,9 +411,14 @@ void Tippeligaen::deletePlayer(){
     }
     QSqlRecord record = playerModel->record(index.row());
     int spillerId = record.value(Spiller_Id).toInt();
-    int r = QMessageBox::warning(this, tr("Slett Spiller"),
-                                 tr("Slett %1 %2 fra spillere?").arg(record.value(Spiller_Fornavn).toString(), record.value(Spiller_Etternavn).toString()), QMessageBox::Yes | QMessageBox::No);
-    if(r == QMessageBox::No){
+    int messageBox = QMessageBox::warning(this, tr("Slett Spiller"),
+                                 tr("Sikker på du vil slette spiller %1 %2?").arg(record.value(Spiller_Fornavn).toString(), record.value(Spiller_Etternavn).toString()),
+                                 QMessageBox::Yes | QMessageBox::No);
+
+    /*messageBox.setButtonText(QMessageBox::Yes, "Ja");
+    messageBox.setButtonText(QMessageBox::No, "Nei");*/
+
+    if(messageBox == QMessageBox::No){
         return;
     }
     QSqlQuery deletePlayer ("DELETE FROM spiller WHERE id = " + spillerId);
