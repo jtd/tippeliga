@@ -29,7 +29,6 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     //teamWiki = createTeamWikiGroupBox();
     //teamWiki->hide();
 
-
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(team, 0, 0);
     layout->addWidget(players, 1, 0);
@@ -50,16 +49,17 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     //resize(850, 400);
     setWindowTitle(tr("Tippeligaen 2010"));
     updatePlayerTableView(0);
+
     connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this, SLOT(updatePlayerInformation()));
     connect(teamComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(updateTeamWiki(int)));
-    connect(createPlayerAction, SIGNAL(triggered()),
-            this, SLOT(actionCreatePlayerTriggered()));
-    connect(createNewPlayer, SIGNAL(clicked()),
-            this, SLOT(actionAddNewPlayerToDataBase()));
     connect(deletePlayerButton, SIGNAL(clicked()),
             this, SLOT(deletePlayer()));
+    connect(createNewPlayer, SIGNAL(clicked()),
+            this, SLOT(actionAddNewPlayerToDataBase()));
+
+    connectMainMenuSlots();
 }
 
 Tippeligaen::~Tippeligaen(){
@@ -87,9 +87,6 @@ void Tippeligaen::changeEvent(QEvent *e){
     }
 }
 
-void Tippeligaen::on_actionAvslutt_triggered(){
-    exit(0);
-}
 
 QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
     teamComboBox = new QComboBox;
@@ -367,52 +364,6 @@ void Tippeligaen::updateTeamWiki(int row){
 }
 
 
-
-void Tippeligaen::on_actionUkens_lag_triggered()
-{
-    teamOfTheRound->show();
-    teamWiki->hide();
-    ui->actionLaginfo->setChecked(false);
-}
-
-void Tippeligaen::on_actionLaginfo_triggered(){
-    teamWiki->show();
-    teamOfTheRound->hide();
-    ui->actionUkens_lag->setChecked(false);
-}
-
-void Tippeligaen::actionCreatePlayerTriggered(){
-    makePlayerGroupBox->show();
-    teamInfo->hide();
-}
-
-void Tippeligaen::actionAddNewPlayerToDataBase(){
-   QSqlQuery insertPlayer;
-   insertPlayer.prepare("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID)"
-                        "VALUES (:fornavn, :etternavn, :draktnummer, :posisjon, :lagID)");
-   insertPlayer.bindValue(":fornavn", playerFirstNameEdit->text());
-   insertPlayer.bindValue(":etternavn", playerLastNameEdit->text());
-   insertPlayer.bindValue(":draktnummer", shirtNumberEdit->text());
-   insertPlayer.bindValue(":posisjon", playerPositionEdit->currentText());
-   insertPlayer.bindValue(":lagID", teamComboBox->currentIndex());
-   insertPlayer.exec();
-
-   int lagID = teamComboBox->currentIndex();
-
-   QMessageBox* m = new QMessageBox();
-   m->setText(QString(tr("Spiller %1 %2 ble opprettet.")).arg(playerFirstNameEdit->text(), playerLastNameEdit->text()));
-   m->show();
-   playerFirstNameEdit->setText("");
-   playerLastNameEdit->setText("");
-   shirtNumberEdit->setText("");
-   updatePlayerTableView(lagID);
-
-   /*delete players;
-   createTeamPlayersGroupBox();
-   players->show();*/
-
-}
-
 void Tippeligaen::updatePlayerInformation(){
     makePlayerGroupBox->hide();
     teamInfo->show();
@@ -434,16 +385,47 @@ void Tippeligaen::updatePlayerInformation(){
 }
 
 void Tippeligaen::makeWindowMenues(){
-    //Lager hovedmeny Window og setter action for dette.
-    createPlayerMenu = new QMenu(this);
-    createPlayerMenu->setTitle(tr("Rediger"));
+//-FIL
+    fileMenu = new QMenu(this);
+    fileMenu->setTitle(tr("Fil"));
 
-    createPlayerAction = new QAction(tr("Opprett ny spiller"), createPlayerMenu);
-    createPlayerMenu->addAction(createPlayerAction);
-    ui->menuBar->addMenu(createPlayerMenu);
+    actionCreatePlayer = new QAction(tr("Legg til spiller"), fileMenu);
+    actionExitApplication = new QAction(tr("Avslutt"), fileMenu);
 
+    fileMenu->addAction(actionCreatePlayer);
+    fileMenu->addSeparator();
+    fileMenu->addAction(actionExitApplication);
+
+//-VIS
+    showMenu = new QMenu(this);
+    showMenu->setTitle(tr("Vis"));
+
+    actionShowTeamOfTheRound = new QAction(tr("Rundens lag"), showMenu);
+    actionShowTeamOfTheRound->setCheckable(true);
+    actionShowTeamOfTheRound->setChecked(true);
+
+    actionShowTeamInfo = new QAction(tr("Laginfo"), showMenu);
+    actionShowTeamInfo->setCheckable(true);
+
+    showMenu->addAction(actionShowTeamOfTheRound);
+    showMenu->addAction(actionShowTeamInfo);
+    showMenu->addSeparator();
+
+    ui->menuBar->addMenu(fileMenu);
+    ui->menuBar->addMenu(showMenu);
     /*connect(cascadeAction, SIGNAL(triggered()), this, SLOT(cascadeSubWindows()));
     tileAction = new QAction(tr("Tile"), fileMenu);*/
+}
+
+void Tippeligaen::connectMainMenuSlots() {
+    connect(actionCreatePlayer, SIGNAL(triggered()),
+        this, SLOT(actionCreatePlayer_triggered()));
+    connect(actionExitApplication, SIGNAL(triggered()),
+        this, SLOT(actionExitApplication_triggered()));
+    connect(actionShowTeamOfTheRound, SIGNAL(triggered()),
+        this, SLOT(actionShowTeamOfTheRound_triggered()));
+    connect(actionShowTeamInfo, SIGNAL(triggered()),
+        this, SLOT(actionShowTeamInfo_triggered()));
 }
 
 void Tippeligaen::deletePlayer(){
@@ -474,5 +456,63 @@ void Tippeligaen::deletePlayer(){
     playerModel->submitAll();
 }
 
+void Tippeligaen::actionShowTeamOfTheRound_triggered()
+{
+    teamOfTheRound->show();
+    teamWiki->hide();
+    actionShowTeamInfo->setChecked(false);
+}
 
+void Tippeligaen::actionShowTeamInfo_triggered(){
+    teamWiki->show();
+    teamOfTheRound->hide();
+    actionShowTeamOfTheRound->setChecked(false);
+}
 
+void Tippeligaen::actionCreatePlayer_triggered(){
+    makePlayerGroupBox->show();
+    teamInfo->hide();
+}
+
+void Tippeligaen::actionExitApplication_triggered(){
+    exit(0);
+}
+
+void Tippeligaen::actionAddNewPlayerToDataBase(){
+    if( playerFirstNameEdit->text() == "" ||
+        playerLastNameEdit->text()== "" ||
+        shirtNumberEdit->text() == "" ){
+
+        QMessageBox* m = new QMessageBox();
+        m->setText(QString(tr("Fyll ut alle felter")));
+        m->setWindowTitle("Feil");
+        m->setWindowFlags(Qt::Drawer);
+        m->show();
+        return;
+    }
+
+    QSqlQuery insertPlayer;
+    insertPlayer.prepare("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID)"
+                        "VALUES (:fornavn, :etternavn, :draktnummer, :posisjon, :lagID)");
+    insertPlayer.bindValue(":fornavn", playerFirstNameEdit->text());
+    insertPlayer.bindValue(":etternavn", playerLastNameEdit->text());
+    insertPlayer.bindValue(":draktnummer", shirtNumberEdit->text());
+    insertPlayer.bindValue(":posisjon", playerPositionEdit->currentText());
+    insertPlayer.bindValue(":lagID", teamComboBox->currentIndex());
+    insertPlayer.exec();
+
+    int lagID = teamComboBox->currentIndex();
+
+    QMessageBox* m = new QMessageBox();
+    m->setText(QString(tr("Spiller %1 %2 ble opprettet.")).arg(playerFirstNameEdit->text(), playerLastNameEdit->text()));
+    m->show();
+    playerFirstNameEdit->setText("");
+    playerLastNameEdit->setText("");
+    shirtNumberEdit->setText("");
+    updatePlayerTableView(lagID);
+
+    /*delete players;
+    createTeamPlayersGroupBox();
+    players->show();*/
+
+}

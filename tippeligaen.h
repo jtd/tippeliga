@@ -56,8 +56,7 @@ public:
     QLabel *playerTeam;
     QLabel *playerPosition;
     QString selectedTeamUrl;
-    QMenu *createPlayerMenu;
-    QAction *createPlayerAction;
+
     QLineEdit *playerFirstNameEdit;
     QLineEdit *playerLastNameEdit;
     QLabel *shirtNumberLabel;
@@ -88,6 +87,13 @@ public:
     Shirt *shirt;
     Field *field;
 
+    QMenu *fileMenu;
+    QMenu *showMenu;
+
+    QAction *actionCreatePlayer;
+    QAction *actionExitApplication;
+    QAction *actionShowTeamOfTheRound;
+    QAction *actionShowTeamInfo;
 
 protected:
     void changeEvent(QEvent *e);
@@ -97,16 +103,19 @@ private:
     QString _url;
 
 private slots:
-    void on_actionLaginfo_triggered();
-    void on_actionUkens_lag_triggered();
-    void on_actionAvslutt_triggered();
-    void actionCreatePlayerTriggered();
     void updatePlayerTableView(int row);
     void updateTeamWiki(int row);
     void updatePlayerInformation();
-    void actionAddNewPlayerToDataBase();
     void deletePlayer();
+    void connectMainMenuSlots();
 
+    //Menu-actions
+    void actionCreatePlayer_triggered();
+    void actionExitApplication_triggered();
+    void actionShowTeamOfTheRound_triggered();
+    void actionShowTeamInfo_triggered();
+
+    void actionAddNewPlayerToDataBase();
 };
 
 #endif // TIPPELIGAEN_H

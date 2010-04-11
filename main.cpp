@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 
     Tippeligaen w;
     w.setWindowState(Qt::WindowMaximized);
+    w.setWindowIcon(QIcon(":/bilder/tippeliga.png"));
     w.show();
     return a.exec();
 }
