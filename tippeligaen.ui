@@ -14,33 +14,17 @@
    <string>Tippeligaen</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuO">
-    <property name="title">
-     <string>Fil</string>
-    </property>
-    <addaction name="actionAvslutt"/>
-   </widget>
-   <widget class="QMenu" name="menuVis">
-    <property name="title">
-     <string>Vis</string>
-    </property>
-    <addaction name="actionUkens_lag"/>
-    <addaction name="actionLaginfo"/>
-    <addaction name="separator"/>
-   </widget>
-   <addaction name="menuO"/>
-   <addaction name="menuVis"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAvslutt">
    <property name="text">
     <string>Avslutt</string>

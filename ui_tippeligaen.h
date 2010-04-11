@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tippeligaen.ui'
 **
-** Created: Sat 10. Apr 16:09:36 2010
+** Created: Sun 11. Apr 15:26:23 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,7 +16,6 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QStatusBar>
 #include <QtGui/QWidget>
@@ -30,10 +29,8 @@ public:
     QAction *actionUkens_lag;
     QAction *actionLaginfo;
     QWidget *centralWidget;
-    QMenuBar *menuBar;
-    QMenu *menuO;
-    QMenu *menuVis;
     QStatusBar *statusBar;
+    QMenuBar *menuBar;
 
     void setupUi(QMainWindow *Tippeligaen)
     {
@@ -52,24 +49,13 @@ public:
         centralWidget = new QWidget(Tippeligaen);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         Tippeligaen->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(Tippeligaen);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 18));
-        menuO = new QMenu(menuBar);
-        menuO->setObjectName(QString::fromUtf8("menuO"));
-        menuVis = new QMenu(menuBar);
-        menuVis->setObjectName(QString::fromUtf8("menuVis"));
-        Tippeligaen->setMenuBar(menuBar);
         statusBar = new QStatusBar(Tippeligaen);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         Tippeligaen->setStatusBar(statusBar);
-
-        menuBar->addAction(menuO->menuAction());
-        menuBar->addAction(menuVis->menuAction());
-        menuO->addAction(actionAvslutt);
-        menuVis->addAction(actionUkens_lag);
-        menuVis->addAction(actionLaginfo);
-        menuVis->addSeparator();
+        menuBar = new QMenuBar(Tippeligaen);
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 600, 21));
+        Tippeligaen->setMenuBar(menuBar);
 
         retranslateUi(Tippeligaen);
 
@@ -82,8 +68,6 @@ public:
         actionAvslutt->setText(QApplication::translate("Tippeligaen", "Avslutt", 0, QApplication::UnicodeUTF8));
         actionUkens_lag->setText(QApplication::translate("Tippeligaen", "Ukens lag", 0, QApplication::UnicodeUTF8));
         actionLaginfo->setText(QApplication::translate("Tippeligaen", "Laginfo", 0, QApplication::UnicodeUTF8));
-        menuO->setTitle(QApplication::translate("Tippeligaen", "Fil", 0, QApplication::UnicodeUTF8));
-        menuVis->setTitle(QApplication::translate("Tippeligaen", "Vis", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
