@@ -543,11 +543,32 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
     case 1:
         rb->setPixmap(QPixmap(picUrl));
         break;
+    case 2:
+        lb->setPixmap(QPixmap(picUrl));
+        break;
+    case 3:
+        lcb->setPixmap(QPixmap(picUrl));
+        break;
+    case 4:
+        rcb->setPixmap(QPixmap(picUrl));
+        break;
+    case 5:
+        rw->setPixmap(QPixmap(picUrl));
+        break;
+    case 6:
+        lw->setPixmap(QPixmap(picUrl));
+        break;
+    case 7:
+        lcm->setPixmap(QPixmap(picUrl));
+        break;
     case 8:
         rcm->setPixmap(QPixmap(picUrl));
         break;
     case 9:
         ls->setPixmap(QPixmap(picUrl));
+        break;
+    case 10:
+        rs->setPixmap(QPixmap(picUrl));
         break;
 
     }
