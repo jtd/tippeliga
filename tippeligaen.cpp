@@ -570,7 +570,6 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
     case 10:
         rs->setPixmap(QPixmap(picUrl));
         break;
-
     }
 
     /*QString teamString = teamComboBox->currentText();
