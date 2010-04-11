@@ -70,6 +70,20 @@ public:
     QPushButton *deletePlayerButton;
     QPushButton *addToTeamOfTheRoundButton;
 
+    //Legger til ting som skal ligge i rundens lag.
+    QLabel *k;
+    QLabel *lb;
+    QLabel *lcb;
+    QLabel *rb;
+    QLabel *rcb;
+    QLabel *lw;
+    QLabel *rw;
+    QLabel *lcm;
+    QLabel *rcm;
+    QLabel *ls;
+    QLabel *rs;
+
+
     QString *test;
     Shirt *shirt;
     Field *field;

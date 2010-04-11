@@ -3,6 +3,10 @@
 Field::Field(QWidget *parent) :
     QWidget(parent)
 {
+    keeperLabel = new QLabel;
+    keeperLabel->setPixmap(QPixmap(":bilder/Vålerenga.png"));
+    keeperLabel->move(20,20);
+    //keeperLabel->show();
 }
 
 void Field::addLabel(QLabel *label)

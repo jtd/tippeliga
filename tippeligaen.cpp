@@ -162,18 +162,58 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
 
     field = new Field();
 
-    fieldLabel = new QLabel(field);
-    fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
-    fieldLabel->setAlignment(Qt::AlignTop);
+    //fieldLabel = new QLabel(field);
+    //fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
+    //fieldLabel->setAlignment(Qt::AlignTop);
+    //field->addLabel(fieldLabel);
     //fieldLabel->show();
-    field->addLabel(fieldLabel);
+    //field->show();
+
+    k = new QLabel;
+    lb = new QLabel;
+    rb = new QLabel;
+    lcb = new QLabel;
+    rcb = new QLabel;
+    lw = new QLabel;
+    rw = new QLabel;
+    lcm = new QLabel;
+    rcm = new QLabel;
+    ls = new QLabel;
+    rs = new QLabel;
+
+    QPixmap unknownShirt(":/bilder/Unknown.png");
+
+    k->setPixmap(unknownShirt);
+    lb->setPixmap(unknownShirt);
+    rb->setPixmap(unknownShirt);
+    lcb->setPixmap(unknownShirt);
+    rcb->setPixmap(unknownShirt);
+    lw->setPixmap(unknownShirt);
+    rw->setPixmap(unknownShirt);
+    lcm->setPixmap(unknownShirt);
+    rcm->setPixmap(unknownShirt);
+    ls->setPixmap(unknownShirt);
+    rs->setPixmap(unknownShirt);
+
+
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(field);//, 0,0);
+    //QBoxLayout *layout = new QBoxLayout;
+    //layout->addWidget(field);//, 0,0);
+    layout->addWidget(k, 0, 2, 1, 2);
+    layout->addWidget(lb, 1, 0);
+    layout->addWidget(rb, 1, 1);
+    layout->addWidget(lcb, 1, 2);
+    layout->addWidget(rcb, 1, 3);
+    layout->addWidget(lw, 2, 0);
+    layout->addWidget(rw, 2, 1);
+    layout->addWidget(lcm, 2, 2);
+    layout->addWidget(rcm, 2, 3);
+    layout->addWidget(ls, 3, 1);
+    layout->addWidget(rs, 3, 2);
     box->setLayout(layout);
     box->setAcceptDrops(true);
     this->setAcceptDrops(true);
-
     return box;
 }
 

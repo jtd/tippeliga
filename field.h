@@ -13,6 +13,7 @@ public:
     explicit Field(QWidget *parent = 0);
     void addLabel(QLabel* label);
     QLabel* label;
+    QLabel *keeperLabel;
 
 
 signals:
