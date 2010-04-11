@@ -58,7 +58,8 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
             this, SLOT(deletePlayer()));
     connect(createNewPlayer, SIGNAL(clicked()),
             this, SLOT(actionAddNewPlayerToDataBase()));
-
+    connect(addToTeamOfTheRoundButton, SIGNAL(clicked()),
+            this, SLOT(addPlayerToTeamOfTheRound()));
     connectMainMenuSlots();
 }
 
@@ -124,6 +125,7 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerModel->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
     playerModel->setHeaderData(Spiller_Posisjon, Qt::Horizontal, tr("Posisjon"));
     playerModel->setHeaderData(Spiller_LagID, Qt::Horizontal, tr("Lag"));
+    playerModel->setHeaderData(Spiller_PosisjonsId, Qt::Horizontal, tr("Posisjonsid"));
 
     playerTableView = new QTableView;
     playerTableView->setModel(playerModel);
@@ -199,13 +201,13 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     //layout->addWidget(field);//, 0,0);
     layout->addWidget(k, 0, 2, 1, 2);
     layout->addWidget(lb, 1, 0);
-    layout->addWidget(rb, 1, 1);
-    layout->addWidget(lcb, 1, 2);
-    layout->addWidget(rcb, 1, 3);
+    layout->addWidget(lcb, 1, 1);
+    layout->addWidget(rcb, 1, 2);
+    layout->addWidget(rb, 1, 3);
     layout->addWidget(lw, 2, 0);
-    layout->addWidget(rw, 2, 1);
-    layout->addWidget(lcm, 2, 2);
-    layout->addWidget(rcm, 2, 3);
+    layout->addWidget(lcm, 2, 1);
+    layout->addWidget(rcm, 2, 2);
+    layout->addWidget(rw, 2, 3);
     layout->addWidget(ls, 3, 1);
     layout->addWidget(rs, 3, 2);
     box->setLayout(layout);
@@ -258,11 +260,14 @@ void Tippeligaen::createMakeNewPlayerView(){
     playerPositionEdit->insertItem(0, tr("Keeper"));
     playerPositionEdit->insertItem(1, tr("Høyre Back"));
     playerPositionEdit->insertItem(2, tr("Venstre Back"));
-    playerPositionEdit->insertItem(3, tr("MidtStopper"));
-    playerPositionEdit->insertItem(4, tr("HøyreVing"));
-    playerPositionEdit->insertItem(5, tr("VenstreVing"));
-    playerPositionEdit->insertItem(6, tr("Midtbane"));
-    playerPositionEdit->insertItem(7, tr("Spiss"));
+    playerPositionEdit->insertItem(3, tr("Venstre Midtstopper"));
+    playerPositionEdit->insertItem(4, tr("Høyre Midtstopper"));
+    playerPositionEdit->insertItem(5, tr("HøyreVing"));
+    playerPositionEdit->insertItem(6, tr("VenstreVing"));
+    playerPositionEdit->insertItem(7, tr("Venstre Midtbane"));
+    playerPositionEdit->insertItem(8, tr("Høyre Midtbane"));
+    playerPositionEdit->insertItem(9, tr("Venstre Spiss"));
+    playerPositionEdit->insertItem(10, tr("Høyre Spiss"));
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(playerFirstNameLabel, 0, 0);
@@ -374,6 +379,8 @@ void Tippeligaen::updatePlayerInformation(){
     QString playerLastNameString = record.value("etternavn").toString();
     QString playerPositionString = record.value("posisjon").toString();
     QString teamString = record.value("lagnavn").toString();
+
+    positionId = record.value("posisjonsId").toInt();
 
     playerName->setText(tr("%1 %2").arg(playerFirstNameString).arg(playerLastNameString));
     playerTeam->setText(tr("%1").arg(teamString));
@@ -499,12 +506,13 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
     }
 
     QSqlQuery insertPlayer;
-    insertPlayer.prepare("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, lagID)"
-                        "VALUES (:fornavn, :etternavn, :draktnummer, :posisjon, :lagID)");
+    insertPlayer.prepare("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID)"
+                         "VALUES (:fornavn, :etternavn, :draktnummer, :posisjon, :posisjonsId, :lagID)");
     insertPlayer.bindValue(":fornavn", playerFirstNameEdit->text());
     insertPlayer.bindValue(":etternavn", playerLastNameEdit->text());
     insertPlayer.bindValue(":draktnummer", shirtNumberEdit->text());
     insertPlayer.bindValue(":posisjon", playerPositionEdit->currentText());
+    insertPlayer.bindValue(":posisjonsId", playerPositionEdit->currentIndex());
     insertPlayer.bindValue(":lagID", teamComboBox->currentIndex());
     insertPlayer.exec();
 
@@ -521,5 +529,30 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
     /*delete players;
     createTeamPlayersGroupBox();
     players->show();*/
+}
 
+void Tippeligaen::addPlayerToTeamOfTheRound(){
+    QString teamString = teamComboBox->currentText();
+    QString picUrl = ":/bilder/" +teamString +".png";
+
+
+    switch(positionId){
+    case 0:
+        k->setPixmap(QPixmap(picUrl));
+        break;
+    case 1:
+        rb->setPixmap(QPixmap(picUrl));
+        break;
+    case 8:
+        rcm->setPixmap(QPixmap(picUrl));
+        break;
+    case 9:
+        ls->setPixmap(QPixmap(picUrl));
+        break;
+
+    }
+
+    /*QString teamString = teamComboBox->currentText();
+    QString picUrl = ":/bilder/" +teamString +".png";
+    k->setPixmap(QPixmap(picUrl));*/
 }

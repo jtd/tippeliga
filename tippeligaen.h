@@ -82,6 +82,8 @@ public:
     QLabel *ls;
     QLabel *rs;
 
+    int positionId;
+
 
     QString *test;
     Shirt *shirt;
@@ -108,6 +110,7 @@ private slots:
     void updatePlayerInformation();
     void deletePlayer();
     void connectMainMenuSlots();
+    void addPlayerToTeamOfTheRound();
 
     //Menu-actions
     void actionCreatePlayer_triggered();
