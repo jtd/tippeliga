@@ -28,6 +28,8 @@ public:
     void createMakeNewPlayerGroupBox();
     void createMakeNewPlayerView();
     void createTeamPlayersGroupBox();
+    void makeUnknownShirt();
+    void insertPlayerToTeamOfTheRound();
 
     QString url();
 
@@ -81,8 +83,10 @@ public:
     QLabel *rcm;
     QLabel *ls;
     QLabel *rs;
+    QLabel *teamOfTheRoundIdLabel;
 
     int positionId;
+    int teamOfTheRoundId;
 
 
     QString *test;
@@ -96,6 +100,7 @@ public:
     QAction *actionExitApplication;
     QAction *actionShowTeamOfTheRound;
     QAction *actionShowTeamInfo;
+    QAction *actionCreateTeamOfTheRound;
 
 protected:
     void changeEvent(QEvent *e);
@@ -117,8 +122,10 @@ private slots:
     void actionExitApplication_triggered();
     void actionShowTeamOfTheRound_triggered();
     void actionShowTeamInfo_triggered();
+    void actionAddNewTeamOfTheRound_triggered();
 
     void actionAddNewPlayerToDataBase();
+
 };
 
 #endif // TIPPELIGAEN_H

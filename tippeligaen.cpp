@@ -179,21 +179,10 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     rcm = new QLabel;
     ls = new QLabel;
     rs = new QLabel;
+    teamOfTheRoundIdLabel= new QLabel;
+    teamOfTheRoundIdLabel->setText("Jasså du!");
 
-    QPixmap unknownShirt(":/bilder/Unknown.png");
-
-    k->setPixmap(unknownShirt);
-    lb->setPixmap(unknownShirt);
-    rb->setPixmap(unknownShirt);
-    lcb->setPixmap(unknownShirt);
-    rcb->setPixmap(unknownShirt);
-    lw->setPixmap(unknownShirt);
-    rw->setPixmap(unknownShirt);
-    lcm->setPixmap(unknownShirt);
-    rcm->setPixmap(unknownShirt);
-    ls->setPixmap(unknownShirt);
-    rs->setPixmap(unknownShirt);
-
+    makeUnknownShirt();
 
 
     QGridLayout *layout = new QGridLayout;
@@ -210,10 +199,26 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     layout->addWidget(rw, 2, 3);
     layout->addWidget(ls, 3, 1);
     layout->addWidget(rs, 3, 2);
+    layout->addWidget(teamOfTheRoundIdLabel, 4, 0);
     box->setLayout(layout);
     box->setAcceptDrops(true);
     this->setAcceptDrops(true);
     return box;
+}
+
+void Tippeligaen::makeUnknownShirt(){
+    QPixmap unknownShirt(":/bilder/Unknown.png");
+    k->setPixmap(unknownShirt);
+    lb->setPixmap(unknownShirt);
+    rb->setPixmap(unknownShirt);
+    lcb->setPixmap(unknownShirt);
+    rcb->setPixmap(unknownShirt);
+    lw->setPixmap(unknownShirt);
+    rw->setPixmap(unknownShirt);
+    lcm->setPixmap(unknownShirt);
+    rcm->setPixmap(unknownShirt);
+    ls->setPixmap(unknownShirt);
+    rs->setPixmap(unknownShirt);
 }
 
 QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
@@ -398,8 +403,10 @@ void Tippeligaen::makeWindowMenues(){
 
     actionCreatePlayer = new QAction(tr("Legg til spiller"), fileMenu);
     actionExitApplication = new QAction(tr("Avslutt"), fileMenu);
+    actionCreateTeamOfTheRound = new QAction(tr("Lag nytt rundenslag"), fileMenu);
 
     fileMenu->addAction(actionCreatePlayer);
+    fileMenu->addAction(actionCreateTeamOfTheRound);
     fileMenu->addSeparator();
     fileMenu->addAction(actionExitApplication);
 
@@ -433,6 +440,8 @@ void Tippeligaen::connectMainMenuSlots() {
         this, SLOT(actionShowTeamOfTheRound_triggered()));
     connect(actionShowTeamInfo, SIGNAL(triggered()),
         this, SLOT(actionShowTeamInfo_triggered()));
+    connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
+            this, SLOT(actionAddNewTeamOfTheRound_triggered()));
 }
 
 void Tippeligaen::deletePlayer(){
@@ -492,6 +501,12 @@ void Tippeligaen::actionExitApplication_triggered(){
     exit(0);
 }
 
+void Tippeligaen::actionAddNewTeamOfTheRound_triggered(){
+    teamOfTheRoundId = 1;
+    QString teamOfTheRoundName = "Lag"+QString::number(teamOfTheRoundId);
+    teamOfTheRoundIdLabel->setText(teamOfTheRoundName);    
+}
+
 void Tippeligaen::actionAddNewPlayerToDataBase(){
     if( playerFirstNameEdit->text() == "" ||
         playerLastNameEdit->text()== "" ||
@@ -530,49 +545,64 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
     createTeamPlayersGroupBox();
     players->show();*/
 }
+void Tippeligaen::insertPlayerToTeamOfTheRound(){
+    QSqlQuery teamOfTheRoundRow;
+    teamOfTheRoundRow.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
+                         "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn");
+    teamOfTheRoundRow.bindValue(":rundensLagNavn", teamOfTheRoundIdLabel->text());
+    teamOfTheRoundRow.bindValue(":navn", playerNameLabel->text());
+    teamOfTheRoundRow.bindValue(":posisjon", playerPosition->text());
+    teamOfTheRoundRow.bindValue(":lagNavn", playerTeam->text());
+    teamOfTheRoundRow.exec();
+}
 
 void Tippeligaen::addPlayerToTeamOfTheRound(){
     QString teamString = teamComboBox->currentText();
     QString picUrl = ":/bilder/" +teamString +".png";
-
-
     switch(positionId){
     case 0:
+        insertPlayerToTeamOfTheRound();
         k->setPixmap(QPixmap(picUrl));
         break;
     case 1:
+        insertPlayerToTeamOfTheRound();
         rb->setPixmap(QPixmap(picUrl));
         break;
     case 2:
+        insertPlayerToTeamOfTheRound();
         lb->setPixmap(QPixmap(picUrl));
         break;
     case 3:
+        insertPlayerToTeamOfTheRound();
         lcb->setPixmap(QPixmap(picUrl));
         break;
     case 4:
+        insertPlayerToTeamOfTheRound();
         rcb->setPixmap(QPixmap(picUrl));
         break;
     case 5:
+        insertPlayerToTeamOfTheRound();
         rw->setPixmap(QPixmap(picUrl));
         break;
     case 6:
+        insertPlayerToTeamOfTheRound();
         lw->setPixmap(QPixmap(picUrl));
         break;
     case 7:
+        insertPlayerToTeamOfTheRound();
         lcm->setPixmap(QPixmap(picUrl));
         break;
     case 8:
+        insertPlayerToTeamOfTheRound();
         rcm->setPixmap(QPixmap(picUrl));
         break;
     case 9:
+        insertPlayerToTeamOfTheRound();
         ls->setPixmap(QPixmap(picUrl));
         break;
     case 10:
+        insertPlayerToTeamOfTheRound();
         rs->setPixmap(QPixmap(picUrl));
         break;
     }
-
-    /*QString teamString = teamComboBox->currentText();
-    QString picUrl = ":/bilder/" +teamString +".png";
-    k->setPixmap(QPixmap(picUrl));*/
 }
