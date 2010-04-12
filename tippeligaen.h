@@ -27,7 +27,7 @@ public:
     void createTeamInfoGroupBox();
     void createMakeNewPlayerGroupBox();
     void createMakeNewPlayerView();
-    void createTeamOfTheRoundChoosTeamGroupBox();
+    void createTeamOfTheRoundChooseTeamGroupBox();
     void createTeamPlayersGroupBox();
     void makeUnknownShirt();
     void insertPlayerToTeamOfTheRound();
@@ -43,7 +43,6 @@ public:
     QGroupBox *players;
     //QGroupBox *createTeamPlayersGroupBox();
     QGroupBox *createTeamOfTheRoundGroupBox();
-    QGroupBox *createTeamWikiGroupBox();
     QGroupBox *createTeamOfTheRoundShowTeamGroupBox;
     QTableWidget *teamOfTheRoundTableWidget;
     QLabel *fieldLabel;
@@ -117,6 +116,9 @@ private:
     QString _url;
 
 private slots:
+    void doAtStartUp();
+    void createLayout();
+
     void updatePlayerTableView(int row);
     void updateTeamWiki(int row);
     void updatePlayerInformation();
