@@ -18,14 +18,18 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     //QGroupBox *teamInfo = createTeamInfoGroupBox();
     createTeamPlayersGroupBox();
     createTeamInfoGroupBox();
+    createTeamOfTheRoundChoosTeamGroupBox();
     teamOfTheRound = createTeamOfTheRoundGroupBox();
     createTeamWikiView();
+    createTeamOfTheRoundShowTeam();
     teamWiki->hide();
+    createTeamOfTheRoundShowTeamGroupBox->hide();
 
     makeWindowMenues();
 
     createMakeNewPlayerView();
     makePlayerGroupBox->hide();
+    teamOfTheRoundChooseTeamGroupBox->hide();
     //teamWiki = createTeamWikiGroupBox();
     //teamWiki->hide();
 
@@ -36,6 +40,8 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     layout->addWidget(makePlayerGroupBox, 2, 0);
     layout->addWidget(teamOfTheRound, 0, 1, 3, 1);
     layout->addWidget(teamWiki, 0, 1, 3, 1);
+    layout->addWidget(teamOfTheRoundChooseTeamGroupBox, 0, 1);
+    layout->addWidget(createTeamOfTheRoundShowTeamGroupBox, 1, 1);
     layout->setColumnStretch(1, 1);
     layout->setColumnMinimumWidth(0, 500);
     layout->setColumnMinimumWidth(1, 500);
@@ -450,6 +456,8 @@ void Tippeligaen::connectMainMenuSlots() {
         this, SLOT(actionShowTeamInfo_triggered()));
     connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
             this, SLOT(actionAddNewTeamOfTheRound_triggered()));
+    /*connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
+            this, SLOT(updateTeamOfTheRoundChoosTeamGroupBox()));*/
 }
 
 void Tippeligaen::deletePlayer(){
@@ -485,8 +493,10 @@ void Tippeligaen::actionShowTeamOfTheRound_triggered(){
         actionShowTeamOfTheRound->setChecked(true);
     }
 
+
     teamOfTheRound->show();
     teamWiki->hide();
+    teamOfTheRoundChooseTeamGroupBox->hide();
     actionShowTeamInfo->setChecked(false);
 }
 
@@ -497,6 +507,7 @@ void Tippeligaen::actionShowTeamInfo_triggered(){
 
     teamWiki->show();
     teamOfTheRound->hide();
+    teamOfTheRoundChooseTeamGroupBox->hide();
     actionShowTeamOfTheRound->setChecked(false);
 }
 
@@ -510,9 +521,18 @@ void Tippeligaen::actionExitApplication_triggered(){
 }
 
 void Tippeligaen::actionAddNewTeamOfTheRound_triggered(){
+    teamOfTheRound->hide();
+    teamWiki->hide();
+
     teamOfTheRoundId = 1;
     QString teamOfTheRoundName = "Lag"+QString::number(teamOfTheRoundId);
     teamOfTheRoundIdLabel->setText(teamOfTheRoundName);    
+    insertPlayerToTeamOfTheRound();
+    connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
+            this, SLOT(updateTeamOfTheRoundChoosTeamGroupBox()));
+    teamOfTheRoundChooseTeamGroupBox->show();
+    createTeamOfTheRoundShowTeamGroupBox->show();
+
 }
 
 void Tippeligaen::actionAddNewPlayerToDataBase(){
@@ -614,3 +634,80 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
         break;
     }
 }
+
+void Tippeligaen::createTeamOfTheRoundChoosTeamGroupBox(){
+    teamOfTheRoundChooseTeamGroupBox = new QGroupBox(tr("Tippeligalag"));;
+    teamOfTheRoundChooseTeamComboBox = new QComboBox;
+    /*teamOfTheRoundModel = new QSqlRelationalTableModel(this);
+    teamOfTheRoundModel->setTable("rundenslag");
+    teamOfTheRoundModel->setRelation(0, QSqlRelation("rundenslag", "id", "rundensLagNavn"));
+    teamOfTheRoundModel->setSort(1, Qt::AscendingOrder);
+    teamOfTheRoundModel->select();
+
+    teamOfTheRoundChooseTeamComboBox->setModel(teamOfTheRoundModel);*/
+
+    /*connect(teamComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(updatePlayerTableView(int)));*/
+    QSqlQuery teamOfTheRound ("select * from rundenslag group by rundensLagNavn" );
+    while (teamOfTheRound.next()) {
+        teamOfTheRoundChooseTeamComboBox->addItem(teamOfTheRound.value(1).toString());
+    }
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(teamOfTheRoundChooseTeamComboBox, 0, 0);
+    teamOfTheRoundChooseTeamGroupBox->setLayout(layout);
+}
+
+void Tippeligaen::updateTeamOfTheRoundChoosTeamGroupBox(){
+    teamOfTheRoundChooseTeamComboBox->clear();
+    QSqlQuery teamOfTheRound ("select * from rundenslag group by rundensLagNavn" );
+    while (teamOfTheRound.next()) {
+        teamOfTheRoundChooseTeamComboBox->addItem(teamOfTheRound.value(1).toString());
+    }
+}
+
+void Tippeligaen::createTeamOfTheRoundShowTeam(){
+    //QGroupBox *box = new QGroupBox(tr("Spillere"));
+    createTeamOfTheRoundShowTeamGroupBox = new QGroupBox(tr("Rundens lag"));
+
+    teamOfTheRoundModel = new QSqlRelationalTableModel(this);
+    teamOfTheRoundModel->setTable("rundenslag");
+    teamOfTheRoundModel->setRelation(1, QSqlRelation("rundenslag", "rundensLagNavn", "rundensLagNavn"));
+    //playerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
+    teamOfTheRoundModel->setHeaderData(0, Qt::Horizontal, tr("rundenslagnavn"));
+    teamOfTheRoundModel->setHeaderData(1, Qt::Horizontal, tr("navn"));
+    teamOfTheRoundModel->setHeaderData(2, Qt::Horizontal, tr("posisjon"));
+    teamOfTheRoundModel->setHeaderData(3, Qt::Horizontal, tr("lagnavn"));
+
+
+    teamOfTheRoundTableWidget = new QTableWidget;
+    teamOfTheRoundTableWidget->insertRow();
+
+    teamOfTheRoundTableView->setModel(teamOfTheRoundModel);
+    teamOfTheRoundTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    teamOfTheRoundTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //playerTableView->setColumnHidden(Spiller_LagID, true);
+    //playerTableView->setColumnHidden(Spiller_Id, true);
+    teamOfTheRoundTableView->resizeColumnsToContents();
+    teamOfTheRoundTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    teamOfTheRoundTableView->setSortingEnabled(true);
+    QHeaderView *header = teamOfTheRoundTableView->horizontalHeader();
+    header->setStretchLastSection(true);
+
+    teamOfTheRoundTableView->setShowGrid(false);
+    teamOfTheRoundTableView->verticalHeader()->hide();
+    teamOfTheRoundTableView->setAlternatingRowColors(true);
+    //albumView->setModel(model);
+    //adjustHeader();
+
+    QLocale locale = teamOfTheRoundTableView->locale();
+    locale.setNumberOptions(QLocale::OmitGroupSeparator);
+    teamOfTheRoundTableView->setLocale(locale);
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(teamOfTheRoundTableView, 0, 0);
+    createTeamOfTheRoundShowTeamGroupBox->setLayout(layout);
+
+    //return box;
+}
+

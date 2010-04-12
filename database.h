@@ -63,6 +63,9 @@ static bool createConnection(){
                                         "navn VARCHAR(40),"
                                         "posisjon VARCHAR(40),"
                                         "lagNavn VARCHAR(40))");
+    query.exec("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn) VALUES('Lag2', 'Øyvind midtbø', 'Spiss', 'Vålerenga')");
+    query.exec("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn) VALUES('Lag2', 'Per Jonsson', 'Keeper', 'Vålerenga')");
+    query.exec("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn) VALUES('Lag3', 'Jon T. Bernander', 'Ving', 'Rosenborg')");
     return true;
 }
 
