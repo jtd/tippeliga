@@ -118,7 +118,7 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerModel = new QSqlRelationalTableModel(this);
     playerModel->setTable("spiller");
     playerModel->setRelation(Spiller_LagID, QSqlRelation("lag", "id", "lagnavn"));
-    playerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
+    playerModel->setSort(Spiller_Id, Qt::AscendingOrder);
     playerModel->setHeaderData(Spiller_Id, Qt::Horizontal, tr("id"));
     playerModel->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
     playerModel->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
@@ -176,17 +176,17 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     //fieldLabel->show();
     //field->show();
 
-    k = new QLabel;
-    lb = new QLabel;
-    rb = new QLabel;
-    lcb = new QLabel;
-    rcb = new QLabel;
-    lw = new QLabel;
-    rw = new QLabel;
-    lcm = new QLabel;
-    rcm = new QLabel;
-    ls = new QLabel;
-    rs = new QLabel;
+    keeper = new QLabel;
+    rightBack = new QLabel;
+    rightCenterBack = new QLabel;
+    leftCenterBack = new QLabel;
+    leftBack = new QLabel;
+    leftWing = new QLabel;
+    rightWing = new QLabel;
+    rightCenterMidfielder = new QLabel;
+    leftCenterMidfielder = new QLabel;
+    leftStriker = new QLabel;
+    rightStriker = new QLabel;
     teamOfTheRoundIdLabel= new QLabel;
     teamOfTheRoundIdLabel->setText("Jasså du!");
 
@@ -196,17 +196,17 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGridLayout *layout = new QGridLayout;
     //QBoxLayout *layout = new QBoxLayout;
     //layout->addWidget(field);//, 0,0);
-    layout->addWidget(k, 0, 2, 1, 4);
-    layout->addWidget(lb, 1, 0);
-    layout->addWidget(rb, 1, 1);
-    layout->addWidget(lcb, 1, 3);
-    layout->addWidget(rcb, 1, 4);
-    layout->addWidget(lw, 2, 0);
-    layout->addWidget(rw, 2, 1);
-    layout->addWidget(lcm, 2, 3);
-    layout->addWidget(rcm, 2, 4);
-    layout->addWidget(ls, 3, 1);
-    layout->addWidget(rs, 3, 3);
+    layout->addWidget(keeper, 0, 2, 1, 4);
+    layout->addWidget(rightBack, 1, 0);
+    layout->addWidget(rightCenterBack, 1, 1);
+    layout->addWidget(leftCenterBack, 1, 3);
+    layout->addWidget(leftBack, 1, 4);
+    layout->addWidget(rightWing, 2, 0);
+    layout->addWidget(rightCenterMidfielder, 2, 1);
+    layout->addWidget(leftCenterMidfielder, 2, 3);
+    layout->addWidget(leftWing, 2, 4);
+    layout->addWidget(rightStriker, 3, 1);
+    layout->addWidget(leftStriker, 3, 3);
     layout->addWidget(teamOfTheRoundIdLabel, 4, 0);
     box->setLayout(layout);
     box->setAcceptDrops(true);
@@ -216,17 +216,17 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
 
 void Tippeligaen::makeUnknownShirt(){
     QPixmap unknownShirt(":/bilder/Unknown.png");
-    k->setPixmap(unknownShirt);
-    lb->setPixmap(unknownShirt);
-    rb->setPixmap(unknownShirt);
-    lcb->setPixmap(unknownShirt);
-    rcb->setPixmap(unknownShirt);
-    lw->setPixmap(unknownShirt);
-    rw->setPixmap(unknownShirt);
-    lcm->setPixmap(unknownShirt);
-    rcm->setPixmap(unknownShirt);
-    ls->setPixmap(unknownShirt);
-    rs->setPixmap(unknownShirt);
+    keeper->setPixmap(unknownShirt);
+    rightBack->setPixmap(unknownShirt);
+    rightCenterBack->setPixmap(unknownShirt);
+    leftCenterBack->setPixmap(unknownShirt);
+    leftBack->setPixmap(unknownShirt);
+    rightWing->setPixmap(unknownShirt);
+    rightCenterMidfielder->setPixmap(unknownShirt);
+    leftCenterMidfielder->setPixmap(unknownShirt);
+    leftWing->setPixmap(unknownShirt);
+    rightStriker->setPixmap(unknownShirt);
+    leftStriker->setPixmap(unknownShirt);
 }
 
 QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
@@ -570,47 +570,47 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
     switch(positionId){
     case 0:
         insertPlayerToTeamOfTheRound();
-        k->setPixmap(QPixmap(picUrl));
+        keeper->setPixmap(QPixmap(picUrl));
         break;
     case 1:
         insertPlayerToTeamOfTheRound();
-        rb->setPixmap(QPixmap(picUrl));
+        rightBack->setPixmap(QPixmap(picUrl));
         break;
     case 2:
         insertPlayerToTeamOfTheRound();
-        lb->setPixmap(QPixmap(picUrl));
+        leftBack->setPixmap(QPixmap(picUrl));
         break;
     case 3:
         insertPlayerToTeamOfTheRound();
-        lcb->setPixmap(QPixmap(picUrl));
+        leftCenterBack->setPixmap(QPixmap(picUrl));
         break;
     case 4:
         insertPlayerToTeamOfTheRound();
-        rcb->setPixmap(QPixmap(picUrl));
+        rightCenterBack->setPixmap(QPixmap(picUrl));
         break;
     case 5:
         insertPlayerToTeamOfTheRound();
-        rw->setPixmap(QPixmap(picUrl));
+        rightWing->setPixmap(QPixmap(picUrl));
         break;
     case 6:
         insertPlayerToTeamOfTheRound();
-        lw->setPixmap(QPixmap(picUrl));
+        leftWing->setPixmap(QPixmap(picUrl));
         break;
     case 7:
         insertPlayerToTeamOfTheRound();
-        lcm->setPixmap(QPixmap(picUrl));
+        leftCenterMidfielder->setPixmap(QPixmap(picUrl));
         break;
     case 8:
         insertPlayerToTeamOfTheRound();
-        rcm->setPixmap(QPixmap(picUrl));
+        rightCenterMidfielder->setPixmap(QPixmap(picUrl));
         break;
     case 9:
         insertPlayerToTeamOfTheRound();
-        ls->setPixmap(QPixmap(picUrl));
+        leftStriker->setPixmap(QPixmap(picUrl));
         break;
     case 10:
         insertPlayerToTeamOfTheRound();
-        rs->setPixmap(QPixmap(picUrl));
+        rightStriker->setPixmap(QPixmap(picUrl));
         break;
     }
 }
