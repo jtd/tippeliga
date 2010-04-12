@@ -11,27 +11,21 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tippeligaen)
 {
-    this->setAcceptDrops(true);
     ui->setupUi(this);
+
     QGroupBox *team = createTeamChooserGroupBox();
-    //QGroupBox *players = createTeamPlayersGroupBox();
-    //QGroupBox *teamInfo = createTeamInfoGroupBox();
+    teamOfTheRound = createTeamOfTheRoundGroupBox();
     createTeamPlayersGroupBox();
     createTeamInfoGroupBox();
-    createTeamOfTheRoundChoosTeamGroupBox();
-    teamOfTheRound = createTeamOfTheRoundGroupBox();
+    createTeamOfTheRoundChooseTeamGroupBox();
     createTeamWikiView();
     createTeamOfTheRoundShowTeam();
-    teamWiki->hide();
-    createTeamOfTheRoundShowTeamGroupBox->hide();
+
 
     makeWindowMenues();
-
     createMakeNewPlayerView();
-    makePlayerGroupBox->hide();
-    teamOfTheRoundChooseTeamGroupBox->hide();
-    //teamWiki = createTeamWikiGroupBox();
-    //teamWiki->hide();
+
+    doAtStartUp();
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(team, 0, 0);
@@ -49,12 +43,10 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
     setCentralWidget(widget);
-    //createMenuBar();
+
     this->adjustSize();
-    //showImageLabel();
-    //resize(850, 400);
     setWindowTitle(tr("Tippeligaen 2010"));
-    updatePlayerTableView(0);
+
 
     connect(playerTableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this, SLOT(updatePlayerInformation()));
@@ -73,6 +65,21 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
 
 Tippeligaen::~Tippeligaen(){
     delete ui;
+}
+
+void Tippeligaen::createLayout(){
+
+
+}
+
+void Tippeligaen::doAtStartUp(){
+    teamWiki->hide();
+    makePlayerGroupBox->hide();
+    teamOfTheRoundChooseTeamGroupBox->hide();
+    createTeamOfTheRoundShowTeamGroupBox->hide();
+
+    updatePlayerTableView(0);
+    updateTeamWiki(0);
 }
 
 void Tippeligaen::setUrl(QString url)
@@ -126,7 +133,7 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerModel = new QSqlRelationalTableModel(this);
     playerModel->setTable("spiller");
     playerModel->setRelation(Spiller_LagID, QSqlRelation("lag", "id", "lagnavn"));
-    playerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
+    playerModel->setSort(Spiller_Id, Qt::AscendingOrder);
     playerModel->setHeaderData(Spiller_Id, Qt::Horizontal, tr("id"));
     playerModel->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
     playerModel->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
@@ -184,17 +191,17 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     //fieldLabel->show();
     //field->show();
 
-    k = new QLabel;
-    lb = new QLabel;
-    rb = new QLabel;
-    lcb = new QLabel;
-    rcb = new QLabel;
-    lw = new QLabel;
-    rw = new QLabel;
-    lcm = new QLabel;
-    rcm = new QLabel;
-    ls = new QLabel;
-    rs = new QLabel;
+    keeper = new QLabel;
+    rightBack = new QLabel;
+    rightCenterBack = new QLabel;
+    leftCenterBack = new QLabel;
+    leftBack = new QLabel;
+    leftWing = new QLabel;
+    rightWing = new QLabel;
+    rightCenterMidfielder = new QLabel;
+    leftCenterMidfielder = new QLabel;
+    leftStriker = new QLabel;
+    rightStriker = new QLabel;
     teamOfTheRoundIdLabel= new QLabel;
     teamOfTheRoundIdLabel->setText("Jasså du!");
 
@@ -204,51 +211,35 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGridLayout *layout = new QGridLayout;
     //QBoxLayout *layout = new QBoxLayout;
     //layout->addWidget(field);//, 0,0);
-    layout->addWidget(k, 0, 2, 1, 4);
-    layout->addWidget(lb, 1, 0);
-    layout->addWidget(rb, 1, 1);
-    layout->addWidget(lcb, 1, 3);
-    layout->addWidget(rcb, 1, 4);
-    layout->addWidget(lw, 2, 0);
-    layout->addWidget(rw, 2, 1);
-    layout->addWidget(lcm, 2, 3);
-    layout->addWidget(rcm, 2, 4);
-    layout->addWidget(ls, 3, 1);
-    layout->addWidget(rs, 3, 3);
+    layout->addWidget(keeper, 0, 2, 1, 4);
+    layout->addWidget(rightBack, 1, 0);
+    layout->addWidget(rightCenterBack, 1, 1);
+    layout->addWidget(leftCenterBack, 1, 3);
+    layout->addWidget(leftBack, 1, 4);
+    layout->addWidget(rightWing, 2, 0);
+    layout->addWidget(rightCenterMidfielder, 2, 1);
+    layout->addWidget(leftCenterMidfielder, 2, 3);
+    layout->addWidget(leftWing, 2, 4);
+    layout->addWidget(rightStriker, 3, 1);
+    layout->addWidget(leftStriker, 3, 3);
     layout->addWidget(teamOfTheRoundIdLabel, 4, 0);
     box->setLayout(layout);
-    box->setAcceptDrops(true);
-    this->setAcceptDrops(true);
     return box;
 }
 
 void Tippeligaen::makeUnknownShirt(){
     QPixmap unknownShirt(":/bilder/Unknown.png");
-    k->setPixmap(unknownShirt);
-    lb->setPixmap(unknownShirt);
-    rb->setPixmap(unknownShirt);
-    lcb->setPixmap(unknownShirt);
-    rcb->setPixmap(unknownShirt);
-    lw->setPixmap(unknownShirt);
-    rw->setPixmap(unknownShirt);
-    lcm->setPixmap(unknownShirt);
-    rcm->setPixmap(unknownShirt);
-    ls->setPixmap(unknownShirt);
-    rs->setPixmap(unknownShirt);
-}
-
-QGroupBox* Tippeligaen::createTeamWikiGroupBox(){
-    QGroupBox *box = new QGroupBox(tr("Wiki"));
-    //Teste litt her updateTeamWiki
-    wiki = new QWebView();
-    //playerName->setText(url());
-    //QString url = selectedTeamUrl;
-    wiki->load(QUrl("http://www.vg.no"));
-    wiki->show();
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(wiki, 0,0);
-    box->setLayout(layout);
-    return box;
+    keeper->setPixmap(unknownShirt);
+    rightBack->setPixmap(unknownShirt);
+    rightCenterBack->setPixmap(unknownShirt);
+    leftCenterBack->setPixmap(unknownShirt);
+    leftBack->setPixmap(unknownShirt);
+    rightWing->setPixmap(unknownShirt);
+    rightCenterMidfielder->setPixmap(unknownShirt);
+    leftCenterMidfielder->setPixmap(unknownShirt);
+    leftWing->setPixmap(unknownShirt);
+    rightStriker->setPixmap(unknownShirt);
+    leftStriker->setPixmap(unknownShirt);
 }
 
 void Tippeligaen::createTeamWikiView(){
@@ -495,7 +486,6 @@ void Tippeligaen::actionShowTeamOfTheRound_triggered(){
         actionShowTeamOfTheRound->setChecked(true);
     }
 
-
     teamOfTheRound->show();
     teamWiki->hide();
     teamOfTheRoundChooseTeamGroupBox->hide();
@@ -592,52 +582,52 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
     switch(positionId){
     case 0:
         insertPlayerToTeamOfTheRound();
-        k->setPixmap(QPixmap(picUrl));
+        keeper->setPixmap(QPixmap(picUrl));
         break;
     case 1:
         insertPlayerToTeamOfTheRound();
-        rb->setPixmap(QPixmap(picUrl));
+        rightBack->setPixmap(QPixmap(picUrl));
         break;
     case 2:
         insertPlayerToTeamOfTheRound();
-        lb->setPixmap(QPixmap(picUrl));
+        leftBack->setPixmap(QPixmap(picUrl));
         break;
     case 3:
         insertPlayerToTeamOfTheRound();
-        lcb->setPixmap(QPixmap(picUrl));
+        leftCenterBack->setPixmap(QPixmap(picUrl));
         break;
     case 4:
         insertPlayerToTeamOfTheRound();
-        rcb->setPixmap(QPixmap(picUrl));
+        rightCenterBack->setPixmap(QPixmap(picUrl));
         break;
     case 5:
         insertPlayerToTeamOfTheRound();
-        rw->setPixmap(QPixmap(picUrl));
+        rightWing->setPixmap(QPixmap(picUrl));
         break;
     case 6:
         insertPlayerToTeamOfTheRound();
-        lw->setPixmap(QPixmap(picUrl));
+        leftWing->setPixmap(QPixmap(picUrl));
         break;
     case 7:
         insertPlayerToTeamOfTheRound();
-        lcm->setPixmap(QPixmap(picUrl));
+        leftCenterMidfielder->setPixmap(QPixmap(picUrl));
         break;
     case 8:
         insertPlayerToTeamOfTheRound();
-        rcm->setPixmap(QPixmap(picUrl));
+        rightCenterMidfielder->setPixmap(QPixmap(picUrl));
         break;
     case 9:
         insertPlayerToTeamOfTheRound();
-        ls->setPixmap(QPixmap(picUrl));
+        leftStriker->setPixmap(QPixmap(picUrl));
         break;
     case 10:
         insertPlayerToTeamOfTheRound();
-        rs->setPixmap(QPixmap(picUrl));
+        rightStriker->setPixmap(QPixmap(picUrl));
         break;
     }
 }
 
-void Tippeligaen::createTeamOfTheRoundChoosTeamGroupBox(){
+void Tippeligaen::createTeamOfTheRoundChooseTeamGroupBox(){
     teamOfTheRoundChooseTeamGroupBox = new QGroupBox(tr("Tippeligalag"));;
     teamOfTheRoundChooseTeamComboBox = new QComboBox;
     /*teamOfTheRoundModel = new QSqlRelationalTableModel(this);
@@ -672,9 +662,7 @@ void Tippeligaen::createTeamOfTheRoundShowTeam(){
     createTeamOfTheRoundShowTeamGroupBox = new QGroupBox(tr("Rundens lag"));
 
     textbrowser = new QTextBrowser;
-
     updateTeamOfTheRoundTable();
-
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(textbrowser, 0,0);
     createTeamOfTheRoundShowTeamGroupBox->setLayout(layout);

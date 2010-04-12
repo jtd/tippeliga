@@ -27,7 +27,7 @@ public:
     void createTeamInfoGroupBox();
     void createMakeNewPlayerGroupBox();
     void createMakeNewPlayerView();
-    void createTeamOfTheRoundChoosTeamGroupBox();
+    void createTeamOfTheRoundChooseTeamGroupBox();
     void createTeamPlayersGroupBox();
     void makeUnknownShirt();
     void insertPlayerToTeamOfTheRound();
@@ -43,7 +43,6 @@ public:
     QGroupBox *players;
     //QGroupBox *createTeamPlayersGroupBox();
     QGroupBox *createTeamOfTheRoundGroupBox();
-    QGroupBox *createTeamWikiGroupBox();
     QGroupBox *createTeamOfTheRoundShowTeamGroupBox;
     QTableWidget *teamOfTheRoundTableWidget;
     QTextBrowser *textbrowser;
@@ -81,17 +80,17 @@ public:
     QPushButton *addToTeamOfTheRoundButton;
 
     //Legger til ting som skal ligge i rundens lag.
-    QLabel *k;
-    QLabel *lb;
-    QLabel *lcb;
-    QLabel *rb;
-    QLabel *rcb;
-    QLabel *lw;
-    QLabel *rw;
-    QLabel *lcm;
-    QLabel *rcm;
-    QLabel *ls;
-    QLabel *rs;
+    QLabel *keeper;
+    QLabel *rightBack;
+    QLabel *rightCenterBack;
+    QLabel *leftCenterBack;
+    QLabel *leftBack;
+    QLabel *rightWing;
+    QLabel *rightCenterMidfielder;
+    QLabel *leftCenterMidfielder;
+    QLabel *leftWing;
+    QLabel *rightStriker;
+    QLabel *leftStriker;
     QLabel *teamOfTheRoundIdLabel;
 
     int positionId;
@@ -119,6 +118,9 @@ private:
     QString _url;
 
 private slots:
+    void doAtStartUp();
+    void createLayout();
+
     void updatePlayerTableView(int row);
     void updateTeamWiki(int row);
     void updatePlayerInformation();
