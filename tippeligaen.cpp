@@ -21,7 +21,6 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     createTeamWikiView();
     createTeamOfTheRoundShowTeam();
 
-
     makeWindowMenues();
     createMakeNewPlayerView();
 
@@ -65,11 +64,18 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
 
 Tippeligaen::~Tippeligaen(){
     delete ui;
-}
-
-void Tippeligaen::createLayout(){
-
-
+    delete _keeper;
+    delete _rightBack;
+    delete _rightCenterBack;
+    delete _leftCenterBack;
+    delete _leftBack;
+    delete _rightWing;
+    delete _rightCenterMidfielder;
+    delete _leftCenterMidfielder;
+    delete _leftWing;
+    delete _rightStriker;
+    delete _leftStriker;
+    delete _teamOfTheRoundIdLabel;
 }
 
 void Tippeligaen::doAtStartUp(){
@@ -82,15 +88,150 @@ void Tippeligaen::doAtStartUp(){
     updateTeamWiki(0);
 }
 
-void Tippeligaen::setUrl(QString url)
-{
+void Tippeligaen::setUrl(QString url){
     _url = url;
 }
-
 QString Tippeligaen::url()
 {
     return _url;
 }
+
+void Tippeligaen::setKeeper(QLabel *keeper){
+    _keeper = keeper;
+}
+QLabel* Tippeligaen::keeper(){
+    return _keeper;
+}
+void Tippeligaen::setRightBack(QLabel *rightBack){
+    _rightBack = rightBack;
+}
+QLabel* Tippeligaen::rightBack(){
+    return _rightBack;
+}
+void Tippeligaen::setRightCenterBack(QLabel *rightCenterBack){
+    _rightCenterBack = rightCenterBack;
+}
+QLabel* Tippeligaen::rightCenterBack(){
+    return _rightCenterBack;
+}
+void Tippeligaen::setLeftCenterBack(QLabel *leftCenterBack){
+    _leftCenterBack = leftCenterBack;
+}
+QLabel* Tippeligaen::leftCenterBack(){
+    return _leftCenterBack;
+}
+void Tippeligaen::setLeftBack(QLabel *leftBack){
+    _leftBack = leftBack;
+}
+QLabel* Tippeligaen::leftBack(){
+    return _leftBack;
+}
+void Tippeligaen::setRightWing(QLabel *rightWing){
+    _rightWing = rightWing;
+}
+QLabel* Tippeligaen::rightWing(){
+    return _rightWing;
+}
+void Tippeligaen::setRightCenterMidfielder(QLabel *rightCenterMidfielder){
+    _rightCenterMidfielder = rightCenterMidfielder;
+}
+QLabel* Tippeligaen::rightCenterMidfielder(){
+    return _rightCenterMidfielder;
+}
+void Tippeligaen::setLeftCenterMidfielder(QLabel *leftCenterMidfielder){
+    _leftCenterMidfielder = leftCenterMidfielder;
+}
+QLabel* Tippeligaen::leftCenterMidfielder(){
+    return _leftCenterMidfielder;
+}
+void Tippeligaen::setLeftWing(QLabel *leftWing){
+    _leftWing = leftWing;
+}
+QLabel* Tippeligaen::leftWing(){
+    return _leftWing;
+}
+void Tippeligaen::setRightStriker(QLabel *rightStriker){
+    _rightStriker = rightStriker;
+}
+QLabel* Tippeligaen::rightStriker(){
+    return _rightStriker;
+}
+void Tippeligaen::setLeftStriker(QLabel *leftStriker){
+    _leftStriker = leftStriker;
+}
+QLabel* Tippeligaen::leftStriker(){
+    return _leftStriker;
+}
+void Tippeligaen::setTeamOfTheRoundIdLabel(QLabel *teamOfTheRoundIdLabel){
+    _teamOfTheRoundIdLabel = teamOfTheRoundIdLabel;
+}
+QLabel* Tippeligaen::teamOfTheRoundIdLabel(){
+    return _teamOfTheRoundIdLabel;
+}
+
+void Tippeligaen::setShirtNumberLabel(QLabel *shirtNumberLabel){
+    _shirtNumberLabel = shirtNumberLabel;
+}
+QLabel* Tippeligaen::shirtNumberLabel(){
+    return _shirtNumberLabel;
+}
+
+void Tippeligaen::setPlayerFirstNameLabel(QLabel *playerFirstNameLabel){
+    _playerFirstNameLabel = playerFirstNameLabel;
+}
+QLabel* Tippeligaen::playerFirstNameLabel(){
+    return _playerFirstNameLabel;
+}
+
+void Tippeligaen::setPlayerLastNameLabel(QLabel *playerLastNameLabel){
+    _playerLastNameLabel = playerLastNameLabel;
+}
+QLabel* Tippeligaen::playerLastNameLabel(){
+    return _playerLastNameLabel;
+}
+
+void Tippeligaen::setPlayerNameLabel(QLabel *playerNameLabel){
+    _playerNameLabel = playerNameLabel;
+}
+QLabel* Tippeligaen::playerNameLabel(){
+    return _playerNameLabel;
+}
+
+void Tippeligaen::setPlayerTeamLabel(QLabel *playerTeamLabel){
+    _playerTeamLabel = playerTeamLabel;
+}
+QLabel* Tippeligaen::playerTeamLabel(){
+    return _playerTeamLabel;
+}
+
+void Tippeligaen::setPlayerPositionLabel(QLabel *playerPositionLabel){
+    _playerPositionLabel = playerPositionLabel;
+}
+QLabel* Tippeligaen::playerPositionLabel(){
+    return _playerPositionLabel;
+}
+
+void Tippeligaen::setPlayerName(QLabel *playerName){
+    _playerName = playerName;
+}
+QLabel* Tippeligaen::playerName(){
+    return _playerName;
+}
+
+void Tippeligaen::setPlayerTeam(QLabel *playerTeam){
+    _playerTeam = playerTeam;
+}
+QLabel* Tippeligaen::playerTeam(){
+    return _playerTeam;
+}
+
+void Tippeligaen::setPlayerPosition(QLabel *playerPosition){
+    _playerPosition = playerPosition;
+}
+QLabel* Tippeligaen::playerPosition(){
+    return _playerPosition;
+}
+
 
 void Tippeligaen::changeEvent(QEvent *e){
     QMainWindow::changeEvent(e);
@@ -102,7 +243,6 @@ void Tippeligaen::changeEvent(QEvent *e){
         break;
     }
 }
-
 
 QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
     teamComboBox = new QComboBox;
@@ -134,7 +274,7 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerModel->setTable("spiller");
     playerModel->setRelation(Spiller_LagID, QSqlRelation("lag", "id", "lagnavn"));
     playerModel->setSort(Spiller_Id, Qt::AscendingOrder);
-    playerModel->setHeaderData(Spiller_Id, Qt::Horizontal, tr("id"));
+    playerModel->setHeaderData(Spiller_Id, Qt::Horizontal, tr("Id"));
     playerModel->setHeaderData(Spiller_Fornavn, Qt::Horizontal, tr("Fornavn"));
     playerModel->setHeaderData(Spiller_Etternavn, Qt::Horizontal, tr("Etternavn"));
     playerModel->setHeaderData(Spiller_Draktnummer, Qt::Horizontal, tr("Draktnummer"));
@@ -146,8 +286,9 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerTableView->setModel(playerModel);
     playerTableView->setSelectionMode(QAbstractItemView::SingleSelection);
     playerTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    //playerTableView->setColumnHidden(Spiller_LagID, true);
-    //playerTableView->setColumnHidden(Spiller_Id, true);
+    playerTableView->setColumnHidden(Spiller_Id, true);
+    playerTableView->setColumnHidden(Spiller_LagID, true);
+    playerTableView->setColumnHidden(Spiller_PosisjonsId, true);
     playerTableView->resizeColumnsToContents();
     playerTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     playerTableView->setSortingEnabled(true);
@@ -191,19 +332,19 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     //fieldLabel->show();
     //field->show();
 
-    keeper = new QLabel;
-    rightBack = new QLabel;
-    rightCenterBack = new QLabel;
-    leftCenterBack = new QLabel;
-    leftBack = new QLabel;
-    leftWing = new QLabel;
-    rightWing = new QLabel;
-    rightCenterMidfielder = new QLabel;
-    leftCenterMidfielder = new QLabel;
-    leftStriker = new QLabel;
-    rightStriker = new QLabel;
-    teamOfTheRoundIdLabel= new QLabel;
-    teamOfTheRoundIdLabel->setText("Jasså du!");
+    _keeper = new QLabel;
+    _rightBack = new QLabel;
+    _rightCenterBack = new QLabel;
+    _leftCenterBack = new QLabel;
+    _leftBack = new QLabel;
+    _leftWing = new QLabel;
+    _rightWing = new QLabel;
+    _rightCenterMidfielder = new QLabel;
+    _leftCenterMidfielder = new QLabel;
+    _leftStriker = new QLabel;
+    _rightStriker = new QLabel;
+    _teamOfTheRoundIdLabel= new QLabel;
+    _teamOfTheRoundIdLabel->setText("Ukens lag");
 
     makeUnknownShirt();
 
@@ -211,35 +352,35 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGridLayout *layout = new QGridLayout;
     //QBoxLayout *layout = new QBoxLayout;
     //layout->addWidget(field);//, 0,0);
-    layout->addWidget(keeper, 0, 2, 1, 4);
-    layout->addWidget(rightBack, 1, 0);
-    layout->addWidget(rightCenterBack, 1, 1);
-    layout->addWidget(leftCenterBack, 1, 3);
-    layout->addWidget(leftBack, 1, 4);
-    layout->addWidget(rightWing, 2, 0);
-    layout->addWidget(rightCenterMidfielder, 2, 1);
-    layout->addWidget(leftCenterMidfielder, 2, 3);
-    layout->addWidget(leftWing, 2, 4);
-    layout->addWidget(rightStriker, 3, 1);
-    layout->addWidget(leftStriker, 3, 3);
-    layout->addWidget(teamOfTheRoundIdLabel, 4, 0);
+    layout->addWidget(_keeper, 0, 2, 1, 4);
+    layout->addWidget(_rightBack, 1, 0);
+    layout->addWidget(_rightCenterBack, 1, 1);
+    layout->addWidget(_leftCenterBack, 1, 3);
+    layout->addWidget(_leftBack, 1, 4);
+    layout->addWidget(_rightWing, 2, 0);
+    layout->addWidget(_rightCenterMidfielder, 2, 1);
+    layout->addWidget(_leftCenterMidfielder, 2, 3);
+    layout->addWidget(_leftWing, 2, 4);
+    layout->addWidget(_rightStriker, 3, 1);
+    layout->addWidget(_leftStriker, 3, 3);
+    layout->addWidget(_teamOfTheRoundIdLabel, 4, 0);
     box->setLayout(layout);
     return box;
 }
 
 void Tippeligaen::makeUnknownShirt(){
     QPixmap unknownShirt(":/bilder/Unknown.png");
-    keeper->setPixmap(unknownShirt);
-    rightBack->setPixmap(unknownShirt);
-    rightCenterBack->setPixmap(unknownShirt);
-    leftCenterBack->setPixmap(unknownShirt);
-    leftBack->setPixmap(unknownShirt);
-    rightWing->setPixmap(unknownShirt);
-    rightCenterMidfielder->setPixmap(unknownShirt);
-    leftCenterMidfielder->setPixmap(unknownShirt);
-    leftWing->setPixmap(unknownShirt);
-    rightStriker->setPixmap(unknownShirt);
-    leftStriker->setPixmap(unknownShirt);
+    keeper()->setPixmap(unknownShirt);
+    rightBack()->setPixmap(unknownShirt);
+    rightCenterBack()->setPixmap(unknownShirt);
+    leftCenterBack()->setPixmap(unknownShirt);
+    leftBack()->setPixmap(unknownShirt);
+    rightWing()->setPixmap(unknownShirt);
+    rightCenterMidfielder()->setPixmap(unknownShirt);
+    leftCenterMidfielder()->setPixmap(unknownShirt);
+    leftWing()->setPixmap(unknownShirt);
+    rightStriker()->setPixmap(unknownShirt);
+    leftStriker()->setPixmap(unknownShirt);
 }
 
 void Tippeligaen::createTeamWikiView(){
@@ -253,14 +394,14 @@ void Tippeligaen::createMakeNewPlayerView(){
     //teamInfo->hide();
     makePlayerGroupBox = new QGroupBox(tr("Registrer ny spiller"));
 
-    playerFirstNameLabel = new QLabel;
-    playerFirstNameLabel->setText(tr("Fornavn: "));
-    playerLastNameLabel = new QLabel;
-    playerLastNameLabel->setText(tr("Etternavn: "));
-    shirtNumberLabel = new QLabel;
-    shirtNumberLabel->setText(tr("Draktnummer: "));
-    playerPositionLabel = new QLabel;
-    playerPositionLabel->setText(tr("Posisjon: "));
+    _playerFirstNameLabel = new QLabel;
+    _playerFirstNameLabel->setText(tr("Fornavn: "));
+    _playerLastNameLabel = new QLabel;
+    _playerLastNameLabel->setText(tr("Etternavn: "));
+    _shirtNumberLabel = new QLabel;
+    _shirtNumberLabel->setText(tr("Draktnummer: "));
+    _playerPositionLabel = new QLabel;
+    _playerPositionLabel->setText(tr("Posisjon: "));
     createNewPlayer = new QPushButton;
     createNewPlayer->setText(tr("Legg til ny spiller"));
 
@@ -282,13 +423,13 @@ void Tippeligaen::createMakeNewPlayerView(){
     playerPositionEdit->insertItem(10, tr("Høyre Spiss"));
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(playerFirstNameLabel, 0, 0);
+    layout->addWidget(playerFirstNameLabel(), 0, 0);
     layout->addWidget(playerFirstNameEdit, 0, 1);
-    layout->addWidget(playerLastNameLabel, 1, 0);
+    layout->addWidget(playerLastNameLabel(), 1, 0);
     layout->addWidget(playerLastNameEdit, 1, 1);
-    layout->addWidget(playerPositionLabel, 2, 0);
+    layout->addWidget(playerPositionLabel(), 2, 0);
     layout->addWidget(playerPositionEdit, 2, 1);
-    layout->addWidget(shirtNumberLabel, 3, 0);
+    layout->addWidget(shirtNumberLabel(), 3, 0);
     layout->addWidget(shirtNumberEdit, 3, 1);
     layout->addWidget(createNewPlayer, 4, 0);
     makePlayerGroupBox->setLayout(layout);
@@ -306,29 +447,29 @@ void Tippeligaen::createTeamInfoGroupBox(){
     shirtLabel->setPixmap(QPixmap(":/bilder/Aalesund.png"));
 
     shirt->addLabel(shirtLabel);
-    playerNameLabel = new QLabel;
-    playerNameLabel->setText(tr("Spillernavn: "));
-    playerPositionLabel = new QLabel;
-    playerPositionLabel->setText(tr("Posisjon: "));
-    playerTeamLabel = new QLabel;
-    playerTeamLabel->setText(tr("Lag: "));
+    _playerNameLabel = new QLabel;
+    _playerNameLabel->setText(tr("Spillernavn: "));
+    _playerPositionLabel = new QLabel;
+    _playerPositionLabel->setText(tr("Posisjon: "));
+    _playerTeamLabel = new QLabel;
+    _playerTeamLabel->setText(tr("Lag: "));
 
     deletePlayerButton = new QPushButton;
     deletePlayerButton->setText(tr("Slett"));
     addToTeamOfTheRoundButton = new QPushButton;
     addToTeamOfTheRoundButton->setText(tr("Legg til i rundens lag"));
 
-    playerName = new QLabel;
-    playerTeam = new QLabel;
-    playerPosition = new QLabel;
+    _playerName = new QLabel;
+    _playerTeam = new QLabel;
+    _playerPosition = new QLabel;
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(playerNameLabel, 0, 0);
-    layout->addWidget(playerName, 0, 1);
-    layout->addWidget(playerPositionLabel, 1, 0);
-    layout->addWidget(playerPosition, 1, 1);
-    layout->addWidget(playerTeamLabel, 2, 0);
-    layout->addWidget(playerTeam, 2, 1);
+    layout->addWidget(playerNameLabel(), 0, 0);
+    layout->addWidget(playerName(), 0, 1);
+    layout->addWidget(playerPositionLabel(), 1, 0);
+    layout->addWidget(playerPosition(), 1, 1);
+    layout->addWidget(playerTeamLabel(), 2, 0);
+    layout->addWidget(playerTeam(), 2, 1);
     layout->addWidget(deletePlayerButton, 3, 0);
     layout->addWidget(addToTeamOfTheRoundButton, 3, 1);
     layout->addWidget(shirt, 0, 2, 4, 1);
@@ -368,7 +509,7 @@ void Tippeligaen::updateTeamWiki(int row){
     QSqlRecord record = teamModel->record(row);
     if(index.isValid()){
          QString teamUrl = record.value("nettside").toString();
-         playerName->setText(teamUrl);
+         _playerName->setText(teamUrl);
          wiki = new QWebView();
          wiki->load(QUrl(teamUrl));
          //wiki->show();
@@ -394,9 +535,9 @@ void Tippeligaen::updatePlayerInformation(){
 
     positionId = record.value("posisjonsId").toInt();
 
-    playerName->setText(tr("%1 %2").arg(playerFirstNameString).arg(playerLastNameString));
-    playerTeam->setText(tr("%1").arg(teamString));
-    playerPosition->setText(tr("%1").arg(playerPositionString));
+    _playerName->setText(tr("%1 %2").arg(playerFirstNameString).arg(playerLastNameString));
+    _playerTeam->setText(tr("%1").arg(teamString));
+    _playerPosition->setText(tr("%1").arg(playerPositionString));
 
     QString picUrl = ":/bilder/" +teamString +".png";
     shirtLabel->setPixmap(QPixmap(picUrl));
@@ -450,7 +591,7 @@ void Tippeligaen::connectMainMenuSlots() {
     connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
             this, SLOT(actionAddNewTeamOfTheRound_triggered()));
     /*connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
-            this, SLOT(updateTeamOfTheRoundChoosTeamGroupBox()));*/
+            this, SLOT(updateTeamOfTheRoundChooseTeamGroupBox()));*/
 }
 
 void Tippeligaen::deletePlayer(){
@@ -518,10 +659,10 @@ void Tippeligaen::actionAddNewTeamOfTheRound_triggered(){
 
     teamOfTheRoundId = 1;
     QString teamOfTheRoundName = "Lag"+QString::number(teamOfTheRoundId);
-    teamOfTheRoundIdLabel->setText(teamOfTheRoundName);    
+    teamOfTheRoundIdLabel()->setText(teamOfTheRoundName);
     insertPlayerToTeamOfTheRound();
     connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
-            this, SLOT(updateTeamOfTheRoundChoosTeamGroupBox()));
+            this, SLOT(updateTeamOfTheRoundChooseTeamGroupBox()));
     teamOfTheRoundChooseTeamGroupBox->show();
     createTeamOfTheRoundShowTeamGroupBox->show();
 
@@ -569,10 +710,10 @@ void Tippeligaen::insertPlayerToTeamOfTheRound(){
     QSqlQuery teamOfTheRoundRow;
     teamOfTheRoundRow.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
                          "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn");
-    teamOfTheRoundRow.bindValue(":rundensLagNavn", teamOfTheRoundIdLabel->text());
-    teamOfTheRoundRow.bindValue(":navn", playerNameLabel->text());
-    teamOfTheRoundRow.bindValue(":posisjon", playerPosition->text());
-    teamOfTheRoundRow.bindValue(":lagNavn", playerTeam->text());
+    teamOfTheRoundRow.bindValue(":rundensLagNavn", teamOfTheRoundIdLabel()->text());
+    teamOfTheRoundRow.bindValue(":navn", playerNameLabel()->text());
+    teamOfTheRoundRow.bindValue(":posisjon", playerPosition()->text());
+    teamOfTheRoundRow.bindValue(":lagNavn", playerTeam()->text());
     teamOfTheRoundRow.exec();
 }
 
@@ -582,47 +723,47 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
     switch(positionId){
     case 0:
         insertPlayerToTeamOfTheRound();
-        keeper->setPixmap(QPixmap(picUrl));
+        keeper()->setPixmap(QPixmap(picUrl));
         break;
     case 1:
         insertPlayerToTeamOfTheRound();
-        rightBack->setPixmap(QPixmap(picUrl));
+        rightBack()->setPixmap(QPixmap(picUrl));
         break;
     case 2:
         insertPlayerToTeamOfTheRound();
-        leftBack->setPixmap(QPixmap(picUrl));
+        leftBack()->setPixmap(QPixmap(picUrl));
         break;
     case 3:
         insertPlayerToTeamOfTheRound();
-        leftCenterBack->setPixmap(QPixmap(picUrl));
+        leftCenterBack()->setPixmap(QPixmap(picUrl));
         break;
     case 4:
         insertPlayerToTeamOfTheRound();
-        rightCenterBack->setPixmap(QPixmap(picUrl));
+        rightCenterBack()->setPixmap(QPixmap(picUrl));
         break;
     case 5:
         insertPlayerToTeamOfTheRound();
-        rightWing->setPixmap(QPixmap(picUrl));
+        rightWing()->setPixmap(QPixmap(picUrl));
         break;
     case 6:
         insertPlayerToTeamOfTheRound();
-        leftWing->setPixmap(QPixmap(picUrl));
+        leftWing()->setPixmap(QPixmap(picUrl));
         break;
     case 7:
         insertPlayerToTeamOfTheRound();
-        leftCenterMidfielder->setPixmap(QPixmap(picUrl));
+        leftCenterMidfielder()->setPixmap(QPixmap(picUrl));
         break;
     case 8:
         insertPlayerToTeamOfTheRound();
-        rightCenterMidfielder->setPixmap(QPixmap(picUrl));
+        rightCenterMidfielder()->setPixmap(QPixmap(picUrl));
         break;
     case 9:
         insertPlayerToTeamOfTheRound();
-        leftStriker->setPixmap(QPixmap(picUrl));
+        leftStriker()->setPixmap(QPixmap(picUrl));
         break;
     case 10:
         insertPlayerToTeamOfTheRound();
-        rightStriker->setPixmap(QPixmap(picUrl));
+        rightStriker()->setPixmap(QPixmap(picUrl));
         break;
     }
 }
@@ -650,7 +791,7 @@ void Tippeligaen::createTeamOfTheRoundChooseTeamGroupBox(){
     teamOfTheRoundChooseTeamGroupBox->setLayout(layout);
 }
 
-void Tippeligaen::updateTeamOfTheRoundChoosTeamGroupBox(){
+void Tippeligaen::updateTeamOfTheRoundChooseTeamGroupBox(){
     teamOfTheRoundChooseTeamComboBox->clear();
     QSqlQuery teamOfTheRound ("select * from rundenslag group by rundensLagNavn" );
     while (teamOfTheRound.next()) {

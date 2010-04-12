@@ -20,7 +20,55 @@ class Tippeligaen : public QMainWindow {
 public:
     Tippeligaen(QWidget *parent = 0);
     ~Tippeligaen();
+
     void setUrl(QString url);
+    QString url();
+    void setTeamOfTheRoundIdLabel(QLabel *teamOfTheRoundIdLabel);
+    QLabel *teamOfTheRoundIdLabel();
+
+    void setKeeper(QLabel *keeper);
+    void setRightBack(QLabel *rightBack);
+    void setRightCenterBack(QLabel *rightCenterBack);
+    void setLeftCenterBack(QLabel *leftCenterBack);
+    void setLeftBack(QLabel *leftBack);
+    void setRightWing(QLabel *rightWing);
+    void setRightCenterMidfielder(QLabel *rightCenterMidfielder);
+    void setLeftCenterMidfielder(QLabel *leftCenterMidfielder);
+    void setLeftWing(QLabel *leftWing);
+    void setRightStriker(QLabel *rightStriker);
+    void setLeftStriker(QLabel *leftStriker);
+    QLabel *keeper();
+    QLabel *rightBack();
+    QLabel *rightCenterBack();
+    QLabel *leftCenterBack();
+    QLabel *leftBack();
+    QLabel *rightWing();
+    QLabel *rightCenterMidfielder();
+    QLabel *leftCenterMidfielder();
+    QLabel *leftWing();
+    QLabel *rightStriker();
+    QLabel *leftStriker();
+
+    void setShirtNumberLabel(QLabel *shirtNumberLabel);
+    void setPlayerFirstNameLabel(QLabel *playerFirstNameLabel);
+    void setPlayerLastNameLabel(QLabel *playerLastNameLabel);
+    void setPlayerNameLabel(QLabel *playerNameLabel);
+    void setPlayerTeamLabel(QLabel *playerTeamLabel);
+    void setPlayerPositionLabel(QLabel *playerPositionLabel);
+    void setPlayerName(QLabel *playerName);
+    void setPlayerTeam(QLabel *playerTeam);
+    void setPlayerPosition(QLabel *playerPosition);
+    QLabel *shirtNumberLabel();
+    QLabel *playerFirstNameLabel();
+    QLabel *playerLastNameLabel();
+    QLabel *playerNameLabel();
+    QLabel *playerTeamLabel();
+    QLabel *playerPositionLabel();
+    QLabel *playerName();
+    QLabel *playerTeam();
+    QLabel *playerPosition();
+
+
     void createTeamWikiView();
 
     void makeWindowMenues();
@@ -33,7 +81,7 @@ public:
     void insertPlayerToTeamOfTheRound();
     void createTeamOfTheRoundShowTeam();
 
-    QString url();
+
 
     QComboBox *teamComboBox;
     QGroupBox *createTeamChooserGroupBox();
@@ -61,37 +109,19 @@ public:
     QGroupBox *teamWiki;
     QGridLayout *wikiLayout;
     QGroupBox *makePlayerGroupBox;
-    QLabel *playerNameLabel, *playerTeamLabel, *playerPositionLabel;
-    QLabel *playerName;
-    QLabel *playerTeam;
-    QLabel *playerPosition;
     QString selectedTeamUrl;
 
     QLineEdit *playerFirstNameEdit;
     QLineEdit *playerLastNameEdit;
-    QLabel *shirtNumberLabel;
     QComboBox *playerPositionEdit;
     QLineEdit *shirtNumberEdit;
-    QLabel *playerFirstNameLabel;
-    QLabel *playerLastNameLabel;
+
     QPushButton *createNewPlayer;
     QGridLayout *mainLayout;
     QPushButton *deletePlayerButton;
     QPushButton *addToTeamOfTheRoundButton;
 
     //Legger til ting som skal ligge i rundens lag.
-    QLabel *keeper;
-    QLabel *rightBack;
-    QLabel *rightCenterBack;
-    QLabel *leftCenterBack;
-    QLabel *leftBack;
-    QLabel *rightWing;
-    QLabel *rightCenterMidfielder;
-    QLabel *leftCenterMidfielder;
-    QLabel *leftWing;
-    QLabel *rightStriker;
-    QLabel *leftStriker;
-    QLabel *teamOfTheRoundIdLabel;
 
     int positionId;
     int teamOfTheRoundId;
@@ -117,9 +147,32 @@ private:
     Ui::Tippeligaen *ui;
     QString _url;
 
+    QLabel *_teamOfTheRoundIdLabel;
+
+    QLabel *_keeper;
+    QLabel *_rightBack;
+    QLabel *_rightCenterBack;
+    QLabel *_leftCenterBack;
+    QLabel *_leftBack;
+    QLabel *_rightWing;
+    QLabel *_rightCenterMidfielder;
+    QLabel *_leftCenterMidfielder;
+    QLabel *_leftWing;
+    QLabel *_rightStriker;
+    QLabel *_leftStriker;
+
+    QLabel *_shirtNumberLabel;
+    QLabel *_playerFirstNameLabel;
+    QLabel *_playerLastNameLabel;
+    QLabel *_playerNameLabel;
+    QLabel *_playerTeamLabel;
+    QLabel *_playerPositionLabel;
+    QLabel *_playerName;
+    QLabel *_playerTeam;
+    QLabel *_playerPosition;
+
 private slots:
     void doAtStartUp();
-    void createLayout();
 
     void updatePlayerTableView(int row);
     void updateTeamWiki(int row);
@@ -127,8 +180,9 @@ private slots:
     void deletePlayer();
     void connectMainMenuSlots();
     void addPlayerToTeamOfTheRound();
-    void updateTeamOfTheRoundChoosTeamGroupBox();
+    void updateTeamOfTheRoundChooseTeamGroupBox();
     void updateTeamOfTheRoundTable();
+
     //Menu-actions
     void actionCreatePlayer_triggered();
     void actionExitApplication_triggered();
