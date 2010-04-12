@@ -489,6 +489,9 @@ void Tippeligaen::actionShowTeamOfTheRound_triggered(){
     teamOfTheRound->show();
     teamWiki->hide();
     teamOfTheRoundChooseTeamGroupBox->hide();
+    createTeamOfTheRoundShowTeamGroupBox->hide();
+
+
     actionShowTeamInfo->setChecked(false);
 }
 
@@ -500,6 +503,7 @@ void Tippeligaen::actionShowTeamInfo_triggered(){
     teamWiki->show();
     teamOfTheRound->hide();
     teamOfTheRoundChooseTeamGroupBox->hide();
+    createTeamOfTheRoundShowTeamGroupBox->hide();
     actionShowTeamOfTheRound->setChecked(false);
 }
 
@@ -569,7 +573,7 @@ void Tippeligaen::insertPlayerToTeamOfTheRound(){
     QSqlQuery teamOfTheRoundRow;
     teamOfTheRoundRow.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
                          "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn");
-    teamOfTheRoundRow.bindValue(":rundensLagNavn", teamOfTheRoundIdLabel->text());
+    teamOfTheRoundRow.bindValue(":rundensLagNavn", "Lag2");
     teamOfTheRoundRow.bindValue(":navn", playerNameLabel->text());
     teamOfTheRoundRow.bindValue(":posisjon", playerPosition->text());
     teamOfTheRoundRow.bindValue(":lagNavn", playerTeam->text());
@@ -628,18 +632,8 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
 }
 
 void Tippeligaen::createTeamOfTheRoundChooseTeamGroupBox(){
-    teamOfTheRoundChooseTeamGroupBox = new QGroupBox(tr("Tippeligalag"));;
+    teamOfTheRoundChooseTeamGroupBox = new QGroupBox(tr("Rundenslag"));;
     teamOfTheRoundChooseTeamComboBox = new QComboBox;
-    /*teamOfTheRoundModel = new QSqlRelationalTableModel(this);
-    teamOfTheRoundModel->setTable("rundenslag");
-    teamOfTheRoundModel->setRelation(0, QSqlRelation("rundenslag", "id", "rundensLagNavn"));
-    teamOfTheRoundModel->setSort(1, Qt::AscendingOrder);
-    teamOfTheRoundModel->select();
-
-    teamOfTheRoundChooseTeamComboBox->setModel(teamOfTheRoundModel);*/
-
-    /*connect(teamComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(updatePlayerTableView(int)));*/
     QSqlQuery teamOfTheRound ("select * from rundenslag group by rundensLagNavn" );
     while (teamOfTheRound.next()) {
         teamOfTheRoundChooseTeamComboBox->addItem(teamOfTheRound.value(1).toString());
@@ -670,9 +664,10 @@ void Tippeligaen::createTeamOfTheRoundShowTeam(){
 
 void Tippeligaen::updateTeamOfTheRoundTable(){
     QString htmlTable("");
-    htmlTable.append("<table width=250 border=1>");
-    htmlTable.append("<tr><td>rundensLagNavn</td><td>Spillernavn</td><td>posisjon</td><td>navn på lag</td></tr>");
+    htmlTable.append("<table width=400 border=1>");
+    htmlTable.append("<tr><td>Rundenslag</td><td>Spillernavn</td><td>Posisjon</td><td>Navn på lag</td></tr>");
     QSqlQuery teamOfTheRound ("select * from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText() + "'");
+    QSqlQuery test ("select rundensLagNavn, count(*) as antallLag from rundenslag group by rundensLagNavn ");
     while (teamOfTheRound.next()) {
         htmlTable.append("<tr><td>");
         htmlTable.append(teamOfTheRound.value(1).toString());
