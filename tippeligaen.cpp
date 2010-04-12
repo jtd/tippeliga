@@ -158,8 +158,16 @@ void Tippeligaen::createTeamPlayersGroupBox(){
 
 QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Rundens lag"));
-
     field = new Field();
+
+    QLabel *fieldImage = new QLabel();
+    fieldImage->setPixmap(QPixmap(":/bilder/field.png"));
+    box->setStyleSheet("QGroupBox { "
+                            "background-image: url(:/bilder/field.png);"
+                            "background-repeat: none;"
+                            "border: 20px solid;"
+                            "border-color: none; "
+                        "}");
 
     //fieldLabel = new QLabel(field);
     //fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
@@ -188,17 +196,17 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGridLayout *layout = new QGridLayout;
     //QBoxLayout *layout = new QBoxLayout;
     //layout->addWidget(field);//, 0,0);
-    layout->addWidget(k, 0, 2, 1, 2);
+    layout->addWidget(k, 0, 2, 1, 4);
     layout->addWidget(lb, 1, 0);
-    layout->addWidget(lcb, 1, 1);
-    layout->addWidget(rcb, 1, 2);
-    layout->addWidget(rb, 1, 3);
+    layout->addWidget(rb, 1, 1);
+    layout->addWidget(lcb, 1, 3);
+    layout->addWidget(rcb, 1, 4);
     layout->addWidget(lw, 2, 0);
-    layout->addWidget(lcm, 2, 1);
-    layout->addWidget(rcm, 2, 2);
-    layout->addWidget(rw, 2, 3);
+    layout->addWidget(rw, 2, 1);
+    layout->addWidget(lcm, 2, 3);
+    layout->addWidget(rcm, 2, 4);
     layout->addWidget(ls, 3, 1);
-    layout->addWidget(rs, 3, 2);
+    layout->addWidget(rs, 3, 3);
     layout->addWidget(teamOfTheRoundIdLabel, 4, 0);
     box->setLayout(layout);
     box->setAcceptDrops(true);
