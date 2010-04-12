@@ -8,7 +8,8 @@ enum {
     Spiller_Etternavn = 2,
     Spiller_Draktnummer = 3,
     Spiller_Posisjon = 4,
-    Spiller_LagID = 5
+    Spiller_PosisjonsId = 5,
+    Spiller_LagID = 6
 };
 
 class Player
