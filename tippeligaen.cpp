@@ -66,6 +66,8 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
             this, SLOT(actionAddNewPlayerToDataBase()));
     connect(addToTeamOfTheRoundButton, SIGNAL(clicked()),
             this, SLOT(addPlayerToTeamOfTheRound()));
+    connect(teamOfTheRoundChooseTeamComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(updateTeamOfTheRoundTable()));
     connectMainMenuSlots();
 }
 
@@ -667,47 +669,36 @@ void Tippeligaen::updateTeamOfTheRoundChoosTeamGroupBox(){
 }
 
 void Tippeligaen::createTeamOfTheRoundShowTeam(){
-    //QGroupBox *box = new QGroupBox(tr("Spillere"));
     createTeamOfTheRoundShowTeamGroupBox = new QGroupBox(tr("Rundens lag"));
 
-    teamOfTheRoundModel = new QSqlRelationalTableModel(this);
-    teamOfTheRoundModel->setTable("rundenslag");
-    teamOfTheRoundModel->setRelation(1, QSqlRelation("rundenslag", "rundensLagNavn", "rundensLagNavn"));
-    //playerModel->setSort(Spiller_Etternavn, Qt::AscendingOrder);
-    teamOfTheRoundModel->setHeaderData(0, Qt::Horizontal, tr("rundenslagnavn"));
-    teamOfTheRoundModel->setHeaderData(1, Qt::Horizontal, tr("navn"));
-    teamOfTheRoundModel->setHeaderData(2, Qt::Horizontal, tr("posisjon"));
-    teamOfTheRoundModel->setHeaderData(3, Qt::Horizontal, tr("lagnavn"));
+    textbrowser = new QTextBrowser;
 
-
-    teamOfTheRoundTableWidget = new QTableWidget;
-    teamOfTheRoundTableWidget->insertRow();
-
-    teamOfTheRoundTableView->setModel(teamOfTheRoundModel);
-    teamOfTheRoundTableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    teamOfTheRoundTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    //playerTableView->setColumnHidden(Spiller_LagID, true);
-    //playerTableView->setColumnHidden(Spiller_Id, true);
-    teamOfTheRoundTableView->resizeColumnsToContents();
-    teamOfTheRoundTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    teamOfTheRoundTableView->setSortingEnabled(true);
-    QHeaderView *header = teamOfTheRoundTableView->horizontalHeader();
-    header->setStretchLastSection(true);
-
-    teamOfTheRoundTableView->setShowGrid(false);
-    teamOfTheRoundTableView->verticalHeader()->hide();
-    teamOfTheRoundTableView->setAlternatingRowColors(true);
-    //albumView->setModel(model);
-    //adjustHeader();
-
-    QLocale locale = teamOfTheRoundTableView->locale();
-    locale.setNumberOptions(QLocale::OmitGroupSeparator);
-    teamOfTheRoundTableView->setLocale(locale);
+    updateTeamOfTheRoundTable();
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(teamOfTheRoundTableView, 0, 0);
+    layout->addWidget(textbrowser, 0,0);
     createTeamOfTheRoundShowTeamGroupBox->setLayout(layout);
+}
 
-    //return box;
+void Tippeligaen::updateTeamOfTheRoundTable(){
+    QString htmlTable("");
+    htmlTable.append("<table width=250 border=1>");
+    htmlTable.append("<tr><td>rundensLagNavn</td><td>Spillernavn</td><td>posisjon</td><td>navn på lag</td></tr>");
+    QSqlQuery teamOfTheRound ("select * from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText() + "'");
+    while (teamOfTheRound.next()) {
+        htmlTable.append("<tr><td>");
+        htmlTable.append(teamOfTheRound.value(1).toString());
+        htmlTable.append("</td><td>");
+        htmlTable.append(teamOfTheRound.value(2).toString());
+        htmlTable.append("</td><td>");
+        htmlTable.append(teamOfTheRound.value(3).toString());
+        htmlTable.append("</td><td>");
+        htmlTable.append(teamOfTheRound.value(4).toString());
+        htmlTable.append("</td>");
+        htmlTable.append("</tr>");
+    }
+
+    htmlTable.append("</table>");
+    textbrowser->setHtml(htmlTable);
 }
 

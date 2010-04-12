@@ -46,6 +46,8 @@ public:
     QGroupBox *createTeamWikiGroupBox();
     QGroupBox *createTeamOfTheRoundShowTeamGroupBox;
     QTableWidget *teamOfTheRoundTableWidget;
+    QTextBrowser *textbrowser;
+    //QTableView *teamOfTheRoundTableView;
     QLabel *fieldLabel;
     QGroupBox *teamInfo;
     //QGroupBox *createTeamInfoGroupBox();
@@ -124,7 +126,7 @@ private slots:
     void connectMainMenuSlots();
     void addPlayerToTeamOfTheRound();
     void updateTeamOfTheRoundChoosTeamGroupBox();
-
+    void updateTeamOfTheRoundTable();
     //Menu-actions
     void actionCreatePlayer_triggered();
     void actionExitApplication_triggered();
