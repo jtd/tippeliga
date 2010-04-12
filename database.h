@@ -19,6 +19,7 @@ static bool createConnection(){
 
     query.exec("DROP TABLE lag");
     query.exec("DROP TABLE spiller");
+    query.exec("DROP TABLE rundenslag");
 
     query.exec("CREATE TABLE lag (id INT PRIMARY KEY,"
                                  "lagnavn VARCHAR(40),"
@@ -57,6 +58,11 @@ static bool createConnection(){
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES('Henrik', 'Wingerei', '4', 'Høyre midtbane', 8, 10)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES('Øyvind', 'Midtbø', '1', 'Keeper', 0, 4)");
 
+    query.exec("CREATE TABLE rundenslag (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                        "rundensLagNavn VARCHAR(40),"
+                                        "navn VARCHAR(40),"
+                                        "posisjon VARCHAR(40),"
+                                        "lagNavn VARCHAR(40))");
     return true;
 }
 
