@@ -203,7 +203,7 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     leftStriker = new QLabel;
     rightStriker = new QLabel;
     teamOfTheRoundIdLabel= new QLabel;
-    teamOfTheRoundIdLabel->setText("Jasså du!");
+    teamOfTheRoundIdLabel->setText("Lag1");
 
     makeUnknownShirt();
 
@@ -570,14 +570,14 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
     players->show();*/
 }
 void Tippeligaen::insertPlayerToTeamOfTheRound(){
-    QSqlQuery teamOfTheRoundRow;
-    teamOfTheRoundRow.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
-                         "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn");
-    teamOfTheRoundRow.bindValue(":rundensLagNavn", "Lag2");
-    teamOfTheRoundRow.bindValue(":navn", playerNameLabel->text());
-    teamOfTheRoundRow.bindValue(":posisjon", playerPosition->text());
-    teamOfTheRoundRow.bindValue(":lagNavn", playerTeam->text());
-    teamOfTheRoundRow.exec();
+    QSqlQuery insertTeamOfTheRound;
+    insertTeamOfTheRound.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
+                         "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn)");
+    insertTeamOfTheRound.bindValue(":rundensLagNavn", teamOfTheRoundIdLabel->text());
+    insertTeamOfTheRound.bindValue(":navn", playerName->text());
+    insertTeamOfTheRound.bindValue(":posisjon", playerPosition->text());
+    insertTeamOfTheRound.bindValue(":lagNavn", playerTeam->text());
+    insertTeamOfTheRound.exec();
 }
 
 void Tippeligaen::addPlayerToTeamOfTheRound(){
