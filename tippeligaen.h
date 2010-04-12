@@ -27,19 +27,25 @@ public:
     void createTeamInfoGroupBox();
     void createMakeNewPlayerGroupBox();
     void createMakeNewPlayerView();
+    void createTeamOfTheRoundChoosTeamGroupBox();
     void createTeamPlayersGroupBox();
     void makeUnknownShirt();
     void insertPlayerToTeamOfTheRound();
+    void createTeamOfTheRoundShowTeam();
 
     QString url();
 
     QComboBox *teamComboBox;
     QGroupBox *createTeamChooserGroupBox();
     QTableView *playerTableView;
+    QComboBox *teamOfTheRoundChooseTeamComboBox;
+    QGroupBox *teamOfTheRoundChooseTeamGroupBox;
     QGroupBox *players;
     //QGroupBox *createTeamPlayersGroupBox();
     QGroupBox *createTeamOfTheRoundGroupBox();
     QGroupBox *createTeamWikiGroupBox();
+    QGroupBox *createTeamOfTheRoundShowTeamGroupBox;
+    QTableWidget *teamOfTheRoundTableWidget;
     QLabel *fieldLabel;
     QGroupBox *teamInfo;
     //QGroupBox *createTeamInfoGroupBox();
@@ -48,6 +54,7 @@ public:
     QSqlRelationalTableModel *model;
     QSqlRelationalTableModel *teamModel;
     QSqlRelationalTableModel *playerModel;
+    QSqlRelationalTableModel *teamOfTheRoundModel;
     QWebView *wiki;
     QGroupBox *teamOfTheRound;
     QGroupBox *teamWiki;
@@ -116,6 +123,7 @@ private slots:
     void deletePlayer();
     void connectMainMenuSlots();
     void addPlayerToTeamOfTheRound();
+    void updateTeamOfTheRoundChoosTeamGroupBox();
 
     //Menu-actions
     void actionCreatePlayer_triggered();

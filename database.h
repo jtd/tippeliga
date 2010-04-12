@@ -21,12 +21,6 @@ static bool createConnection(){
     query.exec("DROP TABLE spiller");
     query.exec("DROP TABLE rundenslag");
 
-    query.exec("CREATE TABLE rundenslag (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                        "rundensLagNavn VARCHAR(40),"
-                                        "navn VARCHAR(40),"
-                                        "posisjon VARCHAR(40),"
-                                        "lagNavn VARCHAR(40))");
-
     query.exec("CREATE TABLE lag (id INT PRIMARY KEY,"
                                  "lagnavn VARCHAR(40),"
                                  "nettside TEXT)");
@@ -134,6 +128,17 @@ static bool createConnection(){
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Lars Iver', 'Strand', '10', 'Høyre ving', 5, 15)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Mohammed', 'Abdellaoue', '25', 'Høyre spiss', 10, 15)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Mostafa', 'Abdellaoue', '20', 'Venstre spiss', 9, 15)");
+
+
+    query.exec("CREATE TABLE rundenslag (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                        "rundensLagNavn VARCHAR(40),"
+                                        "navn VARCHAR(40),"
+                                        "posisjon VARCHAR(40),"
+                                        "lagNavn VARCHAR(40))");
+
+    query.exec("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn) VALUES('Lag2', 'Øyvind midtbø', 'Spiss', 'Vålerenga')");
+    query.exec("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn) VALUES('Lag2', 'Per Jonsson', 'Keeper', 'Vålerenga')");
+    query.exec("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn) VALUES('Lag3', 'Jon T. Bernander', 'Ving', 'Rosenborg')");
 
     return true;
 }
