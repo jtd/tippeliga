@@ -17,9 +17,9 @@ static bool createConnection(){
 
     QSqlQuery query;
 
-    query.exec("DROP TABLE lag");
-    query.exec("DROP TABLE spiller");
-    query.exec("DROP TABLE rundenslag");
+/* KOMMENTER UT -----> */
+    query.exec("DROP TABLE IF EXISTS lag");
+    query.exec("DROP TABLE IF EXISTS spiller");
 
     query.exec("CREATE TABLE lag (id INT PRIMARY KEY,"
                                  "lagnavn VARCHAR(40),"
@@ -201,6 +201,7 @@ static bool createConnection(){
                                         "posisjon VARCHAR(40),"
                                         "lagNavn VARCHAR(40))");
 
+/* <----- KOMMENTER UT */
     return true;
 }
 
