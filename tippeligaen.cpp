@@ -596,12 +596,9 @@ void Tippeligaen::makeWindowMenues(){
 
     actionCreatePlayer = new QAction(tr("Legg til spiller"), fileMenu);
     actionCreateNewTeamOfTheRound = new QAction(tr("Lag nytt \"Rundens lag\""), fileMenu);
-    actionExitApplication = new QAction(tr("Avslutt"), fileMenu);
 
     fileMenu->addAction(actionCreatePlayer);
     fileMenu->addAction(actionCreateNewTeamOfTheRound);
-    fileMenu->addSeparator();
-    fileMenu->addAction(actionExitApplication);
 
 //-VIS
     showMenu = new QMenu(this);
@@ -638,8 +635,6 @@ void Tippeligaen::connectMainMenuSlots() {
         this, SLOT(actionCreatePlayer_triggered()));
     connect(actionCreateNewTeamOfTheRound, SIGNAL(triggered()),
         this, SLOT(actionCreateNewTeamOfTheRound_triggered()));
-    connect(actionExitApplication, SIGNAL(triggered()),
-        this, SLOT(actionExitApplication_triggered()));
 
     connect(actionShowTeamOfTheRound, SIGNAL(triggered()),
         this, SLOT(actionShowTeamOfTheRound_triggered()));
@@ -663,10 +658,6 @@ void Tippeligaen::actionCreateNewTeamOfTheRound_triggered(){
     playerInfoGroupBox->hide();
     makePlayerGroupBox->hide();
     crateNewTeamOfTheRoundGroupBox->show();
-}
-
-void Tippeligaen::actionExitApplication_triggered(){
-    exit(0);
 }
 
 void Tippeligaen::actionShowTeamOfTheRound_triggered(){
