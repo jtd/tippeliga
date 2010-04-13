@@ -91,7 +91,6 @@ public:
     QGridLayout *wikiLayout;
     QComboBox *teamComboBox;
     QComboBox *teamOfTheRoundChooseTeamComboBox;
-    //QGroupBox *createTeamPlayersGroupBox();
     QGroupBox *createTeamChooserGroupBox();
     QGroupBox *teamOfTheRoundChooseTeamGroupBox;
     QGroupBox *players;
@@ -102,7 +101,6 @@ public:
     QGroupBox *teamWiki;
     QGroupBox *makePlayerGroupBox;
     QGroupBox *crateNewTeamOfTheRoundGroupBox;
-    //QGroupBox *createTeamInfoGroupBox();
     QTableView *playerTableView;
     QTableWidget *teamOfTheRoundTableWidget; //?
     QTextBrowser *textbrowser;
@@ -113,7 +111,6 @@ public:
     QWebView *wiki;
     QString selectedTeamUrl;
 
-    //Lagt til nytt
     void crateNewTeamOfTheRound();
     QLineEdit *teamOfTheRoundLineEdit;
     QPushButton *teamOfTheRoundButton;
@@ -128,7 +125,6 @@ public:
     QPushButton *deletePlayerButton;
     QPushButton *addToTeamOfTheRoundButton;
 
-    //Legger til ting som skal ligge i rundens lag.
     int positionId;
     int teamOfTheRoundId;
 
@@ -137,7 +133,6 @@ public:
     QMenu *helpMenu;
 
     QAction *actionCreatePlayer;
-    QAction *actionExitApplication;
     QAction *actionShowTeamOfTheRound;
     QAction *actionShowTeamInfo;
     QAction *actionShowPreviousTeamOfTheRound;
@@ -175,7 +170,6 @@ private:
     QLabel *_playerTeam;
     QLabel *_playerPosition;
 
-    QLabel *_fieldLabel;
     QLabel *_shirtLabel;
     QLabel *_teamOfTheRoundLabel;
 

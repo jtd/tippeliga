@@ -76,7 +76,29 @@ Tippeligaen::~Tippeligaen(){
     delete _leftWing;
     delete _rightStriker;
     delete _leftStriker;
+    delete _playerFirstNameLabel;
+    delete _playerLastNameLabel;
+    delete _playerNameLabel;
+    delete _playerTeamLabel;
+    delete _playerPositionLabel;
+    delete _playerName;
+    delete _playerTeam;
+    delete _playerPosition;
+    delete _shirtLabel;
+    delete _teamOfTheRoundLabel;
     delete _teamOfTheRoundIdLabel;
+    delete actionCreatePlayer;
+    delete actionExitApplication;
+    delete actionShowTeamOfTheRound;
+    delete actionShowTeamInfo;
+    delete actionShowPreviousTeamOfTheRound;
+    delete actionCreateNewTeamOfTheRound;
+    delete actionShowAboutMessage;
+    delete fileMenu;
+    delete showMenu;
+    delete helpMenu;
+
+
 }
 
 void Tippeligaen::doAtStartUp(){
@@ -190,13 +212,6 @@ void Tippeligaen::setPlayerLastNameLabel(QLabel *playerLastNameLabel){
 }
 QLabel* Tippeligaen::playerLastNameLabel(){
     return _playerLastNameLabel;
-}
-
-void Tippeligaen::setFieldLabel(QLabel *fieldLabel){
-    _fieldLabel = fieldLabel;
-}
-QLabel* Tippeligaen::fieldLabel(){
-    return _fieldLabel;
 }
 
 void Tippeligaen::setShirtLabel(QLabel *shirtLabel){
