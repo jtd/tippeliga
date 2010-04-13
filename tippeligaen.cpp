@@ -423,16 +423,16 @@ void Tippeligaen::createMakeNewPlayerView(){
     playerPositionEdit = new QComboBox;
     shirtNumberEdit = new QLineEdit;
     playerPositionEdit->insertItem(0, tr("Keeper"));
-    playerPositionEdit->insertItem(1, tr("Høyre Back"));
-    playerPositionEdit->insertItem(2, tr("Venstre Back"));
-    playerPositionEdit->insertItem(3, tr("Venstre Midtstopper"));
-    playerPositionEdit->insertItem(4, tr("Høyre Midtstopper"));
-    playerPositionEdit->insertItem(5, tr("HøyreVing"));
-    playerPositionEdit->insertItem(6, tr("VenstreVing"));
-    playerPositionEdit->insertItem(7, tr("Venstre Midtbane"));
-    playerPositionEdit->insertItem(8, tr("Høyre Midtbane"));
-    playerPositionEdit->insertItem(9, tr("Venstre Spiss"));
-    playerPositionEdit->insertItem(10, tr("Høyre Spiss"));
+    playerPositionEdit->insertItem(1, tr("Høyre back"));
+    playerPositionEdit->insertItem(2, tr("Venstre back"));
+    playerPositionEdit->insertItem(3, tr("Venstre midtstopper"));
+    playerPositionEdit->insertItem(4, tr("Høyre midtstopper"));
+    playerPositionEdit->insertItem(5, tr("Høyre ving"));
+    playerPositionEdit->insertItem(6, tr("Venstre ving"));
+    playerPositionEdit->insertItem(7, tr("Venstre midtbane"));
+    playerPositionEdit->insertItem(8, tr("Høyre midtbane"));
+    playerPositionEdit->insertItem(9, tr("Venstre spiss"));
+    playerPositionEdit->insertItem(10, tr("Høyre spiss"));
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(playerFirstNameLabel(), 0, 0);
@@ -789,48 +789,60 @@ void Tippeligaen::insertPlayerToTeamOfTheRound(){
 void Tippeligaen::addPlayerToTeamOfTheRound(){
     QString teamString = teamComboBox->currentText();
     QString picUrl = ":/bilder/" +teamString +".png";
+    QSqlQuery deleteOldPlayer;
     switch(positionId){
     case 0:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Keeper'");
         insertPlayerToTeamOfTheRound();
         keeper()->setPixmap(QPixmap(picUrl));
         break;
     case 1:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Høyre back'");
         insertPlayerToTeamOfTheRound();
         rightBack()->setPixmap(QPixmap(picUrl));
         break;
     case 2:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Venstre back'");
         insertPlayerToTeamOfTheRound();
         leftBack()->setPixmap(QPixmap(picUrl));
         break;
     case 3:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Venstre midtstopper'");
         insertPlayerToTeamOfTheRound();
         leftCenterBack()->setPixmap(QPixmap(picUrl));
         break;
     case 4:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Høyre midtstopper'");
         insertPlayerToTeamOfTheRound();
         rightCenterBack()->setPixmap(QPixmap(picUrl));
         break;
     case 5:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Høyre ving'");
         insertPlayerToTeamOfTheRound();
         rightWing()->setPixmap(QPixmap(picUrl));
         break;
     case 6:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Venstre ving'");
         insertPlayerToTeamOfTheRound();
         leftWing()->setPixmap(QPixmap(picUrl));
         break;
     case 7:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Venstre midtbane'");
         insertPlayerToTeamOfTheRound();
         leftCenterMidfielder()->setPixmap(QPixmap(picUrl));
         break;
     case 8:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Høyre midtbane'");
         insertPlayerToTeamOfTheRound();
         rightCenterMidfielder()->setPixmap(QPixmap(picUrl));
         break;
     case 9:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Venstre spiss'");
         insertPlayerToTeamOfTheRound();
         leftStriker()->setPixmap(QPixmap(picUrl));
         break;
     case 10:
+        deleteOldPlayer.exec("delete from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText()+"' and posisjon = 'Høyre spiss'");
         insertPlayerToTeamOfTheRound();
         rightStriker()->setPixmap(QPixmap(picUrl));
         break;
