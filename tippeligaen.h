@@ -134,6 +134,7 @@ public:
 
     QMenu *fileMenu;
     QMenu *showMenu;
+    QMenu *helpMenu;
 
     QAction *actionCreatePlayer;
     QAction *actionExitApplication;
@@ -141,6 +142,7 @@ public:
     QAction *actionShowTeamInfo;
     QAction *actionShowPreviousTeamOfTheRound;
     QAction *actionCreateNewTeamOfTheRound;
+    QAction *actionShowAboutMessage;
 
 protected:
     void changeEvent(QEvent *e);
@@ -198,6 +200,7 @@ private slots:
     void actionShowPreviousTeamOfTheRound_triggered();
     void actionCreateNewTeamOfTheRound_triggered();
     void teamOfTheRoundButtonClicked();
+    void actionShowAboutMessage_triggered();
 
 
 };

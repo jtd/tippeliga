@@ -288,9 +288,7 @@ QGroupBox* Tippeligaen::createTeamChooserGroupBox(){
     return box;
 }
 
-//QGroupBox*
 void Tippeligaen::createTeamPlayersGroupBox(){
-    //QGroupBox *box = new QGroupBox(tr("Spillere"));
     players = new QGroupBox(tr("Spillere"));
 
     playerModel = new QSqlRelationalTableModel(this);
@@ -321,18 +319,10 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerTableView->setShowGrid(false);
     playerTableView->verticalHeader()->hide();
     playerTableView->setAlternatingRowColors(true);
-    //albumView->setModel(model);
-    //adjustHeader();
-
-    QLocale locale = playerTableView->locale();
-    locale.setNumberOptions(QLocale::OmitGroupSeparator);
-    playerTableView->setLocale(locale);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(playerTableView, 0, 0);
     players->setLayout(layout);
-
-    //return box;
 }
 
 QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
@@ -523,26 +513,17 @@ void Tippeligaen::createTeamInfoGroupBox(){
     playerInfoGroupBox->setLayout(layout);
 
     playerInfoGroupBox->setMinimumHeight(170);
-    //return box;
 }
 
 void Tippeligaen::updatePlayerTableView(int row){
     QModelIndex index = teamModel->relationModel(0)->index(row, 0);
     QSqlRecord record = teamModel->record(row);
-    //QModelIndex i = tippeligaLagComboBox->currentIndex();
     if(index.isValid()){
          playerModel->setFilter(QString("lagID = %1").arg(row));
 
          QString teamUrl = record.value("nettside").toString();
-         //selectedTeamId = new QString;
          setUrl(teamUrl);
          selectedTeamUrl = teamUrl;
-         //playerName->setText(selectedTeamUrl);
-
-
-        /*QSqlRecord record = teamModel->record(row);
-        int id = record.value("id").toInt();
-        playerModel->setFilter(QString("lagID = %1").arg(id));*/
     }
     else{
         playerModel->setFilter("lagID = -1");
@@ -624,10 +605,15 @@ void Tippeligaen::makeWindowMenues(){
     showMenu->addAction(actionShowPreviousTeamOfTheRound);
     showMenu->addSeparator();
 
+//-HJELP
+    helpMenu = new QMenu(this);
+    helpMenu->setTitle(tr("Hjelp"));
+    actionShowAboutMessage = new QAction(tr("Om \"Rundens lag\""), helpMenu);
+    helpMenu->addAction(actionShowAboutMessage);
+
     ui->menuBar->addMenu(fileMenu);
     ui->menuBar->addMenu(showMenu);
-    /*connect(cascadeAction, SIGNAL(triggered()), this, SLOT(cascadeSubWindows()));
-    tileAction = new QAction(tr("Tile"), fileMenu);*/
+    ui->menuBar->addMenu(helpMenu);
 }
 
 void Tippeligaen::connectMainMenuSlots() {
@@ -646,36 +632,8 @@ void Tippeligaen::connectMainMenuSlots() {
             this, SLOT(actionShowPreviousTeamOfTheRound_triggered()));
     connect(actionShowPreviousTeamOfTheRound, SIGNAL(triggered()),
             this, SLOT(updateTeamOfTheRoundChooseTeamGroupBox()));
-    /*connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
-            this, SLOT(updateTeamOfTheRoundChooseTeamGroupBox()));*/
-}
-
-void Tippeligaen::deletePlayer(){
-
-    QModelIndex index = playerTableView->currentIndex();
-    if(!index.isValid()){
-        QMessageBox* m = new QMessageBox();
-        m->setText(tr("Merk en spiller for å slette"));
-        m->show();
-        return;
-    }
-    QSqlRecord record = playerModel->record(index.row());
-    int spillerId = record.value(Spiller_Id).toInt();
-    int messageBox = QMessageBox::warning(this, tr("Slett Spiller"),
-                                 tr("Sikker på du vil slette spiller %1 %2?").arg(record.value(Spiller_Fornavn).toString(), record.value(Spiller_Etternavn).toString()),
-                                 QMessageBox::Yes | QMessageBox::No);
-
-    /*messageBox.setButtonText(QMessageBox::Yes, "Ja");
-    messageBox.setButtonText(QMessageBox::No, "Nei");*/
-
-    if(messageBox == QMessageBox::No){
-        return;
-    }
-    QSqlQuery deletePlayer ("DELETE FROM spiller WHERE id = " + spillerId);
-    deletePlayer.exec();
-
-    playerModel->removeRow(index.row());
-    playerModel->submitAll();
+    connect(actionShowAboutMessage, SIGNAL(triggered()),
+            this, SLOT(actionShowAboutMessage_triggered()));
 }
 
 void Tippeligaen::actionCreatePlayer_triggered(){
@@ -739,16 +697,26 @@ void Tippeligaen::actionShowPreviousTeamOfTheRound_triggered(){
     actionShowTeamInfo->setChecked(false);
 }
 
+void Tippeligaen::actionShowAboutMessage_triggered(){
+    QMessageBox *aboutMessage = new QMessageBox;
+    aboutMessage->setText(tr("\"Rundens lag\" er laget av JT og Eirik"));
+    aboutMessage->setWindowTitle(tr("Om \"Rundens lag\""));
+    aboutMessage->setWindowIcon( QIcon(":/bilder/tippeliga.png"));
+    aboutMessage->setIconPixmap( QPixmap(":/bilder/tippeliga.png"));
+    aboutMessage->show();
+    return;
+}
+
 void Tippeligaen::actionAddNewPlayerToDataBase(){
     if( playerFirstNameEdit->text() == "" ||
         playerLastNameEdit->text()== "" ||
         shirtNumberEdit->text() == "" ){
 
-        QMessageBox* m = new QMessageBox();
-        m->setText(QString(tr("Fyll ut alle felter")));
-        m->setWindowTitle("Feil");
-        m->setWindowFlags(Qt::Drawer);
-        m->show();
+        QMessageBox* errorMessage = new QMessageBox();
+        errorMessage->setText(QString(tr("Fyll ut alle felter")));
+        errorMessage->setWindowTitle("Feil");
+        errorMessage->setWindowFlags(Qt::Drawer);
+        errorMessage->show();
         return;
     }
 
@@ -898,8 +866,31 @@ void Tippeligaen::updateTeamOfTheRoundTable(){
         htmlTable.append("</td>");
         htmlTable.append("</tr>");
     }
-
     htmlTable.append("</table>");
     textbrowser->setHtml(htmlTable);
 }
 
+void Tippeligaen::deletePlayer(){
+
+    QModelIndex index = playerTableView->currentIndex();
+    if(!index.isValid()){
+        QMessageBox* errorMessage = new QMessageBox();
+        errorMessage->setText(tr("Merk en spiller for å slette"));
+        errorMessage->show();
+        return;
+    }
+    QSqlRecord record = playerModel->record(index.row());
+    int spillerId = record.value(Spiller_Id).toInt();
+    int messageBox = QMessageBox::warning(this, tr("Slett Spiller"),
+                                 tr("Sikker på du vil slette spiller %1 %2?").arg(record.value(Spiller_Fornavn).toString(), record.value(Spiller_Etternavn).toString()),
+                                 QMessageBox::Yes | QMessageBox::No);
+
+    if(messageBox == QMessageBox::No){
+        return;
+    }
+    QSqlQuery deletePlayer ("DELETE FROM spiller WHERE id = " + spillerId);
+    deletePlayer.exec();
+
+    playerModel->removeRow(index.row());
+    playerModel->submitAll();
+}
