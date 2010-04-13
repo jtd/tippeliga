@@ -191,6 +191,20 @@ QLabel* Tippeligaen::playerLastNameLabel(){
     return _playerLastNameLabel;
 }
 
+void Tippeligaen::setFieldLabel(QLabel *fieldLabel){
+    _fieldLabel = fieldLabel;
+}
+QLabel* Tippeligaen::fieldLabel(){
+    return _fieldLabel;
+}
+
+void Tippeligaen::setShirtLabel(QLabel *shirtLabel){
+    _shirtLabel = shirtLabel;
+}
+QLabel* Tippeligaen::shirtLabel(){
+    return _shirtLabel;
+}
+
 void Tippeligaen::setPlayerNameLabel(QLabel *playerNameLabel){
     _playerNameLabel = playerNameLabel;
 }
@@ -440,11 +454,11 @@ void Tippeligaen::createMakeNewPlayerView(){
 void Tippeligaen::createTeamInfoGroupBox(){
     playerInfoGroupBox = new QGroupBox(tr("Spillerinfo"));
     shirt = new Shirt();
-    shirtLabel = new QLabel(shirt);
-    shirtLabel->setAlignment(Qt::AlignRight);
-    shirtLabel->setPixmap(QPixmap(":/bilder/Aalesund.png"));
+    _shirtLabel = new QLabel(shirt);
+    _shirtLabel->setAlignment(Qt::AlignRight);
+    _shirtLabel->setPixmap(QPixmap(":/bilder/Aalesund.png"));
 
-    shirt->addLabel(shirtLabel);
+    shirt->addLabel(_shirtLabel);
     _playerNameLabel = new QLabel;
     _playerNameLabel->setText(tr("Spillernavn: "));
     _playerPositionLabel = new QLabel;
@@ -538,8 +552,8 @@ void Tippeligaen::updatePlayerInformation(){
     _playerPosition->setText(tr("%1").arg(playerPositionString));
 
     QString picUrl = ":/bilder/" +teamString +".png";
-    shirtLabel->setPixmap(QPixmap(picUrl));
-    shirt->addLabel(shirtLabel);
+    _shirtLabel->setPixmap(QPixmap(picUrl));
+    shirt->addLabel(_shirtLabel);
 }
 
 void Tippeligaen::makeWindowMenues(){
@@ -722,6 +736,8 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
 }
 
 void Tippeligaen::insertPlayerToTeamOfTheRound(){
+    actionShowTeamOfTheRound_triggered();
+
     QSqlQuery insertTeamOfTheRound;
     insertTeamOfTheRound.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
                          "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn)");

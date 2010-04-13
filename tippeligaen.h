@@ -68,9 +68,12 @@ public:
     QLabel *playerTeam();
     QLabel *playerPosition();
 
+    void setFieldLabel(QLabel *fieldLabel);
+    QLabel *fieldLabel();
+    void setShirtLabel(QLabel *shirtLabel);
+    QLabel *shirtLabel();
 
     void createTeamWikiView();
-
     void makeWindowMenues();
     void createTeamInfoGroupBox();
     void createMakeNewPlayerView();
@@ -81,33 +84,28 @@ public:
     void createTeamOfTheRoundShowTeam();
 
 
-
+    QGridLayout *wikiLayout;
     QComboBox *teamComboBox;
-    QGroupBox *createTeamChooserGroupBox();
-    QTableView *playerTableView;
     QComboBox *teamOfTheRoundChooseTeamComboBox;
+    //QGroupBox *createTeamPlayersGroupBox();
+    QGroupBox *createTeamChooserGroupBox();
     QGroupBox *teamOfTheRoundChooseTeamGroupBox;
     QGroupBox *players;
-    //QGroupBox *createTeamPlayersGroupBox();
     QGroupBox *createTeamOfTheRoundGroupBox();
     QGroupBox *createTeamOfTheRoundShowTeamGroupBox;
-    QTableWidget *teamOfTheRoundTableWidget;
-    QTextBrowser *textbrowser;
-    //QTableView *teamOfTheRoundTableView;
-    QLabel *fieldLabel;
     QGroupBox *playerInfoGroupBox;
+    QGroupBox *teamOfTheRound;
+    QGroupBox *teamWiki;
+    QGroupBox *makePlayerGroupBox;
     //QGroupBox *createTeamInfoGroupBox();
-    QLabel *shirtLabel;
-    QLabel *valerengaInfo;
+    QTableView *playerTableView;
+    QTableWidget *teamOfTheRoundTableWidget; //?
+    QTextBrowser *textbrowser;
     QSqlRelationalTableModel *model;
     QSqlRelationalTableModel *teamModel;
     QSqlRelationalTableModel *playerModel;
     QSqlRelationalTableModel *teamOfTheRoundModel;
     QWebView *wiki;
-    QGroupBox *teamOfTheRound;
-    QGroupBox *teamWiki;
-    QGridLayout *wikiLayout;
-    QGroupBox *makePlayerGroupBox;
     QString selectedTeamUrl;
 
     QLineEdit *playerFirstNameEdit;
@@ -121,10 +119,8 @@ public:
     QPushButton *addToTeamOfTheRoundButton;
 
     //Legger til ting som skal ligge i rundens lag.
-
     int positionId;
     int teamOfTheRoundId;
-
 
     QString *test;
     Shirt *shirt;
@@ -170,6 +166,9 @@ private:
     QLabel *_playerName;
     QLabel *_playerTeam;
     QLabel *_playerPosition;
+
+    QLabel *_fieldLabel;
+    QLabel *_shirtLabel;
 
 private slots:
     void doAtStartUp();
