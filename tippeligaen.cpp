@@ -359,24 +359,24 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     _leftStriker = new QLabel;
     _rightStriker = new QLabel;
     _teamOfTheRoundIdLabel= new QLabel;
-    _teamOfTheRoundIdLabel->setText("Ukens lag");
+    _teamOfTheRoundIdLabel->setText("Rundens lag 1");
 
     makeUnknownShirt();
 
-
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(_keeper, 0, 2, 1, 4);
-    layout->addWidget(_rightBack, 1, 0);
-    layout->addWidget(_rightCenterBack, 1, 1);
-    layout->addWidget(_leftCenterBack, 1, 3);
-    layout->addWidget(_leftBack, 1, 4);
-    layout->addWidget(_rightWing, 2, 0);
-    layout->addWidget(_rightCenterMidfielder, 2, 1);
-    layout->addWidget(_leftCenterMidfielder, 2, 3);
-    layout->addWidget(_leftWing, 2, 4);
-    layout->addWidget(_rightStriker, 3, 1);
-    layout->addWidget(_leftStriker, 3, 3);
-    layout->addWidget(_teamOfTheRoundIdLabel, 4, 0);
+    layout->addWidget(keeper(), 0, 2, 1, 4);
+    layout->addWidget(rightBack(), 1, 0);
+    layout->addWidget(rightCenterBack(), 1, 1);
+    layout->addWidget(leftCenterBack(), 1, 3);
+    layout->addWidget(leftBack(), 1, 4);
+    layout->addWidget(rightWing(), 2, 0);
+    layout->addWidget(rightCenterMidfielder(), 2, 1);
+    layout->addWidget(leftCenterMidfielder(), 2, 3);
+    layout->addWidget(leftWing(), 2, 4);
+    layout->addWidget(rightStriker(), 3, 1);
+    layout->addWidget(leftStriker(), 3, 3);
+    layout->addWidget(teamOfTheRoundIdLabel(), 4, 0, 4, 0, Qt::AlignHCenter);
+    teamOfTheRoundIdLabel()->setStyleSheet("color: #fff; font-size: 20px;");
     box->setLayout(layout);
     return box;
 }
@@ -883,14 +883,12 @@ void Tippeligaen::createTeamOfTheRoundShowTeam(){
 void Tippeligaen::updateTeamOfTheRoundTable(){
     QString htmlTable("");
     htmlTable.append("<table width=400>");
-    htmlTable.append("<tr style='font-weight: bold;'><td style='padding-bottom: 15px;'>Rundens lag</td>");
-    htmlTable.append("<td>Spillernavn</td><td>Posisjon</td><td>Navn på lag</td></tr>");
+    htmlTable.append("<tr style='font-weight: bold;'><td style='padding-bottom: 15px;'>Spillernavn</td>");
+    htmlTable.append("<td>Posisjon</td><td>Navn på lag</td></tr>");
     QSqlQuery teamOfTheRound ("select * from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText() + "'");
     QSqlQuery test ("select rundensLagNavn, count(*) as antallLag from rundenslag group by rundensLagNavn ");
     while (teamOfTheRound.next()) {
         htmlTable.append("<tr><td style='padding-bottom: 15px;'>");
-        htmlTable.append(teamOfTheRound.value(1).toString());
-        htmlTable.append("</td><td>");
         htmlTable.append(teamOfTheRound.value(2).toString());
         htmlTable.append("</td><td>");
         htmlTable.append(teamOfTheRound.value(3).toString());

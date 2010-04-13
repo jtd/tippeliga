@@ -17,6 +17,7 @@ static bool createConnection(){
 
     QSqlQuery query;
 
+    /*
     query.exec("DROP TABLE lag");
     query.exec("DROP TABLE spiller");
     query.exec("DROP TABLE rundenslag");
@@ -135,7 +136,7 @@ static bool createConnection(){
                                         "navn VARCHAR(40),"
                                         "posisjon VARCHAR(40),"
                                         "lagNavn VARCHAR(40))");
-
+    */
     return true;
 }
 
