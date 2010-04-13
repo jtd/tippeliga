@@ -482,7 +482,7 @@ void Tippeligaen::createTeamInfoGroupBox(){
     playerInfoGroupBox = new QGroupBox(tr("Spillerinfo"));
     _shirtLabel = new QLabel();
     _shirtLabel->setAlignment(Qt::AlignRight);
-    _shirtLabel->setPixmap(QPixmap(":/bilder/Aalesund.png"));
+    _shirtLabel->setPixmap(QPixmap(":/bilder/0.png"));
 
     _playerNameLabel = new QLabel;
     _playerNameLabel->setText(tr("Spillernavn: "));
@@ -568,7 +568,7 @@ void Tippeligaen::updatePlayerInformation(){
     _playerTeam->setText(tr("%1").arg(teamString));
     _playerPosition->setText(tr("%1").arg(playerPositionString));
 
-    QString picUrl = ":/bilder/" +teamString +".png";
+    QString picUrl = ":/bilder/" + QString::number(teamComboBox->currentIndex()) +".png";
     _shirtLabel->setPixmap(QPixmap(picUrl));
 }
 

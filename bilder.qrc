@@ -1,23 +1,23 @@
 <RCC>
     <qresource prefix="/">
-        <file>bilder/Aalesund.png</file>
-        <file>bilder/Brann.png</file>
-        <file>bilder/Haugesund.png</file>
-        <file>bilder/Hønefoss.png</file>
-        <file>bilder/Lillestrøm.png</file>
-        <file>bilder/Molde.png</file>
-        <file>bilder/Rosenborg.png</file>
-        <file>bilder/Sandefjord.png</file>
-        <file>bilder/Stabæk.png</file>
-        <file>bilder/Start.png</file>
-        <file>bilder/Strømsgodset.png</file>
-        <file>bilder/Tromsø.png</file>
-        <file>bilder/Viking.png</file>
-        <file>bilder/Vålerenga.png</file>
-        <file>bilder/Kongsvinger.png</file>
-        <file>bilder/Odd Grenland.png</file>
         <file>bilder/Unknown.png</file>
         <file>bilder/tippeliga.png</file>
         <file>bilder/field.png</file>
+        <file>bilder/0.png</file>
+        <file>bilder/1.png</file>
+        <file>bilder/2.png</file>
+        <file>bilder/3.png</file>
+        <file>bilder/4.png</file>
+        <file>bilder/5.png</file>
+        <file>bilder/6.png</file>
+        <file>bilder/7.png</file>
+        <file>bilder/8.png</file>
+        <file>bilder/9.png</file>
+        <file>bilder/10.png</file>
+        <file>bilder/11.png</file>
+        <file>bilder/12.png</file>
+        <file>bilder/13.png</file>
+        <file>bilder/14.png</file>
+        <file>bilder/15.png</file>
     </qresource>
 </RCC>
