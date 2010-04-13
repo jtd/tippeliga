@@ -304,6 +304,8 @@ void Tippeligaen::createTeamPlayersGroupBox(){
     playerModel->setHeaderData(Spiller_PosisjonsId, Qt::Horizontal, tr("Posisjonsid"));
 
     playerTableView = new QTableView;
+    playerTableView->setColumnWidth(1,100);
+    playerTableView->setColumnWidth(2,150);
     playerTableView->setModel(playerModel);
     playerTableView->setSelectionMode(QAbstractItemView::SingleSelection);
     playerTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -461,7 +463,7 @@ void Tippeligaen::teamOfTheRoundButtonClicked(){
         QMessageBox *errorMessage = new QMessageBox;
         errorMessage->setText(tr("Fyll inn navn på rundens lag"));
         errorMessage->setWindowTitle(tr("Feil"));
-        errorMessage->setWindowFlags(Qt::Drawer);
+        errorMessage->setWindowIcon( QIcon(":/bilder/tippeliga.png"));
         errorMessage->show();
         return;
     }
@@ -469,7 +471,7 @@ void Tippeligaen::teamOfTheRoundButtonClicked(){
     QMessageBox *saveMessage = new QMessageBox;
     saveMessage->setText("Du kan nå legge til spillere i " + teamOfTheRoundLineEdit->text());
     saveMessage->setWindowTitle(tr("Lagret"));
-    saveMessage->setWindowFlags(Qt::Drawer);
+    saveMessage->setWindowIcon( QIcon(":/bilder/tippeliga.png"));
     saveMessage->show();
 
     actionShowTeamOfTheRound_triggered();
@@ -699,7 +701,9 @@ void Tippeligaen::actionShowPreviousTeamOfTheRound_triggered(){
 
 void Tippeligaen::actionShowAboutMessage_triggered(){
     QMessageBox *aboutMessage = new QMessageBox;
-    aboutMessage->setText(tr("\"Rundens lag\" er laget av JT og Eirik"));
+    aboutMessage->setText(tr("\"Rundens lag\" et program for å lagre og holde oversikt Tippeligalagene, dens spillere "
+                             "og rundens beste spillere. Programmet er laget i faget \"GUI-programmering og C++\" "
+                             "på Høgskolen i Oslo, og er laget av:\n\nJon Torstein Dalen - s148184\nEirik Luka - s148208"));
     aboutMessage->setWindowTitle(tr("Om \"Rundens lag\""));
     aboutMessage->setWindowIcon( QIcon(":/bilder/tippeliga.png"));
     aboutMessage->setIconPixmap( QPixmap(":/bilder/tippeliga.png"));
@@ -715,7 +719,7 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
         QMessageBox* errorMessage = new QMessageBox();
         errorMessage->setText(QString(tr("Fyll ut alle felter")));
         errorMessage->setWindowTitle("Feil");
-        errorMessage->setWindowFlags(Qt::Drawer);
+        errorMessage->setWindowIcon( QIcon(":/bilder/tippeliga.png"));
         errorMessage->show();
         return;
     }
@@ -733,9 +737,11 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
 
     int lagID = teamComboBox->currentIndex();
 
-    QMessageBox* m = new QMessageBox();
-    m->setText(QString(tr("Spiller %1 %2 ble opprettet.")).arg(playerFirstNameEdit->text(), playerLastNameEdit->text()));
-    m->show();
+    QMessageBox* errorMessage = new QMessageBox();
+    errorMessage->setText(QString(tr("Spiller %1 %2 ble opprettet.")).arg(playerFirstNameEdit->text(), playerLastNameEdit->text()));
+    errorMessage->setWindowTitle("Lagret");
+    errorMessage->setWindowIcon( QIcon(":/bilder/tippeliga.png"));
+    errorMessage->show();
     playerFirstNameEdit->setText("");
     playerLastNameEdit->setText("");
     shirtNumberEdit->setText("");
@@ -756,7 +762,7 @@ void Tippeligaen::insertPlayerToTeamOfTheRound(){
 }
 
 void Tippeligaen::addPlayerToTeamOfTheRound(){
-    QString teamString = teamComboBox->currentText();
+    QString teamString = QString::number(teamComboBox->currentIndex());
     QString picUrl = ":/bilder/" +teamString +".png";
     QSqlQuery deleteOldPlayer;
     switch(positionId){
@@ -855,7 +861,6 @@ void Tippeligaen::updateTeamOfTheRoundTable(){
     htmlTable.append("<tr style='font-weight: bold;'><td style='padding-bottom: 15px;'>Spillernavn</td>");
     htmlTable.append("<td>Posisjon</td><td>Navn på lag</td></tr>");
     QSqlQuery teamOfTheRound ("select * from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText() + "'");
-    QSqlQuery test ("select rundensLagNavn, count(*) as antallLag from rundenslag group by rundensLagNavn ");
     while (teamOfTheRound.next()) {
         htmlTable.append("<tr><td style='padding-bottom: 15px;'>");
         htmlTable.append(teamOfTheRound.value(2).toString());
@@ -876,6 +881,8 @@ void Tippeligaen::deletePlayer(){
     if(!index.isValid()){
         QMessageBox* errorMessage = new QMessageBox();
         errorMessage->setText(tr("Merk en spiller for å slette"));
+        errorMessage->setWindowTitle("Feil");
+        errorMessage->setWindowIcon( QIcon(":/bilder/tippeliga.png"));
         errorMessage->show();
         return;
     }

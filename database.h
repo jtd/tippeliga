@@ -17,7 +17,6 @@ static bool createConnection(){
 
     QSqlQuery query;
 
-    /*
     query.exec("DROP TABLE lag");
     query.exec("DROP TABLE spiller");
     query.exec("DROP TABLE rundenslag");
@@ -51,6 +50,71 @@ static bool createConnection(){
                                      "posisjonsId INT,"
                                      "lagID INT,"
                                      "FOREIGN KEY (lagID) REFERENCES lag(id))");
+
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon Inge', 'Høiland', '3', 'Venstre midtstopper', 3, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Kristian', 'Onstad', '4', 'Høyre back', 1, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tom', 'Stenvoll', '5', 'Høyre midtstopper', 4, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Daniel', 'Nannskog', '10', 'Høyre spiss', 10, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Veigar', 'Pall Gunnarsson', '11', 'Venstre spiss', 9, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 1)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 1)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Diogo', 'da Costa Oliveira', '9', 'Høyre ving', 5, 1)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Daniel', 'Nannskog', '10', 'Høyre spiss', 10, 1)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Veigar', 'Pall Gunnarsson', '11', 'Venstre spiss', 9, 1)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 2)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 2)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon Inge', 'Høiland', '3', 'Venstre midtstopper', 3, 2)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Kristian', 'Onstad', '4', 'Høyre back', 1, 2)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Daniel', 'Nannskog', '10', 'Høyre spiss', 10, 2)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Veigar', 'Pall Gunnarsson', '11', 'Venstre spiss', 9, 2)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 3)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tom', 'Stenvoll', '5', 'Høyre midtstopper', 4, 3)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Henning', 'Hauger', '6', 'Høyre midtbane', 8, 3)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Espen', 'Hoff', '7', 'Venstre midtbane', 7, 3)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Pálmi', 'Rafn Pálmason', '8', 'Venstre ving', 6, 3)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 4)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 4)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon Inge', 'Høiland', '3', 'Venstre midtstopper', 3, 4)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Kristian', 'Onstad', '4', 'Høyre back', 1, 4)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tom', 'Stenvoll', '5', 'Høyre midtstopper', 4, 4)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Daniel', 'Nannskog', '10', 'Høyre spiss', 10, 4)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 5)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 5)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon Inge', 'Høiland', '3', 'Venstre midtstopper', 3, 5)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Kristian', 'Onstad', '4', 'Høyre back', 1, 5)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tom', 'Stenvoll', '5', 'Høyre midtstopper', 4, 5)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon Inge', 'Høiland', '3', 'Venstre midtstopper', 3, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Kristian', 'Onstad', '4', 'Høyre back', 1, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tom', 'Stenvoll', '5', 'Høyre midtstopper', 4, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Henning', 'Hauger', '6', 'Høyre midtbane', 8, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Espen', 'Hoff', '7', 'Venstre midtbane', 7, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Pálmi', 'Rafn Pálmason', '8', 'Venstre ving', 6, 6)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Henning', 'Hauger', '6', 'Høyre midtbane', 8, 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Espen', 'Hoff', '7', 'Venstre midtbane', 7, 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Pálmi', 'Rafn Pálmason', '8', 'Venstre ving', 6, 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Diogo', 'da Costa Oliveira', '9', 'Høyre ving', 5, 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Daniel', 'Nannskog', '10', 'Høyre spiss', 10, 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Veigar', 'Pall Gunnarsson', '11', 'Venstre spiss', 9, 7)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Henning', 'Hauger', '6', 'Høyre midtbane', 8, 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Espen', 'Hoff', '7', 'Venstre midtbane', 7, 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Pálmi', 'Rafn Pálmason', '8', 'Venstre ving', 6, 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Diogo', 'da Costa Oliveira', '9', 'Høyre ving', 5, 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Daniel', 'Nannskog', '10', 'Høyre spiss', 10, 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Veigar', 'Pall Gunnarsson', '11', 'Venstre spiss', 9, 8)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 9)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 9)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon Inge', 'Høiland', '3', 'Venstre midtstopper', 3, 9)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Kristian', 'Onstad', '4', 'Høyre back', 1, 9)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tom', 'Stenvoll', '5', 'Høyre midtstopper', 4, 9)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Henning', 'Hauger', '6', 'Høyre midtbane', 8, 9)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Espen', 'Hoff', '7', 'Venstre midtbane', 7, 9)");
+
 
     //Stabæk
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 10)");
@@ -136,7 +200,7 @@ static bool createConnection(){
                                         "navn VARCHAR(40),"
                                         "posisjon VARCHAR(40),"
                                         "lagNavn VARCHAR(40))");
-    */
+
     return true;
 }
 
