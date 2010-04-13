@@ -485,6 +485,7 @@ void Tippeligaen::teamOfTheRoundButtonClicked(){
     actionShowTeamOfTheRound_triggered();
     makeUnknownShirt();
     teamOfTheRoundIdLabel()->setText(teamOfTheRoundLineEdit->text());
+    teamOfTheRoundLineEdit->setText("");
 }
 
 void Tippeligaen::createTeamInfoGroupBox(){
