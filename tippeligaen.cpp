@@ -96,8 +96,30 @@ Tippeligaen::~Tippeligaen(){
     delete fileMenu;
     delete showMenu;
     delete helpMenu;
-
-
+    delete createNewPlayer;
+    delete deletePlayerButton;
+    delete addToTeamOfTheRoundButton;
+    delete playerFirstNameEdit;
+    delete playerLastNameEdit;
+    delete shirtNumberEdit;
+    delete playerPositionEdit;
+    delete teamOfTheRoundLineEdit;
+    delete teamOfTheRoundButton;
+    delete teamModel;
+    delete playerModel;
+    delete wiki;
+    delete textbrowser;
+    delete playerTableView;
+    delete wikiLayout;
+    delete makePlayerGroupBox;
+    delete crateNewTeamOfTheRoundGroupBox;
+    delete playerInfoGroupBox;
+    delete createTeamOfTheRoundShowTeamGroupBox;
+    delete players;
+    delete teamOfTheRoundChooseTeamComboBox;
+    delete teamOfTheRoundChooseTeamGroupBox;
+    delete teamComboBox;
+    delete teamWiki;
 }
 
 void Tippeligaen::doAtStartUp(){
@@ -694,9 +716,6 @@ void Tippeligaen::actionShowPreviousTeamOfTheRound_triggered(){
     playerInfoGroupBox->hide();
     crateNewTeamOfTheRoundGroupBox->hide();
 
-    //teamOfTheRoundId = 1;
-    //QString teamOfTheRoundName = "Lag " + QString::number(teamOfTheRoundId);
-    //teamOfTheRoundIdLabel()->setText(teamOfTheRoundName);
     teamOfTheRoundChooseTeamGroupBox->show();
     createTeamOfTheRoundShowTeamGroupBox->show();
 

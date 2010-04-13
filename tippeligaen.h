@@ -97,17 +97,14 @@ public:
     QGroupBox *createTeamOfTheRoundGroupBox();
     QGroupBox *createTeamOfTheRoundShowTeamGroupBox;
     QGroupBox *playerInfoGroupBox;
-    QGroupBox *teamOfTheRound;
+    QGroupBox *teamOfTheRound; //
     QGroupBox *teamWiki;
     QGroupBox *makePlayerGroupBox;
     QGroupBox *crateNewTeamOfTheRoundGroupBox;
     QTableView *playerTableView;
-    QTableWidget *teamOfTheRoundTableWidget; //?
     QTextBrowser *textbrowser;
-    QSqlRelationalTableModel *model;
     QSqlRelationalTableModel *teamModel;
     QSqlRelationalTableModel *playerModel;
-    QSqlRelationalTableModel *teamOfTheRoundModel;
     QWebView *wiki;
     QString selectedTeamUrl;
 
@@ -121,7 +118,6 @@ public:
     QComboBox *playerPositionEdit;
 
     QPushButton *createNewPlayer;
-    QGridLayout *mainLayout;
     QPushButton *deletePlayerButton;
     QPushButton *addToTeamOfTheRoundButton;
 
