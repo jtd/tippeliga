@@ -21,6 +21,7 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     createTeamOfTheRoundChooseTeamGroupBox();
     createTeamWikiView();
     createTeamOfTheRoundShowTeam();
+    crateNewTeamOfTheRound();
 
     makeWindowMenues();
     createMakeNewPlayerView();
@@ -32,6 +33,7 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     layout->addWidget(players, 1, 0);
     layout->addWidget(playerInfoGroupBox, 2 ,0);
     layout->addWidget(makePlayerGroupBox, 2, 0);
+    layout->addWidget(crateNewTeamOfTheRoundGroupBox, 2, 0);
     layout->addWidget(teamOfTheRound, 0, 1, 3, 1);
     layout->addWidget(teamWiki, 0, 1, 3, 1);
     layout->addWidget(teamOfTheRoundChooseTeamGroupBox, 0, 1);
@@ -60,6 +62,8 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
             this, SLOT(addPlayerToTeamOfTheRound()));
     connect(teamOfTheRoundChooseTeamComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(updateTeamOfTheRoundTable()));
+    connect(teamOfTheRoundButton, SIGNAL(clicked()),
+            this, SLOT(teamOfTheRoundButtonClicked()));
     connectMainMenuSlots();
 }
 
@@ -87,6 +91,7 @@ void Tippeligaen::doAtStartUp(){
     updatePlayerTableView(0);
     updateTeamWiki(0);
     playerInfoGroupBox->hide();
+    crateNewTeamOfTheRoundGroupBox->hide();
 }
 
 void Tippeligaen::setUrl(QString url){
@@ -437,6 +442,35 @@ void Tippeligaen::createMakeNewPlayerView(){
     makePlayerGroupBox->setMinimumHeight(170);
 }
 
+void Tippeligaen::crateNewTeamOfTheRound(){
+    crateNewTeamOfTheRoundGroupBox = new QGroupBox(tr("Lag nytt rundens lag"));
+
+    teamOfTheRoundLabel = new QLabel;
+    teamOfTheRoundLabel->setText(tr("Navn på rundens lag: "));
+    teamOfTheRoundLineEdit = new QLineEdit;
+    teamOfTheRoundButton = new QPushButton;
+    teamOfTheRoundButton->setText(tr("Lag rundens lag"));
+   
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(teamOfTheRoundLabel, 0, 0);
+    layout->addWidget(teamOfTheRoundLineEdit, 0, 1);
+    layout->addWidget(teamOfTheRoundButton, 0, 2);
+    crateNewTeamOfTheRoundGroupBox->setLayout(layout);
+    crateNewTeamOfTheRoundGroupBox->setMinimumHeight(170);
+}
+
+void Tippeligaen::teamOfTheRoundButtonClicked(){
+    if(teamOfTheRoundLineEdit->text() == ""){
+        QMessageBox *m = new QMessageBox;
+        m->setText(tr("Fyll inn navn på rundens lag"));
+        m->setWindowTitle(tr("Feil"));
+        m->setWindowFlags(Qt::Drawer);
+        m->show();
+        return;
+    }
+   teamOfTheRoundIdLabel()->setText(teamOfTheRoundLineEdit->text());
+}
+
 void Tippeligaen::createTeamInfoGroupBox(){
     playerInfoGroupBox = new QGroupBox(tr("Spillerinfo"));
     shirt = new Shirt();
@@ -522,7 +556,9 @@ void Tippeligaen::updateTeamWiki(int row){
 
 void Tippeligaen::updatePlayerInformation(){
     makePlayerGroupBox->hide();
+    crateNewTeamOfTheRoundGroupBox->hide();
     playerInfoGroupBox->show();
+
     QModelIndex index = playerTableView->currentIndex();
     QSqlRecord record = playerModel->record(index.row());
 
@@ -632,10 +668,13 @@ void Tippeligaen::deletePlayer(){
 void Tippeligaen::actionCreatePlayer_triggered(){
     makePlayerGroupBox->show();
     playerInfoGroupBox->hide();
+    crateNewTeamOfTheRoundGroupBox->hide();
 }
 
 void Tippeligaen::actionCreateNewTeamOfTheRound_triggered(){
-
+    playerInfoGroupBox->hide();
+    makePlayerGroupBox->hide();
+    crateNewTeamOfTheRoundGroupBox->show();
 }
 
 void Tippeligaen::actionExitApplication_triggered(){
@@ -675,10 +714,11 @@ void Tippeligaen::actionShowPreviousTeamOfTheRound_triggered(){
     teamOfTheRound->hide();
     teamWiki->hide();
     playerInfoGroupBox->hide();
+    crateNewTeamOfTheRoundGroupBox->hide();
 
-    teamOfTheRoundId = 1;
-    QString teamOfTheRoundName = "Lag " + QString::number(teamOfTheRoundId);
-    teamOfTheRoundIdLabel()->setText(teamOfTheRoundName);
+    //teamOfTheRoundId = 1;
+    //QString teamOfTheRoundName = "Lag " + QString::number(teamOfTheRoundId);
+    //teamOfTheRoundIdLabel()->setText(teamOfTheRoundName);
     teamOfTheRoundChooseTeamGroupBox->show();
     createTeamOfTheRoundShowTeamGroupBox->show();
 
@@ -784,7 +824,7 @@ void Tippeligaen::addPlayerToTeamOfTheRound(){
 }
 
 void Tippeligaen::createTeamOfTheRoundChooseTeamGroupBox(){
-    teamOfTheRoundChooseTeamGroupBox = new QGroupBox(tr("Rundenslag"));;
+    teamOfTheRoundChooseTeamGroupBox = new QGroupBox(tr("Rundens lag"));;
     teamOfTheRoundChooseTeamComboBox = new QComboBox;
     QSqlQuery teamOfTheRound ("select * from rundenslag group by rundensLagNavn" );
     while (teamOfTheRound.next()) {

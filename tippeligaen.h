@@ -110,6 +110,14 @@ public:
     QGroupBox *makePlayerGroupBox;
     QString selectedTeamUrl;
 
+    //Lagt til nytt
+    QGroupBox *crateNewTeamOfTheRoundGroupBox;
+    void crateNewTeamOfTheRound();
+    QLabel *teamOfTheRoundLabel;
+    QLineEdit *teamOfTheRoundLineEdit;
+    QPushButton *teamOfTheRoundButton;
+
+
     QLineEdit *playerFirstNameEdit;
     QLineEdit *playerLastNameEdit;
     QComboBox *playerPositionEdit;
@@ -191,6 +199,7 @@ private slots:
     void actionShowTeamInfo_triggered();
     void actionShowPreviousTeamOfTheRound_triggered();
     void actionCreateNewTeamOfTheRound_triggered();
+    void teamOfTheRoundButtonClicked();
 
 
 };
