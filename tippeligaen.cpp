@@ -88,7 +88,6 @@ Tippeligaen::~Tippeligaen(){
     delete _teamOfTheRoundLabel;
     delete _teamOfTheRoundIdLabel;
     delete actionCreatePlayer;
-    delete actionExitApplication;
     delete actionShowTeamOfTheRound;
     delete actionShowTeamInfo;
     delete actionShowPreviousTeamOfTheRound;
