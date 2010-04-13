@@ -137,7 +137,6 @@ public:
     QMenu *helpMenu;
 
     QAction *actionCreatePlayer;
-    QAction *actionExitApplication;
     QAction *actionShowTeamOfTheRound;
     QAction *actionShowTeamInfo;
     QAction *actionShowPreviousTeamOfTheRound;
@@ -194,7 +193,6 @@ private slots:
 
     //Menu-actions
     void actionCreatePlayer_triggered();
-    void actionExitApplication_triggered();
     void actionShowTeamOfTheRound_triggered();
     void actionShowTeamInfo_triggered();
     void actionShowPreviousTeamOfTheRound_triggered();
