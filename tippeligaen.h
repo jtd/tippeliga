@@ -118,7 +118,6 @@ public:
     QLineEdit *teamOfTheRoundLineEdit;
     QPushButton *teamOfTheRoundButton;
 
-
     QLineEdit *playerFirstNameEdit;
     QLineEdit *playerLastNameEdit;
     QLineEdit *shirtNumberEdit;
