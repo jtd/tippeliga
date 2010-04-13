@@ -4,10 +4,12 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <QSqlRelationalTableModel>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QtSql>
 #include "team.h"
 #include "player.h"
-#include "shirt.h"
-#include "field.h"
 
 #include <QWebView>
 
@@ -72,6 +74,8 @@ public:
     QLabel *fieldLabel();
     void setShirtLabel(QLabel *shirtLabel);
     QLabel *shirtLabel();
+    void setTeamOfTheRoundLabel(QLabel *teamOfTheRoundLabel);
+    QLabel *teamOfTheRoundLabel();
 
     void createTeamWikiView();
     void makeWindowMenues();
@@ -97,6 +101,7 @@ public:
     QGroupBox *teamOfTheRound;
     QGroupBox *teamWiki;
     QGroupBox *makePlayerGroupBox;
+    QGroupBox *crateNewTeamOfTheRoundGroupBox;
     //QGroupBox *createTeamInfoGroupBox();
     QTableView *playerTableView;
     QTableWidget *teamOfTheRoundTableWidget; //?
@@ -109,17 +114,15 @@ public:
     QString selectedTeamUrl;
 
     //Lagt til nytt
-    QGroupBox *crateNewTeamOfTheRoundGroupBox;
     void crateNewTeamOfTheRound();
-    QLabel *teamOfTheRoundLabel;
     QLineEdit *teamOfTheRoundLineEdit;
     QPushButton *teamOfTheRoundButton;
 
 
     QLineEdit *playerFirstNameEdit;
     QLineEdit *playerLastNameEdit;
-    QComboBox *playerPositionEdit;
     QLineEdit *shirtNumberEdit;
+    QComboBox *playerPositionEdit;
 
     QPushButton *createNewPlayer;
     QGridLayout *mainLayout;
@@ -129,10 +132,6 @@ public:
     //Legger til ting som skal ligge i rundens lag.
     int positionId;
     int teamOfTheRoundId;
-
-    QString *test;
-    Shirt *shirt;
-    Field *field;
 
     QMenu *fileMenu;
     QMenu *showMenu;
@@ -177,6 +176,7 @@ private:
 
     QLabel *_fieldLabel;
     QLabel *_shirtLabel;
+    QLabel *_teamOfTheRoundLabel;
 
 private slots:
     void doAtStartUp();

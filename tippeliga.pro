@@ -8,16 +8,10 @@ QT += network \
 TARGET = tippeliga
 TEMPLATE = app
 SOURCES += main.cpp \
-    tippeligaen.cpp \
-    player.cpp \
-    team.cpp \
-    shirt.cpp \
-    field.cpp
+    tippeligaen.cpp
 HEADERS += tippeligaen.h \
     database.h \
     player.h \
-    team.h \
-    shirt.h \
-    field.h
+    team.h
 FORMS += tippeligaen.ui
 RESOURCES += bilder.qrc

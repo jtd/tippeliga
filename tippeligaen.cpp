@@ -1,11 +1,7 @@
 #include "tippeligaen.h"
 #include "ui_tippeligaen.h"
-#include "shirt.h"
 
-#include <QSqlDatabase>
-#include <QSqlError>
-#include <QSqlQuery>
-#include <QtSql>
+
 
 Tippeligaen::Tippeligaen(QWidget *parent) :
     QMainWindow(parent),
@@ -91,7 +87,7 @@ void Tippeligaen::doAtStartUp(){
     updatePlayerTableView(0);
     updateTeamWiki(0);
     playerInfoGroupBox->hide();
-    crateNewTeamOfTheRoundGroupBox->hide();
+    crateNewTeamOfTheRoundGroupBox->show();
 }
 
 void Tippeligaen::setUrl(QString url){
@@ -252,6 +248,13 @@ QLabel* Tippeligaen::playerPosition(){
     return _playerPosition;
 }
 
+void Tippeligaen::setTeamOfTheRoundLabel(QLabel *teamOfTheRoundLabel){
+    _teamOfTheRoundLabel = teamOfTheRoundLabel;
+}
+QLabel* Tippeligaen::teamOfTheRoundLabel(){
+    return _teamOfTheRoundLabel;
+}
+
 
 void Tippeligaen::changeEvent(QEvent *e){
     QMainWindow::changeEvent(e);
@@ -334,7 +337,6 @@ void Tippeligaen::createTeamPlayersGroupBox(){
 
 QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
     QGroupBox *box = new QGroupBox(tr("Rundens lag"));
-    field = new Field();
 
     QLabel *fieldImage = new QLabel();
     fieldImage->setPixmap(QPixmap(":/bilder/field.png"));
@@ -344,13 +346,6 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
                             "border: 20px solid;"
                             "border-color: none; "
                         "}");
-
-    //fieldLabel = new QLabel(field);
-    //fieldLabel->setPixmap(QPixmap(":/bilder/fullbaneTest.png"));
-    //fieldLabel->setAlignment(Qt::AlignTop);
-    //field->addLabel(fieldLabel);
-    //fieldLabel->show();
-    //field->show();
 
     _keeper = new QLabel;
     _rightBack = new QLabel;
@@ -370,8 +365,6 @@ QGroupBox* Tippeligaen::createTeamOfTheRoundGroupBox(){
 
 
     QGridLayout *layout = new QGridLayout;
-    //QBoxLayout *layout = new QBoxLayout;
-    //layout->addWidget(field);//, 0,0);
     layout->addWidget(_keeper, 0, 2, 1, 4);
     layout->addWidget(_rightBack, 1, 0);
     layout->addWidget(_rightCenterBack, 1, 1);
@@ -459,14 +452,14 @@ void Tippeligaen::createMakeNewPlayerView(){
 void Tippeligaen::crateNewTeamOfTheRound(){
     crateNewTeamOfTheRoundGroupBox = new QGroupBox(tr("Lag nytt rundens lag"));
 
-    teamOfTheRoundLabel = new QLabel;
-    teamOfTheRoundLabel->setText(tr("Navn på rundens lag: "));
+    _teamOfTheRoundLabel = new QLabel;
+    _teamOfTheRoundLabel->setText(tr("Navn på rundens lag: "));
     teamOfTheRoundLineEdit = new QLineEdit;
     teamOfTheRoundButton = new QPushButton;
     teamOfTheRoundButton->setText(tr("Lag rundens lag"));
    
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(teamOfTheRoundLabel, 0, 0);
+    layout->addWidget(teamOfTheRoundLabel(), 0, 0);
     layout->addWidget(teamOfTheRoundLineEdit, 0, 1);
     layout->addWidget(teamOfTheRoundButton, 0, 2);
     crateNewTeamOfTheRoundGroupBox->setLayout(layout);
@@ -475,24 +468,31 @@ void Tippeligaen::crateNewTeamOfTheRound(){
 
 void Tippeligaen::teamOfTheRoundButtonClicked(){
     if(teamOfTheRoundLineEdit->text() == ""){
-        QMessageBox *m = new QMessageBox;
-        m->setText(tr("Fyll inn navn på rundens lag"));
-        m->setWindowTitle(tr("Feil"));
-        m->setWindowFlags(Qt::Drawer);
-        m->show();
+        QMessageBox *errorMessage = new QMessageBox;
+        errorMessage->setText(tr("Fyll inn navn på rundens lag"));
+        errorMessage->setWindowTitle(tr("Feil"));
+        errorMessage->setWindowFlags(Qt::Drawer);
+        errorMessage->show();
         return;
     }
-   teamOfTheRoundIdLabel()->setText(teamOfTheRoundLineEdit->text());
+
+    QMessageBox *saveMessage = new QMessageBox;
+    saveMessage->setText("Du kan nå legge til spillere i " + teamOfTheRoundLineEdit->text());
+    saveMessage->setWindowTitle(tr("Lagret"));
+    saveMessage->setWindowFlags(Qt::Drawer);
+    saveMessage->show();
+
+    actionShowTeamOfTheRound_triggered();
+    makeUnknownShirt();
+    teamOfTheRoundIdLabel()->setText(teamOfTheRoundLineEdit->text());
 }
 
 void Tippeligaen::createTeamInfoGroupBox(){
     playerInfoGroupBox = new QGroupBox(tr("Spillerinfo"));
-    shirt = new Shirt();
-    _shirtLabel = new QLabel(shirt);
+    _shirtLabel = new QLabel();
     _shirtLabel->setAlignment(Qt::AlignRight);
     _shirtLabel->setPixmap(QPixmap(":/bilder/Aalesund.png"));
 
-    shirt->addLabel(_shirtLabel);
     _playerNameLabel = new QLabel;
     _playerNameLabel->setText(tr("Spillernavn: "));
     _playerPositionLabel = new QLabel;
@@ -518,7 +518,7 @@ void Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(playerTeam(), 2, 1);
     layout->addWidget(deletePlayerButton, 3, 0);
     layout->addWidget(addToTeamOfTheRoundButton, 3, 1);
-    layout->addWidget(shirt, 0, 2, 4, 1);
+    layout->addWidget(shirtLabel(), 0, 2, 4, 1);
     playerInfoGroupBox->setLayout(layout);
 
     playerInfoGroupBox->setMinimumHeight(170);
@@ -567,7 +567,6 @@ void Tippeligaen::updateTeamWiki(int row){
     }
 }
 
-
 void Tippeligaen::updatePlayerInformation(){
     makePlayerGroupBox->hide();
     crateNewTeamOfTheRoundGroupBox->hide();
@@ -589,7 +588,6 @@ void Tippeligaen::updatePlayerInformation(){
 
     QString picUrl = ":/bilder/" +teamString +".png";
     _shirtLabel->setPixmap(QPixmap(picUrl));
-    shirt->addLabel(_shirtLabel);
 }
 
 void Tippeligaen::makeWindowMenues(){
@@ -598,7 +596,7 @@ void Tippeligaen::makeWindowMenues(){
     fileMenu->setTitle(tr("Fil"));
 
     actionCreatePlayer = new QAction(tr("Legg til spiller"), fileMenu);
-    actionCreateNewTeamOfTheRound = new QAction(tr("Lag nytt Rundens lag"), fileMenu);
+    actionCreateNewTeamOfTheRound = new QAction(tr("Lag nytt \"Rundens lag\""), fileMenu);
     actionExitApplication = new QAction(tr("Avslutt"), fileMenu);
 
     fileMenu->addAction(actionCreatePlayer);
@@ -617,7 +615,7 @@ void Tippeligaen::makeWindowMenues(){
     actionShowTeamInfo = new QAction(tr("Laginfo"), showMenu);
     actionShowTeamInfo->setCheckable(true);
 
-    actionShowPreviousTeamOfTheRound = new QAction(tr("Tidligere \"Rundens lag\""), fileMenu);
+    actionShowPreviousTeamOfTheRound = new QAction(tr("Lagrede \"Rundens lag\""), fileMenu);
     actionShowPreviousTeamOfTheRound->setCheckable(true);
 
     showMenu->addAction(actionShowTeamOfTheRound);
