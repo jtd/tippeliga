@@ -73,7 +73,6 @@ public:
 
     void makeWindowMenues();
     void createTeamInfoGroupBox();
-    void createMakeNewPlayerGroupBox();
     void createMakeNewPlayerView();
     void createTeamOfTheRoundChooseTeamGroupBox();
     void createTeamPlayersGroupBox();
@@ -96,7 +95,7 @@ public:
     QTextBrowser *textbrowser;
     //QTableView *teamOfTheRoundTableView;
     QLabel *fieldLabel;
-    QGroupBox *teamInfo;
+    QGroupBox *playerInfoGroupBox;
     //QGroupBox *createTeamInfoGroupBox();
     QLabel *shirtLabel;
     QLabel *valerengaInfo;
@@ -138,7 +137,8 @@ public:
     QAction *actionExitApplication;
     QAction *actionShowTeamOfTheRound;
     QAction *actionShowTeamInfo;
-    QAction *actionCreateTeamOfTheRound;
+    QAction *actionShowPreviousTeamOfTheRound;
+    QAction *actionCreateNewTeamOfTheRound;
 
 protected:
     void changeEvent(QEvent *e);
@@ -182,15 +182,16 @@ private slots:
     void addPlayerToTeamOfTheRound();
     void updateTeamOfTheRoundChooseTeamGroupBox();
     void updateTeamOfTheRoundTable();
+    void actionAddNewPlayerToDataBase();
 
     //Menu-actions
     void actionCreatePlayer_triggered();
     void actionExitApplication_triggered();
     void actionShowTeamOfTheRound_triggered();
     void actionShowTeamInfo_triggered();
-    void actionAddNewTeamOfTheRound_triggered();
+    void actionShowPreviousTeamOfTheRound_triggered();
+    void actionCreateNewTeamOfTheRound_triggered();
 
-    void actionAddNewPlayerToDataBase();
 
 };
 

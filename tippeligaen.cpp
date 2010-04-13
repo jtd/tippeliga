@@ -13,6 +13,7 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
     QGroupBox *team = createTeamChooserGroupBox();
     teamOfTheRound = createTeamOfTheRoundGroupBox();
     createTeamPlayersGroupBox();
@@ -29,7 +30,7 @@ Tippeligaen::Tippeligaen(QWidget *parent) :
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(team, 0, 0);
     layout->addWidget(players, 1, 0);
-    layout->addWidget(teamInfo, 2 ,0);
+    layout->addWidget(playerInfoGroupBox, 2 ,0);
     layout->addWidget(makePlayerGroupBox, 2, 0);
     layout->addWidget(teamOfTheRound, 0, 1, 3, 1);
     layout->addWidget(teamWiki, 0, 1, 3, 1);
@@ -83,9 +84,9 @@ void Tippeligaen::doAtStartUp(){
     makePlayerGroupBox->hide();
     teamOfTheRoundChooseTeamGroupBox->hide();
     createTeamOfTheRoundShowTeamGroupBox->hide();
-
     updatePlayerTableView(0);
     updateTeamWiki(0);
+    playerInfoGroupBox->hide();
 }
 
 void Tippeligaen::setUrl(QString url){
@@ -391,7 +392,6 @@ void Tippeligaen::createTeamWikiView(){
 }
 
 void Tippeligaen::createMakeNewPlayerView(){
-    //teamInfo->hide();
     makePlayerGroupBox = new QGroupBox(tr("Registrer ny spiller"));
 
     _playerFirstNameLabel = new QLabel;
@@ -438,9 +438,7 @@ void Tippeligaen::createMakeNewPlayerView(){
 }
 
 void Tippeligaen::createTeamInfoGroupBox(){
-    teamInfo = new QGroupBox(tr("Spillerinfo"));
-
-    //Shirt* s = new Shirt();
+    playerInfoGroupBox = new QGroupBox(tr("Spillerinfo"));
     shirt = new Shirt();
     shirtLabel = new QLabel(shirt);
     shirtLabel->setAlignment(Qt::AlignRight);
@@ -473,9 +471,9 @@ void Tippeligaen::createTeamInfoGroupBox(){
     layout->addWidget(deletePlayerButton, 3, 0);
     layout->addWidget(addToTeamOfTheRoundButton, 3, 1);
     layout->addWidget(shirt, 0, 2, 4, 1);
-    teamInfo->setLayout(layout);
+    playerInfoGroupBox->setLayout(layout);
 
-    teamInfo->setMinimumHeight(170);
+    playerInfoGroupBox->setMinimumHeight(170);
     //return box;
 }
 
@@ -505,11 +503,11 @@ void Tippeligaen::updatePlayerTableView(int row){
 }
 
 void Tippeligaen::updateTeamWiki(int row){
+    playerInfoGroupBox->hide();
     QModelIndex index = teamModel->relationModel(0)->index(row, 0);
     QSqlRecord record = teamModel->record(row);
     if(index.isValid()){
          QString teamUrl = record.value("nettside").toString();
-         _playerName->setText(teamUrl);
          wiki = new QWebView();
          wiki->load(QUrl(teamUrl));
          //wiki->show();
@@ -524,7 +522,7 @@ void Tippeligaen::updateTeamWiki(int row){
 
 void Tippeligaen::updatePlayerInformation(){
     makePlayerGroupBox->hide();
-    teamInfo->show();
+    playerInfoGroupBox->show();
     QModelIndex index = playerTableView->currentIndex();
     QSqlRecord record = playerModel->record(index.row());
 
@@ -550,11 +548,11 @@ void Tippeligaen::makeWindowMenues(){
     fileMenu->setTitle(tr("Fil"));
 
     actionCreatePlayer = new QAction(tr("Legg til spiller"), fileMenu);
+    actionCreateNewTeamOfTheRound = new QAction(tr("Lag nytt Rundens lag"), fileMenu);
     actionExitApplication = new QAction(tr("Avslutt"), fileMenu);
-    actionCreateTeamOfTheRound = new QAction(tr("Lag nytt rundenslag"), fileMenu);
 
     fileMenu->addAction(actionCreatePlayer);
-    fileMenu->addAction(actionCreateTeamOfTheRound);
+    fileMenu->addAction(actionCreateNewTeamOfTheRound);
     fileMenu->addSeparator();
     fileMenu->addAction(actionExitApplication);
 
@@ -569,8 +567,12 @@ void Tippeligaen::makeWindowMenues(){
     actionShowTeamInfo = new QAction(tr("Laginfo"), showMenu);
     actionShowTeamInfo->setCheckable(true);
 
+    actionShowPreviousTeamOfTheRound = new QAction(tr("Tidligere \"Rundens lag\""), fileMenu);
+    actionShowPreviousTeamOfTheRound->setCheckable(true);
+
     showMenu->addAction(actionShowTeamOfTheRound);
     showMenu->addAction(actionShowTeamInfo);
+    showMenu->addAction(actionShowPreviousTeamOfTheRound);
     showMenu->addSeparator();
 
     ui->menuBar->addMenu(fileMenu);
@@ -582,14 +584,19 @@ void Tippeligaen::makeWindowMenues(){
 void Tippeligaen::connectMainMenuSlots() {
     connect(actionCreatePlayer, SIGNAL(triggered()),
         this, SLOT(actionCreatePlayer_triggered()));
+    connect(actionCreateNewTeamOfTheRound, SIGNAL(triggered()),
+        this, SLOT(actionCreateNewTeamOfTheRound_triggered()));
     connect(actionExitApplication, SIGNAL(triggered()),
         this, SLOT(actionExitApplication_triggered()));
+
     connect(actionShowTeamOfTheRound, SIGNAL(triggered()),
         this, SLOT(actionShowTeamOfTheRound_triggered()));
     connect(actionShowTeamInfo, SIGNAL(triggered()),
         this, SLOT(actionShowTeamInfo_triggered()));
-    connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
-            this, SLOT(actionAddNewTeamOfTheRound_triggered()));
+    connect(actionShowPreviousTeamOfTheRound, SIGNAL(triggered()),
+            this, SLOT(actionShowPreviousTeamOfTheRound_triggered()));
+    connect(actionShowPreviousTeamOfTheRound, SIGNAL(triggered()),
+            this, SLOT(updateTeamOfTheRoundChooseTeamGroupBox()));
     /*connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
             this, SLOT(updateTeamOfTheRoundChooseTeamGroupBox()));*/
 }
@@ -622,6 +629,19 @@ void Tippeligaen::deletePlayer(){
     playerModel->submitAll();
 }
 
+void Tippeligaen::actionCreatePlayer_triggered(){
+    makePlayerGroupBox->show();
+    playerInfoGroupBox->hide();
+}
+
+void Tippeligaen::actionCreateNewTeamOfTheRound_triggered(){
+
+}
+
+void Tippeligaen::actionExitApplication_triggered(){
+    exit(0);
+}
+
 void Tippeligaen::actionShowTeamOfTheRound_triggered(){
     if(!actionShowTeamOfTheRound->isChecked()) {
         actionShowTeamOfTheRound->setChecked(true);
@@ -631,9 +651,8 @@ void Tippeligaen::actionShowTeamOfTheRound_triggered(){
     teamWiki->hide();
     teamOfTheRoundChooseTeamGroupBox->hide();
     createTeamOfTheRoundShowTeamGroupBox->hide();
-
-
     actionShowTeamInfo->setChecked(false);
+    actionShowPreviousTeamOfTheRound->setChecked(false);
 }
 
 void Tippeligaen::actionShowTeamInfo_triggered(){
@@ -646,30 +665,25 @@ void Tippeligaen::actionShowTeamInfo_triggered(){
     teamOfTheRoundChooseTeamGroupBox->hide();
     createTeamOfTheRoundShowTeamGroupBox->hide();
     actionShowTeamOfTheRound->setChecked(false);
+    actionShowPreviousTeamOfTheRound->setChecked(false);
 }
 
-void Tippeligaen::actionCreatePlayer_triggered(){
-    makePlayerGroupBox->show();
-    teamInfo->hide();
-}
-
-void Tippeligaen::actionExitApplication_triggered(){
-    exit(0);
-}
-
-void Tippeligaen::actionAddNewTeamOfTheRound_triggered(){
+void Tippeligaen::actionShowPreviousTeamOfTheRound_triggered(){
+    if(!actionShowPreviousTeamOfTheRound->isChecked()) {
+        actionShowPreviousTeamOfTheRound->setChecked(true);
+    }
     teamOfTheRound->hide();
     teamWiki->hide();
+    playerInfoGroupBox->hide();
 
     teamOfTheRoundId = 1;
-    QString teamOfTheRoundName = "Lag"+QString::number(teamOfTheRoundId);
+    QString teamOfTheRoundName = "Lag " + QString::number(teamOfTheRoundId);
     teamOfTheRoundIdLabel()->setText(teamOfTheRoundName);
-    insertPlayerToTeamOfTheRound();
-    connect(actionCreateTeamOfTheRound, SIGNAL(triggered()),
-            this, SLOT(updateTeamOfTheRoundChooseTeamGroupBox()));
     teamOfTheRoundChooseTeamGroupBox->show();
     createTeamOfTheRoundShowTeamGroupBox->show();
 
+    actionShowTeamOfTheRound->setChecked(false);
+    actionShowTeamInfo->setChecked(false);
 }
 
 void Tippeligaen::actionAddNewPlayerToDataBase(){
@@ -705,20 +719,17 @@ void Tippeligaen::actionAddNewPlayerToDataBase(){
     playerLastNameEdit->setText("");
     shirtNumberEdit->setText("");
     updatePlayerTableView(lagID);
-
-    /*delete players;
-    createTeamPlayersGroupBox();
-    players->show();*/
 }
+
 void Tippeligaen::insertPlayerToTeamOfTheRound(){
-    QSqlQuery teamOfTheRoundRow;
-    teamOfTheRoundRow.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
-                         "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn");
-    teamOfTheRoundRow.bindValue(":rundensLagNavn", teamOfTheRoundIdLabel()->text());
-    teamOfTheRoundRow.bindValue(":navn", playerNameLabel()->text());
-    teamOfTheRoundRow.bindValue(":posisjon", playerPosition()->text());
-    teamOfTheRoundRow.bindValue(":lagNavn", playerTeam()->text());
-    teamOfTheRoundRow.exec();
+    QSqlQuery insertTeamOfTheRound;
+    insertTeamOfTheRound.prepare("INSERT INTO rundenslag (rundensLagNavn, navn, posisjon, lagNavn)"
+                         "VALUES (:rundensLagNavn, :navn, :posisjon, :lagNavn)");
+    insertTeamOfTheRound.bindValue(":rundensLagNavn", teamOfTheRoundIdLabel()->text());
+    insertTeamOfTheRound.bindValue(":navn", playerName()->text());
+    insertTeamOfTheRound.bindValue(":posisjon", playerPosition()->text());
+    insertTeamOfTheRound.bindValue(":lagNavn", playerTeam()->text());
+    insertTeamOfTheRound.exec();
 }
 
 void Tippeligaen::addPlayerToTeamOfTheRound(){
@@ -806,7 +817,7 @@ void Tippeligaen::createTeamOfTheRoundShowTeam(){
 void Tippeligaen::updateTeamOfTheRoundTable(){
     QString htmlTable("");
     htmlTable.append("<table width=400 border=1>");
-    htmlTable.append("<tr><td>Rundenslag</td><td>Spillernavn</td><td>Posisjon</td><td>Navn på lag</td></tr>");
+    htmlTable.append("<tr><td>Rundens lag</td><td>Spillernavn</td><td>Posisjon</td><td>Navn på lag</td></tr>");
     QSqlQuery teamOfTheRound ("select * from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText() + "'");
     QSqlQuery test ("select rundensLagNavn, count(*) as antallLag from rundenslag group by rundensLagNavn ");
     while (teamOfTheRound.next()) {
