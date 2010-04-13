@@ -870,12 +870,13 @@ void Tippeligaen::createTeamOfTheRoundShowTeam(){
 
 void Tippeligaen::updateTeamOfTheRoundTable(){
     QString htmlTable("");
-    htmlTable.append("<table width=400 border=1>");
-    htmlTable.append("<tr><td>Rundens lag</td><td>Spillernavn</td><td>Posisjon</td><td>Navn på lag</td></tr>");
+    htmlTable.append("<table width=400>");
+    htmlTable.append("<tr style='font-weight: bold;'><td style='padding-bottom: 15px;'>Rundens lag</td>");
+    htmlTable.append("<td>Spillernavn</td><td>Posisjon</td><td>Navn på lag</td></tr>");
     QSqlQuery teamOfTheRound ("select * from rundenslag where rundensLagNavn = '" +teamOfTheRoundChooseTeamComboBox->currentText() + "'");
     QSqlQuery test ("select rundensLagNavn, count(*) as antallLag from rundenslag group by rundensLagNavn ");
     while (teamOfTheRound.next()) {
-        htmlTable.append("<tr><td>");
+        htmlTable.append("<tr><td style='padding-bottom: 15px;'>");
         htmlTable.append(teamOfTheRound.value(1).toString());
         htmlTable.append("</td><td>");
         htmlTable.append(teamOfTheRound.value(2).toString());
