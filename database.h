@@ -56,9 +56,9 @@ static bool createConnection(){
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jonatan', 'Tollås Nation', '3', 'Venstre midtstopper', 3, 0)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Ville', 'Jalasto', '4', 'Høyre back', 1, 0)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Magnus', 'Sylling Olsen', '5', 'Høyre midtstopper', 4, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Glenn', 'Roberts', '12', 'Høyre midtbane', 8, 0)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Trond', 'Fredriksen', '10', 'Høyre spiss', 10, 0)");
-    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tor', 'Hogne Aarøy', '11', 'Venstre spiss', 5, 0)");
-    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Glenn', 'Roberts', '12', 'Venstre spiss', 7, 0)");
+    query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Tor', 'Hogne Aarøy', '11', 'Venstre spiss', 9, 0)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Jon ', 'Knudsen', '1', 'Keeper', 0, 1)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Bjarni', 'Ólafur Eiríksson', '2', 'Venstre back', 2, 1)");
     query.exec("INSERT INTO spiller (fornavn, etternavn, draktnummer, posisjon, posisjonsId, lagID) VALUES ('Diogo', 'da Costa Oliveira', '9', 'Høyre ving', 5, 1)");
